@@ -1,0 +1,53 @@
+{
+  "name": "node-crm",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Iordanidis Chris",
+  "license": "MIT",
+  "description": "NodeJS Tasks API Server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ulysses31/react-mern-tasks.git"
+  },
+  "keywords": [
+    "tasks"
+  ],
+  "engines": {
+    "node": "14.17.0",
+    "npm": "6.14.2"
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "scripts": {
+    "start": "set DEBUG=http,express:* & nodemon --inspect ./bin/www",
+    "test": "mocha \"./tests/**/*.js\" --exit --reporter spec",
+    "lint": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json",
+    "lintfix": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json --fix"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
+    "express": "~4.16.1",
+    "mocha": "^8.4.0",
+    "mongoose": "^5.12.14",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
+    "uuid": "^3.4.0",
+    "winston": "^3.3.3",
+    "winston-mongodb": "^5.0.7"
+  },
+  "devDependencies": {
+    "eslint": "^7.18.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
+}

@@ -1,0 +1,32 @@
+[
+	{
+		"sign": "A",
+		"role": "Administrator",
+		"isEnabled": true,
+		"createdAt": "2021-07-26T10:24:35.037",
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"updatedAt": null,
+		"updatedBy": null,
+		"guid": "1FB67517-6B7F-444B-8081-CE5427D34AD5"
+	},
+	{
+		"sign": "U",
+		"role": "User",
+		"isEnabled": true,
+		"createdAt": "2021-07-26T10:24:35.037",
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"updatedAt": null,
+		"updatedBy": null,
+		"guid": "83548D20-A14C-45BD-A93F-506F56110125"
+	},
+	{
+		"sign": "G",
+		"role": "Guest",
+		"isEnabled": true,
+		"createdAt": "2021-07-26T10:24:35.037",
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"updatedAt": null,
+		"updatedBy": null,
+		"guid": "B2B3B840-AC87-4AC8-A9DA-3245AA312262"
+	}
+]

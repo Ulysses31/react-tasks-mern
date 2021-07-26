@@ -1,0 +1,47 @@
+[
+	{
+		"username": "admin",
+		"password": "123",
+		"email": "admin@datacenter.com",
+		"title": "Administrator",
+		"position": "Προγραμματιστής",
+		"role": "Administrator",
+		"department": "Πληροφορική",
+		"isEnabled": true,
+		"createdAt": "2021-07-26T10:35:26.520",
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"updatedAt": null,
+		"updatedBy": null,
+		"guid": "0E4E4208-0605-41D9-927B-EBA26BAA06AA"
+	},
+	{
+		"username": "guest",
+		"password": "123",
+		"email": "guest@datacenter.com",
+		"title": "Guest",
+		"position": "Προγραμματιστής",
+		"role": "Guest",
+		"department": "Πληροφορική",
+		"isEnabled": true,
+		"createdAt": "2021-07-26T10:35:26.520",
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"updatedAt": null,
+		"updatedBy": null,
+		"guid": "49B8E61F-8108-4EB3-B165-0B4433A41669"
+	},
+	{
+		"username": "user",
+		"password": "123",
+		"email": "user@datacenter.com",
+		"title": "User",
+		"position": "Προγραμματιστής",
+		"role": "User",
+		"department": "Πληροφορική",
+		"isEnabled": true,
+		"createdAt": "2021-07-26T10:35:26.520",
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"updatedAt": null,
+		"updatedBy": null,
+		"guid": "B8B59BB9-4589-4071-81F1-D77F5F069301"
+	}
+]

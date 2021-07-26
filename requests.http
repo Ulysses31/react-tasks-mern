@@ -1,0 +1,164 @@
+# Projects
+GET http://localhost:3001/api/project HTTP/1.1
+GET http://localhost:3001/api/project/60fd0cb8d8700b31082c89c8 HTTP/1.1
+POST http://localhost:3001/api/project HTTP/1.1
+Content-Type: application/json
+
+{
+  "projectName": "Interbrokers Portal",
+  "description": "Interbrokers Portal",
+  "duration": 10,
+  "deadline": "2021-08-02",
+  "isEnabled": true,
+  "state": "ToDo",
+  "priority": "High",
+  "createdBy": "Ιορδανίδης Χρήστος",
+  "updatedAt": "",
+  "updatedBy": "",
+  "task": [
+    {
+      "taskName": "Interbrokers Portal Task",
+      "description": "This is a third Interbrokers Portal task.",
+      "duration": 10,
+      "assignedTo": "Ιορδανίδης Χρήστος",
+      "isEnabled": true,
+      "startDate": "2021-08-01",
+      "endDate": "",
+      "state": "ToDo",
+      "priority": "High",
+      "createdBy": "Ιορδανίδης Χρήστος",
+      "updatedAt": "",
+      "updatedBy": "",
+      "subtask": [
+        {
+          "subTaskName": "Interbrokers sub task 1",
+          "description": "This is the first sub task from admin",
+          "startDate": "2021-08-02",
+          "duration": 5,
+          "isEnabled": true,
+          "createdBy": "Ιορδανίδης Χρήστος",
+          "updatedAt": "",
+          "updatedBy": ""
+        },
+        {
+            "subTaskName": "Interbrokers sub task 2",
+            "description": "This is the second sub task from admin",
+            "startDate": "2021-08-05",
+            "duration": 5,
+            "isEnabled": true,
+            "createdBy": "Ιορδανίδης Χρήστος",
+            "updatedAt": "",
+            "updatedBy": ""
+        }
+      ],
+      "comment": [
+        {
+          "description": "This is the first comment of Interbrokers Portal task",
+          "createdBy": "Ιορδανίδης Χρήστος",
+          "updatedAt": "",
+          "updatedBy": ""
+        },
+        {
+          "description": "This is the second comment of Interbrokers Portal task",
+          "createdBy": "Ιορδανίδης Χρήστος",
+          "updatedAt": "",
+          "updatedBy": ""
+        },
+        {
+          "description": "This is the third comment of Interbrokers Portal task",
+          "createdBy": "Ιορδανίδης Χρήστος",
+          "updatedAt": "",
+          "updatedBy": ""
+        }
+      ]
+    }
+  ]
+}
+# Projects
+
+# User
+GET http://localhost:3001/api/user HTTP/1.1
+GET http://localhost:3001/api/user/60fd862aa399965690cdc471 HTTP/1.1
+POST http://localhost:3001/api/user HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "user",
+  "password": "123",
+  "email": "info@datacenter.com",
+  "title": "User",
+  "position": "User",
+  "role": "User",
+  "department": "Πληροφορική",
+  "isEnabled": true,
+  "createdBy": "Ιορδανίδης Χρήστος",
+  "updatedAt": "",
+  "updatedBy": ""
+}
+# User
+
+# UserRole
+GET http://localhost:3001/api/userRole HTTP/1.1
+GET http://localhost:3001/api/userRole/60fd893e8b280210e4aa5570 HTTP/1.1
+POST http://localhost:3001/api/userRole HTTP/1.1
+Content-Type: application/json
+
+{
+  "sign": "U",
+  "role": "User",
+  "isEnabled": true,
+  "createdBy": "Ιορδανίδης Χρήστος",
+  "updatedAt": "",
+  "updatedBy": ""
+}
+# UserRole
+
+# State
+GET http://localhost:3001/api/state HTTP/1.1
+GET http://localhost:3001/api/state/60fd8c27c3ed355510b98ac6 HTTP/1.1
+POST http://localhost:3001/api/state HTTP/1.1
+Content-Type: application/json
+
+{
+  "sign": "DN",
+  "stateName": "Done",
+  "sort": 5,
+  "isEnabled": true,
+  "createdBy": "Ιορδανίδης Χρήστος",
+  "updatedAt": "",
+  "updatedBy": ""
+}
+# State
+
+# Priority
+GET http://localhost:3001/api/priority HTTP/1.1
+GET http://localhost:3001/api/priority/60fd8e71d15d4b1f6c4da77b HTTP/1.1
+POST http://localhost:3001/api/priority HTTP/1.1
+Content-Type: application/json
+
+{
+  "sign": "L",
+  "name": "Low",
+  "sort": 2,
+  "isEnabled": true,
+  "createdBy": "Ιορδανίδης Χρήστος",
+  "updatedAt": "",
+  "updatedBy": ""
+}
+# Priority
+
+# Department
+GET http://localhost:3001/api/department HTTP/1.1
+GET http://localhost:3001/api/department/60fd95e5911cc656c4a5f729 HTTP/1.1
+POST http://localhost:3001/api/department HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Πληροφορική",
+  "description": "Τμήμα Πληροφορικής IT",
+  "isEnabled": true,
+  "createdBy": "Ιορδανίδης Χρήστος",
+  "updatedAt": "",
+  "updatedBy": ""
+}
+# Department
