@@ -30,12 +30,42 @@ export const fixDate = (dtInput) => {
 
 export const fixDateTime = (dtInput) => {
   const dt = new Date(dtInput);
-  return ('0' + dt.getDate()).slice(-2) + '/' + ('0' + (dt.getMonth() + 1)).slice(-2) + '/' + dt.getFullYear() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+  return (
+    ('0' + dt.getDate()).slice(-2) +
+    '/' +
+    ('0' + (dt.getMonth() + 1)).slice(-2) +
+    '/' +
+    dt.getFullYear() +
+    ' ' +
+    dt.getHours() +
+    ':' +
+    dt.getMinutes() +
+    ':' +
+    dt.getSeconds()
+  );
+};
+
+export const getSqlDate = (dtInput) => {
+  const dt = new Date(dtInput);
+  // return ('0' + dt.getDate()).slice(-2) + '/' + ('0' + (dt.getMonth() + 1)).slice(-2) + '/' + dt.getFullYear() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+  return (
+    dt.getFullYear() +
+    '-' +
+    ('0' + (dt.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + dt.getDate()).slice(-2)
+  );
 };
 
 export const fixTime = (dtInput) => {
   const dt = new Date(dtInput);
-  return ('0' + dt.getHours()).slice(-2) + ':' + ('0' + dt.getMinutes()).slice(-2) + ':' + ('0' + dt.getSeconds()).slice(-2);
+  return (
+    ('0' + dt.getHours()).slice(-2) +
+    ':' +
+    ('0' + dt.getMinutes()).slice(-2) +
+    ':' +
+    ('0' + dt.getSeconds()).slice(-2)
+  );
 };
 
 export const getPageSize = () => {

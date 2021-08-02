@@ -1,4 +1,5 @@
 const Task = require('../models/task');
+const Project = require('../models/project');
 
 exports.getTaskList = async (req, res) => {
   console.log('getTaskList executed...');
@@ -20,6 +21,38 @@ exports.getTaskById = async (req, res) => {
     return res.json(task);
   } catch (e) {
     console.log(e);
+  }
+};
+
+exports.getTaskByUser = async (req, res) => {
+  console.log(`getTaskByUser executed...
+  Param: ${req.params.user}`);
+
+  const dataFrom = req.params.dateFrom;
+  const dataTo = req.params.dateTo;
+
+  try {
+    const tsk = await Project.find({
+      $and: [
+        {
+          'task.startDate': {
+            $gte: new Date(dataFrom),
+            $lte: new Date(dataTo)
+          },
+          'task.isEnabled': true,
+          'task.assignedTo': `${req.params.user}`,
+          isEnabled: true
+        }
+      ]
+    });
+    return res.json(tsk);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
   }
 };
 

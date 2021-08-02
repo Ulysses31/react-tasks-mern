@@ -346,8 +346,11 @@ export default function ProjectList() {
               >
                 {users &&
                   users.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.title}
+                    <option
+                      key={item._id}
+                      value={item.title}
+                    >
+                      {item.title} ({item.department})
                     </option>
                   ))}
               </select>

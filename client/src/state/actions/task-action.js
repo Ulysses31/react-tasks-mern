@@ -24,10 +24,10 @@ export const SUBTASK_DELETE = 'SUBTASK_DELETE';
 export const SUBTASK_DEACTIVATE = 'SUBTASK_DEACTIVATE';
 export const SELECTED_SUBTASK = 'SELECTED_SUBTASK';
 
-const apiUrl = `${apiDomain}/api/tasks`;
+const apiUrl = `${apiDomain}/api/task`;
 const apiUrlComments = `${apiDomain}/api/comment`;
 const apiUrlSubTasks = `${apiDomain}/api/subtask`;
-const apiUrlTaskUser = `${apiDomain}/api/tasks/byuser`;
+const apiUrlTaskUser = `${apiDomain}/api/task/byuser`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -98,7 +98,7 @@ export function fetchTaskById(id) {
   };
 }
 
-export function fetchTaskByUser(usr, dateFrom, dateTo) {
+export function fetchTaskByUser(user, dateFrom, dateTo) {
   console.log('fetchTaskByUser fetched...');
   return (dispatch) => {
     dispatch({
@@ -107,7 +107,7 @@ export function fetchTaskByUser(usr, dateFrom, dateTo) {
     });
     return axios
       .get(
-        `${apiUrlTaskUser}/${usr}/from/${dateFrom}/to/${dateTo}`
+        `${apiUrlTaskUser}/${user}/from/${dateFrom}/to/${dateTo}`
       )
       .then((response) => {
         // console.log(response);

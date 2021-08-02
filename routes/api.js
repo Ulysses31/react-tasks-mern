@@ -10,13 +10,14 @@ const {
   deleteProject
 } = require('../controller/project');
 
-// const {
-//   getTaskList,
-//   getTaskById,
-//   insertTask,
-//   updateTask,
-//   deleteTask
-// } = require('../controller/task');
+const {
+  //   getTaskList,
+  //   getTaskById,
+  getTaskByUser
+  //   insertTask,
+  //   updateTask,
+  //   deleteTask
+} = require('../controller/task');
 
 // const {
 //   getCommentList,
@@ -89,6 +90,10 @@ router.delete('/project/:id', deleteProject);
 // Task
 // router.get('/task', getTaskList);
 // router.get('/task/:id', getTaskById);
+router.get(
+  '/task/byuser/:user/from/:dateFrom/to/:dateTo',
+  getTaskByUser
+);
 // router.post('/task', insertTask);
 // router.put('/task/:id', updateTask);
 // router.delete('/task/:id', deleteTask);
