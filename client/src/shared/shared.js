@@ -1,3 +1,10 @@
+export const prepareFilterDateAndSend = (currDate) => {
+  const month = new Date(currDate).getMonth() + 1;
+  const year = new Date(currDate).getFullYear();
+  const dt = `${month}|${year}`;
+  return dt;
+};
+
 export const getDateTimeFromTicks = (ticks) => {
   var ticksToMicrotime = ticks / 10000;
   var epochMicrotimeDiff = Math.abs(
@@ -23,19 +30,12 @@ export const fixDate = (dtInput) => {
 
 export const fixDateTime = (dtInput) => {
   const dt = new Date(dtInput);
-  return (
-    ('0' + dt.getDate()).slice(-2) +
-    '/' +
-    ('0' + (dt.getMonth() + 1)).slice(-2) +
-    '/' +
-    dt.getFullYear() +
-    ' ' +
-    dt.getHours() +
-    ':' +
-    dt.getMinutes() +
-    ':' +
-    dt.getSeconds()
-  );
+  return ('0' + dt.getDate()).slice(-2) + '/' + ('0' + (dt.getMonth() + 1)).slice(-2) + '/' + dt.getFullYear() + ' ' + dt.getHours() + ':' + dt.getMinutes() + ':' + dt.getSeconds();
+};
+
+export const fixTime = (dtInput) => {
+  const dt = new Date(dtInput);
+  return ('0' + dt.getHours()).slice(-2) + ':' + ('0' + dt.getMinutes()).slice(-2) + ':' + ('0' + dt.getSeconds()).slice(-2);
 };
 
 export const getPageSize = () => {

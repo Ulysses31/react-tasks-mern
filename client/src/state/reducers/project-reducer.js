@@ -33,7 +33,9 @@ const initialState = {
     deadlineTo: '',
     priorityId: 0,
     stateId: 0,
-    selectedUser: 0
+    selectedUser: 0,
+    selectedMonthFrom: 0,
+    selectedMonthTo: 0
   },
   isLoading: false,
   error: null

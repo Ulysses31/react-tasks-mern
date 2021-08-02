@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { apiDomain } from '../../shared/globals';
 
 export const ROLE_FETCH = 'ROLE_FETCH';
 export const USER_FILTERS = 'USER_FILTERS';
@@ -11,10 +12,8 @@ export const USER_ERROR = 'USER_ERROR';
 export const USER_ISLOADING = 'USER_ISLOADING';
 export const SELECTED_USER = 'SELECTED_USER';
 
-const apiUrl = 'http://localhost:3001/api/users';
-const apiUrlRoles = 'http://localhost:3001/api/userroles';
-// const apiUrl = 'http://orbiesapi.dev.gr/api/users';
-// const apiUrlRoles = 'http://orbiesapi.dev.gr/api/userroles';
+const apiUrl = `${apiDomain}/api/user`;
+const apiUrlRoles = `${apiDomain}/api/userrole`;
 
 const options = {
   headers: { 'content-type': 'application/json' },

@@ -12,7 +12,8 @@ import {
   getDateTimeFromTicks,
   fixDate,
   getPageSize,
-  getValidatedUserInfo
+  getValidatedUserInfo,
+  prepareFilterDateAndSend
 } from '../../shared/shared';
 import {
   fetchPriorities,
@@ -110,30 +111,64 @@ export default function ProjectList() {
     } else {
       dispatch(setUserBySession(userInfo));
 
+      var curSelectedMonthFrom = `${
+        new Date().getMonth() + 1
+      }|${new Date().getFullYear()}`;
+      var curSelectedMonthTo = `${
+        new Date().getMonth() + 1
+      }|${new Date().getFullYear()}`;
+
+      // fetch projects
       dispatch(
         fetchProjectsByUser(
           filters.selectedUser === 0
-            ? userInfo._id
-            : filters.selectedUser
+            ? userInfo.title
+            : filters.selectedUser,
+          filters.selectedMonthFrom === 0
+            ? curSelectedMonthFrom
+            : prepareFilterDateAndSend(
+                filters.selectedMonthFrom
+              ),
+          filters.selectedMonthTo === 0
+            ? curSelectedMonthTo
+            : prepareFilterDateAndSend(
+                filters.selectedMonthTo
+              )
         )
       ).then(() =>
         dispatch(fetchStates()).then(() =>
           dispatch(fetchUsers()).then(() =>
             dispatch(fetchPriorities())
+              // set project filters
+              .then(() =>
+                dispatch(
+                  setProjectFilters({
+                    ...filters,
+                    selectedUser:
+                      filters.selectedUser === 0
+                        ? userInfo.title
+                        : filters.selectedUser,
+                    selectedMonthFrom:
+                      filters.selectedMonthFrom === 0
+                        ? new Date()
+                        : filters.selectedMonthFrom,
+                    selectedMonthTo:
+                      filters.selectedMonthTo === 0
+                        ? new Date()
+                        : filters.selectedMonthTo
+                  })
+                )
+              )
           )
         )
       );
     }
-
-    if (filters.selectedUser === 0) {
-      dispatch(
-        setProjectFilters({
-          ...filters,
-          selectedUser: userInfo._id
-        })
-      );
-    }
   }, []);
+
+  useEffect(() => {
+    // go from page 1
+    setCurrentPage(1);
+  }, [filters]);
 
   const handleEditBtn = (project) => {
     dispatch(setSelectedProject(project));
@@ -154,7 +189,47 @@ export default function ProjectList() {
       })
     );
 
-    dispatch(fetchProjectsByUser(e.target.value));
+    dispatch(
+      fetchProjectsByUser(
+        e.target.value,
+        prepareFilterDateAndSend(filters.selectedMonthFrom),
+        prepareFilterDateAndSend(filters.selectedMonthTo)
+      )
+    );
+  };
+
+  const handleMonthFromOnChange = (date) => {
+    dispatch(
+      setProjectFilters({
+        ...filters,
+        selectedMonthFrom: date
+      })
+    );
+
+    dispatch(
+      fetchProjectsByUser(
+        filters.selectedUser,
+        prepareFilterDateAndSend(date),
+        prepareFilterDateAndSend(filters.selectedMonthTo)
+      )
+    );
+  };
+
+  const handleMonthToOnChange = (date) => {
+    dispatch(
+      setProjectFilters({
+        ...filters,
+        selectedMonthTo: date
+      })
+    );
+
+    dispatch(
+      fetchProjectsByUser(
+        filters.selectedUser,
+        prepareFilterDateAndSend(filters.selectedMonthFrom),
+        prepareFilterDateAndSend(date)
+      )
+    );
   };
 
   const handleResetFilters = () => {
@@ -169,7 +244,9 @@ export default function ProjectList() {
         deadlineTo: '',
         priorityId: 0,
         stateId: 0,
-        selectedUser: filters.selectedUser
+        selectedUser: filters.selectedUser,
+        selectedMonthFrom: filters.selectedMonthFrom,
+        selectedMonthTo: filters.selectedMonthTo
       })
     );
   };
@@ -274,6 +351,59 @@ export default function ProjectList() {
                     </option>
                   ))}
               </select>
+            </div>
+            <div className='form-group col-lg-2'>
+              <label htmlFor='selectedMonthFrom'>
+                From Month
+              </label>
+              <DatePicker
+                id='selectedMonthFrom'
+                name='selectedMonthFrom'
+                className='form-control form-control-sm'
+                key='startDate'
+                value={
+                  filters.selectedMonthFrom === 0
+                    ? new Date()
+                    : filters.selectedMonthFrom
+                }
+                selected={
+                  filters.selectedMonthFrom === 0
+                    ? new Date()
+                    : filters.selectedMonthFrom
+                }
+                onChange={(date) =>
+                  handleMonthFromOnChange(date)
+                }
+                dateFormat='MM/yyyy'
+                showMonthYearPicker
+              />
+            </div>
+            <div className='form-group col-lg-2'>
+              <label htmlFor='selectedMonthTo'>
+                To Month
+              </label>
+              <DatePicker
+                id='selectedMonthTo'
+                name='selectedMonthTo'
+                className='form-control form-control-sm'
+                key='startDate'
+                minDate={filters.selectedMonthFrom}
+                value={
+                  filters.selectedMonthTo === 0
+                    ? new Date()
+                    : filters.selectedMonthTo
+                }
+                selected={
+                  filters.selectedMonthTo === 0
+                    ? new Date()
+                    : filters.selectedMonthTo
+                }
+                onChange={(date) =>
+                  handleMonthToOnChange(date)
+                }
+                dateFormat='MM/yyyy'
+                showMonthYearPicker
+              />
             </div>
           </div>
           <br />
@@ -595,13 +725,7 @@ export default function ProjectList() {
                       <td colSpan='2'>
                         <i className='bi bi-calendar3'></i>{' '}
                         &nbsp;
-                        {fixDate(
-                          new Date(
-                            getDateTimeFromTicks(
-                              project.createdOnTicks
-                            )
-                          )
-                        )}
+                        {fixDate(project.createdAt)}
                       </td>
                       <td>
                         <b>{project.projectName}</b>
@@ -619,12 +743,12 @@ export default function ProjectList() {
                       </td>
                       <td>
                         <span className='badge bg-warning text-dark'>
-                          <b>{project.priority.name}</b>
+                          <b>{project.priority}</b>
                         </span>
                       </td>
                       <td>
                         <span className='badge bg-warning text-dark'>
-                          <b>{project.state.stateName}</b>
+                          <b>{project.state}</b>
                         </span>
                       </td>
                       <td nowrap='true' align='center'>

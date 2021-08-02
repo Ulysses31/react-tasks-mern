@@ -78,7 +78,10 @@ const {
 // Project
 router.get('/project', getProjectList);
 router.get('/project/:id', getProjectById);
-router.get('/project/user/:user', getProjectByUser);
+router.get(
+  '/project/user/:user/from/:curDateFrom/to/:curDateTo',
+  getProjectByUser
+);
 router.post('/project', insertProject);
 router.put('/project/:id', updateProject);
 router.delete('/project/:id', deleteProject);
@@ -105,12 +108,12 @@ router.delete('/project/:id', deleteProject);
 // router.delete('/subTask/:id', deleteSubTask);
 
 // User
-router.get('/users', getUserList);
-router.get('/users/:id', getUserById);
-router.post('/users', insertUser);
-router.post('/users/ByLogin', getUserByLogin);
-router.put('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+router.get('/user', getUserList);
+router.get('/user/:id', getUserById);
+router.post('/user', insertUser);
+router.post('/user/ByLogin', getUserByLogin);
+router.put('/user/:id', updateUser);
+router.delete('/user/:id', deleteUser);
 
 // UserRole
 router.get('/userRole', getUserRoleList);

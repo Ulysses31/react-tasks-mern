@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { apiDomain } from '../../shared/globals';
 
 export const PROJECT_FILTERS = 'PROJECT_FILTERS';
 export const PROJECT_FETCH = 'PROJECT_FETCH';
@@ -12,11 +13,8 @@ export const PROJECT_ERROR = 'PROJECT_ERROR';
 export const PROJECT_ISLOADING = 'PROJECT_ISLOADING';
 export const SELECTED_PROJECT = 'SELECTED_PROJECT';
 
-const apiUrl = 'http://localhost:3001/api/projects';
-const apiUrlProjectUser =
-  'http://localhost:3001/api/projects/byuser';
-// const apiUrl = 'http://orbiesapi.dev.gr/api/projects';
-// const apiUrlProjectUser = 'http://orbiesapi.dev.gr/api/projects/byuser';
+const apiUrl = `${apiDomain}/api/projects`;
+const apiUrlProjectUser = `${apiDomain}/api/project/user`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -54,7 +52,11 @@ export function fetchProjects() {
   };
 }
 
-export function fetchProjectsByUser(usr) {
+export function fetchProjectsByUser(
+  usr,
+  curDateFrom,
+  curDateTo
+) {
   console.log('fetchProjectsByUser fetched...');
   return (dispatch) => {
     dispatch({
@@ -62,7 +64,9 @@ export function fetchProjectsByUser(usr) {
       payload: true
     });
     return axios
-      .get(`${apiUrlProjectUser}/${usr}`)
+      .get(
+        `${apiUrlProjectUser}/${usr}/from/${curDateFrom}/to/${curDateTo}`
+      )
       .then((response) => {
         // console.log(response);
         dispatch({
@@ -169,7 +173,7 @@ export function deactivateProject(id) {
         toast.info('Project successfully deleted!');
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         dispatch({
           type: PROJECT_ERROR,
           payload: err.response

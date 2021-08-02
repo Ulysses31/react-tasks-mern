@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { apiDomain } from '../../shared/globals';
 import { resetValidatedUserInfo } from '../../shared/shared';
 import { setProjectFilters } from './project-action';
 import { setTaskFilters } from './task-action';
@@ -11,13 +12,9 @@ export const PRIORITY_FETCH = 'PRIORITY_FETCH';
 export const SIDEBAR_STATE = 'SIDEBAR_STATE';
 export const GENERAL_ERROR = 'GENERAL_ERROR';
 
-const apiStatesUrl = 'http://localhost:3001/api/state';
-const apiPrioritiesUrl =
-  'http://localhost:3001/api/priority';
-const apiUrlUsers = 'http://localhost:3001/api/users';
-// const apiStatesUrl = 'http://orbiesapi.dev.gr/api/states';
-// const apiPrioritiesUrl = 'http://orbiesapi.dev.gr/api/priorities';
-// const apiUrlUsers = 'http://orbiesapi.dev.gr/api/users';
+const apiStatesUrl = `${apiDomain}/api/state`;
+const apiPrioritiesUrl = `${apiDomain}/api/priority`;
+const apiUrlUsers = `${apiDomain}/api/user`;
 
 export function fetchStates() {
   console.log('fetchStates fetched...');

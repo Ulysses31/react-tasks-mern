@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { apiDomain } from '../../shared/globals';
 
 export const TASK_USER_FETCH = 'TASK_USER_FETCH';
 export const TASK_FILTERS = 'TASK_FILTERS';
@@ -23,15 +24,10 @@ export const SUBTASK_DELETE = 'SUBTASK_DELETE';
 export const SUBTASK_DEACTIVATE = 'SUBTASK_DEACTIVATE';
 export const SELECTED_SUBTASK = 'SELECTED_SUBTASK';
 
-const apiUrl = 'http://localhost:3001/api/tasks';
-const apiUrlComments = 'http://localhost:3001/api/comments';
-const apiUrlSubTasks = 'http://localhost:3001/api/subtasks';
-const apiUrlTaskUser =
-  'http://localhost:3001/api/tasks/byuser';
-// const apiUrl = 'http://orbiesapi.dev.gr/api/tasks';
-// const apiUrlComments = 'http://orbiesapi.dev.gr/api/comments';
-// const apiUrlSubTasks = 'http://orbiesapi.dev.gr/api/subtasks';
-// const apiUrlTaskUser = 'http://orbiesapi.dev.gr/api/tasks/byuser';
+const apiUrl = `${apiDomain}/api/tasks`;
+const apiUrlComments = `${apiDomain}/api/comment`;
+const apiUrlSubTasks = `${apiDomain}/api/subtask`;
+const apiUrlTaskUser = `${apiDomain}/api/tasks/byuser`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -102,7 +98,7 @@ export function fetchTaskById(id) {
   };
 }
 
-export function fetchTaskByUser(usr) {
+export function fetchTaskByUser(usr, dateFrom, dateTo) {
   console.log('fetchTaskByUser fetched...');
   return (dispatch) => {
     dispatch({
@@ -110,7 +106,9 @@ export function fetchTaskByUser(usr) {
       payload: true
     });
     return axios
-      .get(`${apiUrlTaskUser}/${usr}`)
+      .get(
+        `${apiUrlTaskUser}/${usr}/from/${dateFrom}/to/${dateTo}`
+      )
       .then((response) => {
         // console.log(response);
         dispatch({

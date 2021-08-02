@@ -36,15 +36,23 @@ exports.getProjectById = async (req, res) => {
 exports.getProjectByUser = async (req, res) => {
   console.log(`getProjectByUser executed...
   Param: ${req.params.user}`);
+
+  const dataFrom = `${req.params.curDateFrom}`.split('|');
+  const dataTo = `${req.params.curDateTo}`.split('|');
+
   try {
     const prj = await Project.find({
       $and: [
-        { isEnabled: true }, // project is enabled
         {
-          $and: [
-            { 'task.isEnabled': true }, // task is enabled
-            { 'task.assignedTo': `${req.params.user}` }
-          ]
+          createdAt: {
+            $gte: new Date(
+              `${dataFrom[1]}-${dataFrom[0]}-01`
+            ),
+            $lte: new Date(`${dataTo[1]}-${dataTo[0]}-31`)
+          },
+          'task.isEnabled': true,
+          'task.assignedTo': `${req.params.user}`,
+          isEnabled: true
         }
       ]
     });

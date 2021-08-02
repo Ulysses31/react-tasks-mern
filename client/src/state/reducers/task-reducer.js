@@ -48,6 +48,7 @@ const initialState = {
     subTaskName: '',
     description: '',
     startDate: new Date(),
+    startTime: null,
     duration: 0,
     taskId: 0,
     isEnabled: true
@@ -61,7 +62,9 @@ const initialState = {
     duration: 0,
     priorityId: 0,
     stateId: 0,
-    selectedUser: 0
+    selectedUser: 0,
+    startDateFrom: 0,
+    startDateTo: 0
   },
   isLoading: false,
   error: null

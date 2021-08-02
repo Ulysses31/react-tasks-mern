@@ -68,6 +68,10 @@ a, a:hover, a:focus {
   font-size: 1.2em !important;
 }
 
+.react-datepicker-popper {
+  z-index: 101 !important;
+}
+
 @media (max-width: 768px) {
   #sidebar {
     margin-left: -250px;

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { apiDomain } from '../../shared/globals';
 
 export const DEPARTMENT_FILTERS = 'DEPARTMENT_FILTERS';
 export const DEPARTMENT_FETCH = 'DEPARTMENT_FETCH';
@@ -13,8 +14,7 @@ export const DEPARTMENT_UPDATE = 'DEPARTMENT_UPDATE';
 export const DEPARTMENT_ERROR = 'DEPARTMENT_ERROR';
 export const SELECTED_DEPARTMENT = 'SELECTED_DEPARTMENT';
 
-const apiUrl = 'http://localhost:3001/api/departments';
-// const apiUrl = 'http://orbiesapi.dev.gr/api/departments';
+const apiUrl = `${apiDomain}/api/department`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
