@@ -41,34 +41,33 @@ export default function TaskList() {
   );
   const tasks = useSelector((state) =>
     state.taskState.tasks.filter((item) => {
+      const { task } = item;
       return (
         (filters.project.toLowerCase() === '' ||
-          item.project.projectName
+          item.projectName
             .toLowerCase()
             .includes(filters.project.toLowerCase())) &&
         (filters.name.toLowerCase() === '' ||
-          item.taskName
+          task.taskName
             .toLowerCase()
             .includes(filters.name.toLowerCase())) &&
         (filters.description.toLowerCase() === '' ||
-          item.description
+          task.description
             .toLowerCase()
             .includes(filters.description.toLowerCase())) &&
         (Number.parseInt(filters.priorityId) === 0 ||
-          Number.parseInt(item.priorityId) ===
-            Number.parseInt(filters.priorityId)) &&
+          task.priority === filters.priorityId) &&
         (Number.parseInt(filters.stateId) === 0 ||
-          Number.parseInt(item.stateId) ===
-            Number.parseInt(filters.stateId)) &&
+          task.state === filters.stateId) &&
         (Number.parseInt(filters.duration) === 0 ||
-          Number.parseInt(item.duration) ===
+          Number.parseInt(task.duration) ===
             Number.parseInt(filters.duration)) &&
         (filters.startDate === '' ||
           fixDate(filters.startDate) ===
-            fixDate(item.startDate)) &&
+            fixDate(task.startDate)) &&
         (filters.endDate === '' ||
           new Date(filters.endDate) ===
-            new Date(item.endDate))
+            new Date(task.endDate))
       );
     })
   );
@@ -96,7 +95,6 @@ export default function TaskList() {
 
   useEffect(() => {
     const userInfo = getValidatedUserInfo();
-    console.log(userInfo);
     if (userInfo._id === 0) {
       history.push('/login');
     } else {
@@ -261,7 +259,7 @@ export default function TaskList() {
   }, [currentPage, tasks, filters]);
   // -- pagination table data -----------------------------
 
-  const TaskTemplate = ({ task, cnt }) => {
+  const TaskTemplate = ({ task, projectName, cnt }) => {
     // console.log(task);
     return (
       <>
@@ -274,7 +272,7 @@ export default function TaskList() {
             </b>
           </td>
           <td>
-            <b>{task.projectName}</b>
+            <b>{projectName}</b>
           </td>
           <td>{task.taskName}</td>
           <td>{task.description}</td>
@@ -295,18 +293,18 @@ export default function TaskList() {
           </td>
           <td>
             <span className='badge bg-warning text-dark'>
-              <b>{task.priority.name}</b>
+              <b>{task.priority}</b>
             </span>
           </td>
           <td>
             <span className='badge bg-warning text-dark'>
-              <b>{task.state.stateName}</b>
+              <b>{task.state}</b>
             </span>
           </td>
           <td align='center'>
             <Link
               className='btn btn-sm btn-primary shadow-sm'
-              to={`/tasks/details/${task.id}`}
+              to={`/tasks/details/${task._id}`}
             >
               <i className='bi bi-clipboard'></i> Details
             </Link>
@@ -680,10 +678,11 @@ export default function TaskList() {
               </thead>
               <tbody>
                 {tasksTableData.length > 0 &&
-                  tasksTableData.map((task, i) => (
+                  tasksTableData.map((data, i) => (
                     <TaskTemplate
-                      key={task.id}
-                      task={task}
+                      key={data.task._id}
+                      projectName={data.projectName}
+                      task={data.task}
                       cnt={i}
                     />
                   ))}
@@ -705,5 +704,6 @@ export default function TaskList() {
 
 TaskList.propTypes = {
   task: PropTypes.object,
+  projectName: PropTypes.string,
   cnt: PropTypes.number
 };

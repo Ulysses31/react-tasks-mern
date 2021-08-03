@@ -32,19 +32,39 @@ exports.getTaskByUser = async (req, res) => {
   const dataTo = req.params.dateTo;
 
   try {
-    const tsk = await Project.find({
-      $and: [
-        {
+    const tsk = await Project.aggregate([
+      { $match: { isEnabled: true } },
+      { $unwind: '$task' },
+      {
+        $match: {
+          'task.assignedTo': `${req.params.user}`,
+          'task.isEnabled': true,
           'task.startDate': {
             $gte: new Date(dataFrom),
             $lte: new Date(dataTo)
-          },
-          'task.isEnabled': true,
-          'task.assignedTo': `${req.params.user}`,
-          isEnabled: true
+          }
         }
-      ]
-    });
+      },
+      {
+        $project: {
+          projectName: 1,
+          'task._id': 1,
+          'task.guid': 1,
+          'task.taskName': 1,
+          'task.description': 1,
+          'task.duration': 1,
+          'task.assignedTo': 1,
+          'task.isEnabled': 1,
+          'task.startDate': 1,
+          'task.endDate': 1,
+          'task.state': 1,
+          'task.priority': 1,
+          'task.createdBy': 1,
+          'task.updatedAt': 1,
+          'task.updatedBy': 1
+        }
+      }
+    ]);
     return res.json(tsk);
   } catch (err) {
     console.log(err);

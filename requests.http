@@ -8,7 +8,7 @@ Content-Type: application/json
   "projectName": "Interbrokers Portal",
   "description": "Interbrokers Portal",
   "duration": 10,
-  "deadline": "2021-08-02",
+  "deadline": "2021-07-12",
   "isEnabled": true,
   "state": "ToDo",
   "priority": "High",
@@ -17,7 +17,7 @@ Content-Type: application/json
   "updatedBy": "",
   "task": [
     {
-      "taskName": "Interbrokers Portal Task",
+      "taskName": "Interbrokers Portal Task A",
       "description": "This is a third Interbrokers Portal task.",
       "duration": 10,
       "assignedTo": "Ιορδανίδης Χρήστος",
@@ -71,6 +71,38 @@ Content-Type: application/json
           "updatedBy": ""
         }
       ]
+    },
+    {
+      "taskName": "Interbrokers Portal Task B",
+      "description": "This is a third Interbrokers Portal task.",
+      "duration": 10,
+      "assignedTo": "Ιορδανίδης Χρήστος",
+      "isEnabled": true,
+      "startDate": "2021-08-01",
+      "endDate": "",
+      "state": "ToDo",
+      "priority": "High",
+      "createdBy": "Ιορδανίδης Χρήστος",
+      "updatedAt": "",
+      "updatedBy": "",
+      "subtask": [],
+      "comment": []
+    },
+    {
+      "taskName": "Interbrokers Portal Task C",
+      "description": "This is a third Interbrokers Portal task.",
+      "duration": 10,
+      "assignedTo": "Ιορδανίδης Χρήστος",
+      "isEnabled": true,
+      "startDate": "2021-08-01",
+      "endDate": "",
+      "state": "ToDo",
+      "priority": "High",
+      "createdBy": "Ιορδανίδης Χρήστος",
+      "updatedAt": "",
+      "updatedBy": "",
+      "subtask": [],
+      "comment": []
     }
   ]
 }
