@@ -625,8 +625,8 @@ export default function TaskList() {
                         {priorities &&
                           priorities.map((item) => (
                             <option
-                              key={item.id}
-                              value={item.id}
+                              key={item._id}
+                              value={item.name}
                             >
                               {item.name}
                             </option>
@@ -665,8 +665,8 @@ export default function TaskList() {
                         {states &&
                           states.map((item) => (
                             <option
-                              key={item.id}
-                              value={item.id}
+                              key={item._id}
+                              value={item.stateName}
                             >
                               {item.stateName}
                             </option>

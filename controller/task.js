@@ -4,7 +4,7 @@ const Project = require('../models/project');
 exports.getTaskList = async (req, res) => {
   console.log('getTaskList executed...');
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find().sort({ createdAt: 1 });
     return res.json(tasks);
   } catch (e) {
     console.log(e);
@@ -45,6 +45,7 @@ exports.getTaskByUser = async (req, res) => {
           }
         }
       },
+      { $sort: { 'task.createdAt': -1 } },
       {
         $project: {
           projectName: 1,

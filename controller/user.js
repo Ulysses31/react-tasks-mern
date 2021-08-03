@@ -3,7 +3,7 @@ const User = require('../models/user');
 exports.getUserList = async (req, res) => {
   console.log('getUserList executed...');
   try {
-    const users = await User.find();
+    const users = await User.find().sort({ createdAt: 1 });
     return res.json(users);
   } catch (err) {
     console.log(err);

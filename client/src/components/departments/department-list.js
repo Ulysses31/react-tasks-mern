@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import Pagination from '../../shared/pagination/Pagination';
 import {
   fixDate,
-  getValidatedUserInfo
+  getValidatedUserInfo,
+  getPageSize
 } from '../../shared/shared';
 import {
   fetchDepartments,
@@ -17,6 +19,7 @@ import ErrorCmp from '../error/error';
 import './department.css';
 
 export default function DepartmentList() {
+  const pageSize = getPageSize();
   const history = useHistory();
   const dispatch = useDispatch();
   const error = useSelector(
@@ -26,7 +29,10 @@ export default function DepartmentList() {
     (state) => state.departmentState.departments
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
+    // user validation
     const userInfo = getValidatedUserInfo();
     if (userInfo.id === 0) {
       history.push('/login');
@@ -53,7 +59,11 @@ export default function DepartmentList() {
       <>
         <tr>
           <td nowrap='true'>
-            <b>{cnt + 1}</b>
+            <b>
+              {currentPage === 1
+                ? cnt + 1
+                : pageSize * (currentPage - 1) + cnt + 1}
+            </b>
           </td>
           <td nowrap='true'>{dprt.id}</td>
           <td nowrap='true'>
@@ -88,6 +98,14 @@ export default function DepartmentList() {
     );
   };
 
+  // -- pagination table data -----------------------------
+  const projectsTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return departments.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, departments]);
+  // -- pagination table data -----------------------------
+
   return (
     <>
       {error && <ErrorCmp err={error} />}
@@ -104,7 +122,7 @@ export default function DepartmentList() {
           >
             <i className='bi bi-plus-lg'></i> New Department
           </Link>
-          {departments.length > 0 && (
+          {projectsTableData.length > 0 && (
             <div className='table-responsive'>
               <table
                 border='0'
@@ -205,7 +223,7 @@ export default function DepartmentList() {
                   </tr>
                 </thead>
                 <tbody>
-                  {departments.map((dprt, i) => (
+                  {projectsTableData.map((dprt, i) => (
                     <DepartmentTemplate
                       key={dprt.id}
                       dprt={dprt}
@@ -214,6 +232,15 @@ export default function DepartmentList() {
                   ))}
                 </tbody>
               </table>
+              <Pagination
+                className='pagination-bar'
+                currentPage={currentPage}
+                totalCount={departments.length}
+                pageSize={pageSize}
+                onPageChange={(page) =>
+                  setCurrentPage(page)
+                }
+              />
             </div>
           )}
         </div>

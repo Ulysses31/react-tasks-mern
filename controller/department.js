@@ -3,7 +3,9 @@ const Department = require('../models/department');
 exports.getDepartmentList = async (req, res) => {
   console.log('getDepartmentList executed...');
   try {
-    const departments = await Department.find();
+    const departments = await Department.find().sort({
+      name: 1
+    });
     return res.json(departments);
   } catch (err) {
     console.log(err);

@@ -3,7 +3,7 @@ const Project = require('../models/project');
 exports.getProjectList = async (req, res) => {
   console.log('getProjectList executed...');
   try {
-    const prj = await Project.find();
+    const prj = await Project.find().sort({ createdAt: 1 });
     return res.json(prj);
   } catch (err) {
     console.log(err);

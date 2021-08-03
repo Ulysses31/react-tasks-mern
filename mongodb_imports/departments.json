@@ -1,12 +1,162 @@
 [
 	{
 		"name": "Πληροφορική",
-		"description": "Τμήμα Πληροφορικής IT",
+		"description": "Interlife IT Department",
 		"isEnabled": true,
 		"createdBy": "Ιορδανίδης Χρήστος",
-		"createdAt": "2021-07-26T10:52:29.613",
+		"createdAt": "2021-08-02T10:52:29.613",
 		"updatedBy": null,
 		"updatedAt": null,
 		"guid": "4094A85E-36B8-40ED-8602-B8D73BA69352"
+	},
+	{
+		"name": "Πωλήσεις",
+		"description": "Interlife Τμήμα Πωλήσεων",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "AEF2BD7F-29EF-4604-8571-03F81EAC6D90"
+	},
+	{
+		"name": "Παραγωγή",
+		"description": "Interlife Τμήμα Παραγωγής",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "F70B6657-FBBF-4903-BF70-6C036874830D"
+	},
+	{
+		"name": "Αποζημιώσεις",
+		"description": "Interlife Τμήμα Αποζημιώσεων",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "B8500FC4-6663-429F-95C1-400924AB92FF"
+	},
+	{
+		"name": "Οικονομικές Υπηρεσίες",
+		"description": "Interlife Τμήμα Οικονομικών Υπηρεσιών",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "F6CDCFA1-75F4-435B-8A43-F6DE017F313C"
+	},
+	{
+		"name": "Marketing",
+		"description": "Interlife Τμήμα Marketing",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "8D8AEA68-3640-4966-9D53-EA9013B5B7F4"
+	},
+	{
+		"name": "Νομικό",
+		"description": "Interlife Νομικό Τμήμα",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "6DEF94EE-1387-4B0B-9CC5-7A777825F70B"
+	},
+	{
+		"name": "Διοικ. Υπηρεσίες",
+		"description": "Interlife Διοικ. Υπηρεσίες",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "EA2BC504-CCF5-49EB-86A0-DD7C5C52B267"
+	},
+	{
+		"name": "Ανθρώπινο Δυναμικό",
+		"description": "Interlife Τμήμα Ανθρώπινου Δυναμικού (HR)",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "E28817E9-9694-4C08-AD21-7C58215C8339"
+	},
+	{
+		"name": "Διαχείριση",
+		"description": "Interlife Τμήμα Διαχείρισης",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "BFFD182E-F10A-47B7-8840-57CFFADEFF5A"
+	},
+	{
+		"name": "Διοίκηση",
+		"description": "Interlife Τμήμα Διοίκησης",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "C57D2EBE-9C36-4E92-99AF-1C8E87EF686F"
+	},
+	{
+		"name": "Λογιστήριο",
+		"description": "Interlife Τμήμα Λογιστηρίου",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "3F6B6297-CD4A-422A-816D-8DC0CC6F8BF7"
+	},
+	{
+		"name": "Θυγατρικές",
+		"description": "Interlife Θυγατρικές",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "F959BB9C-CCE7-4A3E-8988-10B04647ECBB"
+	},
+	{
+		"name": "Υποκαταστήματα",
+		"description": "Interlife Υποκαταστήματα",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "65274535-0459-4BA7-A612-34894082D581"
+	},
+	{
+		"name": "Interbrokers",
+		"description": "Interbrokers",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "8F5E65B9-A85F-429C-A92A-9C4CC6ED741C"
+	},
+	{
+		"name": "Gnomon Experts",
+		"description": "Gnomon Experts",
+		"isEnabled": true,
+		"createdBy": "Ιορδανίδης Χρήστος",
+		"createdAt": "2021-08-02T10:52:29.613",
+		"updatedBy": null,
+		"updatedAt": null,
+		"guid": "BD0DD663-E41F-4385-8412-3759A4B8B31A"
 	}
 ]
