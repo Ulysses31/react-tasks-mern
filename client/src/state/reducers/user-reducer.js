@@ -14,15 +14,15 @@ const initialState = {
   roles: [],
   users: [],
   selectedUser: {
-    id: 0,
+    _id: 0,
     username: '',
     password: '',
     position: '',
-    departmentId: 0,
+    department: '',
     email: '',
     title: '',
     isEnabled: true,
-    userRoleId: 1
+    role: ''
   },
   filters: {
     title: '',
@@ -59,15 +59,15 @@ export default function userReducer(
         ...state,
         users: action.payload,
         selectedUser: {
-          id: 0,
+          _id: 0,
           username: '',
           password: '',
           position: '',
-          departmentId: 0,
+          department: '',
           email: '',
           title: '',
           isEnabled: true,
-          userRoleId: 1
+          role: ''
         },
         error: null
       };
@@ -85,7 +85,7 @@ export default function userReducer(
       return {
         ...state,
         users: state.users.filter((usr) => {
-          return usr.id !== action.payload;
+          return usr._id !== action.payload;
         }),
         error: null
       };

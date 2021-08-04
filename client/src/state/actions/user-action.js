@@ -74,6 +74,7 @@ export function fetchRoles() {
 }
 
 export function insertUser(hst, usr) {
+  console.log(usr);
   return (dispatch) => {
     return axios
       .post(apiUrl, usr, options)
@@ -88,10 +89,12 @@ export function insertUser(hst, usr) {
         hst.goBack();
       })
       .catch((err) => {
-        // console.log(err.response);
+        // console.log(err.response.data.message.message);
         dispatch({
           type: USER_ERROR,
-          payload: err.response
+          payload: {
+            message: err.response.data.message.message
+          }
         });
       });
   };
@@ -100,7 +103,7 @@ export function insertUser(hst, usr) {
 export function updateUser(hst, usr) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${usr.id}`, usr, options)
+      .put(`${apiUrl}/${usr._id}`, usr, options)
       .then((response) => {
         // console.log(response);
         dispatch({

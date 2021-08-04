@@ -179,7 +179,7 @@ export default function UserList() {
             </button>{' '}
             <button
               className='btn btn-sm btn-danger shadow-sm'
-              onClick={() => handleDeleteBtn(user.id)}
+              onClick={() => handleDeleteBtn(user._id)}
             >
               <i className='bi bi-trash'></i>
             </button>
@@ -401,7 +401,7 @@ export default function UserList() {
                 {usersTableData.length > 0 &&
                   usersTableData.map((user, i) => (
                     <UserTemplate
-                      key={user.id}
+                      key={user._id}
                       user={user}
                       cnt={i}
                     />

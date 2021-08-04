@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 // import ScaleLoader from 'react-spinners/ScaleLoader';
-import {
-  fixDate
-} from '../../shared/shared';
+import { fixDate } from '../../shared/shared';
 import {
   fetchTaskById,
   setSelectedTask,
@@ -27,8 +25,12 @@ import './task.css';
 
 export default function TaskList() {
   const dispatch = useDispatch();
-  const task = useSelector((state) => state.taskState.taskById);
-  const error = useSelector((state) => state.taskState.error);
+  const task = useSelector(
+    (state) => state.taskState.taskById
+  );
+  const error = useSelector(
+    (state) => state.taskState.error
+  );
   // const isLoading = useSelector((state) => state.taskState.isLoading);
   const history = useHistory();
   const param = useParams().id;
@@ -52,53 +54,63 @@ export default function TaskList() {
     return (
       <>
         <tr>
-          <td nowrap="true"><b>1</b></td>
-          {/* <td nowrap="true">{task.project.projectName}</td> */}
-          <td nowrap="true">{task?.taskName}</td>
-          <td nowrap="true">{task?.description}</td>
-          <td nowrap="true">{
-            fixDate(new Date(task.startDate))
-          }</td>
-          <td nowrap="true">{
-            task.endDate !== null
-              ? new Date(task.endDate).toLocaleDateString('el')
-              : '---'
-          }</td>
-          <td nowrap="true" className="text-center">
-            <span className="badge badge-primary badge-pill">
-              {task.duration}
-              </span>
+          <td nowrap='true'>
+            <b>1</b>
           </td>
-          <td nowrap="true">{task?.user?.title}</td>
-          <td nowrap="true">
-            <span className="badge bg-warning text-dark">
+          {/* <td nowrap="true">{task.project.projectName}</td> */}
+          <td nowrap='true'>{task.taskName}</td>
+          <td nowrap='true'>{task.description}</td>
+          <td nowrap='true'>
+            {fixDate(new Date(task.startDate))}
+          </td>
+          <td nowrap='true'>
+            {task.endDate !== null
+              ? new Date(task.endDate).toLocaleDateString(
+                  'el'
+                )
+              : '---'}
+          </td>
+          <td nowrap='true' className='text-center'>
+            <span className='badge badge-primary badge-pill'>
+              {task.duration}
+            </span>
+          </td>
+          <td nowrap='true'>{task.user.title}</td>
+          <td nowrap='true'>
+            <span className='badge bg-warning text-dark'>
               <b>{task.priority.name}</b>
             </span>
           </td>
-          <td nowrap="true">
-            <span className="badge bg-warning text-dark">
+          <td nowrap='true'>
+            <span className='badge bg-warning text-dark'>
               <b>{task.state.stateName}</b>
             </span>
           </td>
-          <td nowrap="true" align="center">
-            <button className="btn btn-sm btn-primary shadow-sm"
+          <td nowrap='true' align='center'>
+            <button
+              className='btn btn-sm btn-primary shadow-sm'
               onClick={() => handleEditBtn(task)}
-              disabled={task?.state.stateName === 'Done' ? 'disabled' : ''}
+              disabled={
+                task.state.stateName === 'Done'
+                  ? 'disabled'
+                  : ''
+              }
             >
-              <i className="bi bi-pencil"></i>
-              </button>{' '}
-            <button className="btn btn-sm btn-danger shadow-sm"
-              onClick={() => handleDeleteBtn(task?.id)}
+              <i className='bi bi-pencil'></i>
+            </button>{' '}
+            <button
+              className='btn btn-sm btn-danger shadow-sm'
+              onClick={() => handleDeleteBtn(task.id)}
             >
-              <i className="bi bi-trash"></i>
-              </button>
+              <i className='bi bi-trash'></i>
+            </button>
           </td>
         </tr>
         <tr>
-          <td colSpan="10" style={{ padding: '15px' }}>
-            <div className="row">
-              <SubTasksTemplate subtasks={task?.subTasks} />
-              <CommentsTemplate comments={task?.comments} />
+          <td colSpan='10' style={{ padding: '15px' }}>
+            <div className='row'>
+              <SubTasksTemplate subtasks={task.subTasks} />
+              <CommentsTemplate comments={task.comments} />
             </div>
           </td>
         </tr>
@@ -112,11 +124,13 @@ export default function TaskList() {
       <div className='card shadow-lg'>
         <h5 className='card-header'>
           <i className='bi bi-clipboard'></i> Task Details
-          <div className="float-right">
-            &nbsp;&nbsp; <span className="text-muted">Project:</span>
-            &nbsp;{task?.project?.projectName}
-            &nbsp;&nbsp; <span className="text-muted">Task ID:</span>
-            &nbsp;{task?.id}
+          <div className='float-right'>
+            &nbsp;&nbsp;{' '}
+            <span className='text-muted'>Project:</span>
+            &nbsp;{task.project.projectName}
+            &nbsp;&nbsp;{' '}
+            <span className='text-muted'>Task ID:</span>
+            &nbsp;{task.id}
           </div>
         </h5>
         <div className='card-body overflow-auto'>
@@ -126,21 +140,39 @@ export default function TaskList() {
             css={override}
             size={150}
           /> */}
-          <div className="table-responsive">
-            <table border="0" className="table table-sm">
+          <div className='table-responsive'>
+            <table border='0' className='table table-sm'>
               <thead>
                 <tr>
-                  <th nowrap="true" scope="col">#</th>
+                  <th nowrap='true' scope='col'>
+                    #
+                  </th>
                   {/* <th nowrap="true" scope="col">Project</th> */}
-                  <th nowrap="true" scope="col">Name</th>
-                  <th nowrap="true" scope="col">Description</th>
-                  <th nowrap="true" scope="col">StartDate</th>
-                  <th nowrap="true" scope="col">EndDate</th>
-                  <th nowrap="true" scope="col">Duration</th>
-                  <th nowrap="true" scope="col">Assigned To</th>
-                  <th nowrap="true" scope="col">Priority</th>
-                  <th nowrap="true" scope="col">State</th>
-                  <th nowrap="true"></th>
+                  <th nowrap='true' scope='col'>
+                    Name
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    Description
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    StartDate
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    EndDate
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    Duration
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    Assigned To
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    Priority
+                  </th>
+                  <th nowrap='true' scope='col'>
+                    State
+                  </th>
+                  <th nowrap='true'></th>
                 </tr>
               </thead>
               <tbody>

@@ -67,6 +67,7 @@ export function fetchDepartmentByUser(usr) {
 }
 
 export function insertDepartment(hst, dprt) {
+  console.log(dprt);
   return (dispatch) => {
     return axios
       .post(apiUrl, dprt, options)
@@ -81,10 +82,12 @@ export function insertDepartment(hst, dprt) {
         hst.goBack();
       })
       .catch((err) => {
-        // console.log(err.response);
+        // console.log(err.response.data.message.message);
         dispatch({
           type: DEPARTMENT_ERROR,
-          payload: err.response
+          payload: {
+            message: err.response.data.message.message
+          }
         });
       });
   };
@@ -93,7 +96,7 @@ export function insertDepartment(hst, dprt) {
 export function updateDepartment(hst, dprt) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${dprt.id}`, dprt, options)
+      .put(`${apiUrl}/${dprt._id}`, dprt, options)
       .then((response) => {
         // console.log(response);
         dispatch({

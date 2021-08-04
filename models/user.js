@@ -52,10 +52,12 @@ const User = new mongoose.Schema({
     required: true
   },
   updatedAt: {
-    type: Date
+    type: Date,
+    default: null
   },
   updatedBy: {
-    type: String
+    type: String,
+    default: null
   },
   guid: {
     type: String,

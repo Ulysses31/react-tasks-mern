@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,7 +88,7 @@ export default function DepartmentList() {
             </button>{' '}
             <button
               className='btn btn-sm btn-danger shadow-sm'
-              onClick={() => handleDeleteBtn(dprt.id)}
+              onClick={() => handleDeleteBtn(dprt._id)}
             >
               <i className='bi bi-trash'></i>
             </button>
