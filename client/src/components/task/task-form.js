@@ -151,7 +151,7 @@ export default function TaskForm() {
                 >
                   <option key='usr' value='' defaultValue>---</option>
                   {users && users.map((item) => (
-                    <option key={item.id} value={item.id}>{item.title}</option>
+                    <option key={item.id} value={item.id}>{item.title} ({item.department.name})</option>
                   ))}
                 </select>
               </div>

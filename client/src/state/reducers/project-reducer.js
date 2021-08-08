@@ -1,4 +1,5 @@
 import {
+  PROJECT_ACTIVE_COUNT,
   PROJECT_FILTERS,
   PROJECT_FETCH,
   PROJECT_USER_FETCH,
@@ -8,10 +9,12 @@ import {
   PROJECT_DEACTIVATE,
   PROJECT_ERROR,
   PROJECT_ISLOADING,
-  SELECTED_PROJECT
+  SELECTED_PROJECT,
+  PROJECT_RESET_STATE
 } from '../actions/project-action';
 
 const initialState = {
+  activeProjects: 0,
   projects: [],
   selectedProject: {
     id: 0,
@@ -19,9 +22,11 @@ const initialState = {
     description: '',
     isEnabled: true,
     duration: 0,
+    computedDuration: 0,
     deadline: new Date(),
     priorityId: 1,
-    stateId: 1
+    stateId: 1,
+    durationUnitId: 1
   },
   filters: {
     createdFrom: '',
@@ -46,6 +51,11 @@ export default function projectReducer(
   action
 ) {
   switch (action.type) {
+    case PROJECT_ACTIVE_COUNT:
+      return {
+        ...state,
+        activeProjects: action.payload
+      };
     case PROJECT_FILTERS:
       return {
         ...state,
@@ -64,11 +74,13 @@ export default function projectReducer(
           id: 0,
           projectName: '',
           description: '',
+          computedDuration: 0,
           isEnabled: true,
           duration: 0,
           deadline: new Date(),
           priorityId: 1,
-          stateId: 1
+          stateId: 1,
+          durationUnitId: 1
         },
         error: null
       };
@@ -103,6 +115,8 @@ export default function projectReducer(
         ...state,
         error: action.payload
       };
+    case PROJECT_RESET_STATE:
+      return initialState;
     case SELECTED_PROJECT:
       return {
         ...state,

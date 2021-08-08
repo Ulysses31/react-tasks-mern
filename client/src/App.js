@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+// import Login from './components/login/login';
 import { ToastContainer } from 'react-toastify';
 import Content from './components/content/content';
 import store from './state/store';

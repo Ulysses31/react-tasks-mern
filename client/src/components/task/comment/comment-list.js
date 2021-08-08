@@ -4,7 +4,6 @@ import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Pagination from '../../../shared/pagination/Pagination';
 import {
-  getDateTimeFromTicks,
   fixDate
 } from '../../../shared/shared';
 import {
@@ -47,7 +46,6 @@ export default function CommentsTemplate({ comments }) {
       <table className="table table-striped shadow-sm">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Id</th>
             <th scope="col">Created</th>
             <th scope="col">Comment</th>
@@ -62,16 +60,12 @@ export default function CommentsTemplate({ comments }) {
           {
             commentsTableData.map((cm, i) => (
               <tr key={cm.id}>
-                <td><b>{
-                  currentPage === 1 ? (i + 1) : ((pageSize * (currentPage - 1)) + i) + 1
-                }</b></td>
+                {/* <td><b>{ */}
+                {/*   currentPage === 1 ? (i + 1) : ((pageSize * (currentPage - 1)) + i) + 1 */}
+                {/* }</b></td> */}
                 <td>{cm.id}</td>
                 <td>
-                  {
-                    fixDate(
-                      new Date(getDateTimeFromTicks(cm.createdOnTicks))
-                    )
-                  } - {cm.creator.title}
+                  {fixDate(cm.createdOnTicks)} - {cm.creator.title}
                 </td>
                 <td>{cm.description}</td>
                 <td nowrap="true" align="center">

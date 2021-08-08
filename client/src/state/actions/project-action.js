@@ -2,6 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { apiDomain } from '../../shared/globals';
 
+export const PROJECT_ACTIVE_COUNT = 'PROJECT_ACTIVE_COUNT';
 export const PROJECT_FILTERS = 'PROJECT_FILTERS';
 export const PROJECT_FETCH = 'PROJECT_FETCH';
 export const PROJECT_USER_FETCH = 'PROJECT_USER_FETCH';
@@ -12,9 +13,10 @@ export const PROJECT_UPDATE = 'PROJECT_UPDATE';
 export const PROJECT_ERROR = 'PROJECT_ERROR';
 export const PROJECT_ISLOADING = 'PROJECT_ISLOADING';
 export const SELECTED_PROJECT = 'SELECTED_PROJECT';
+export const PROJECT_RESET_STATE = 'PROJECT_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/projects`;
-const apiUrlProjectUser = `${apiDomain}/api/project/user`;
+const apiUrl = `${apiDomain}/api/project`;
+const apiUrlProjectUser = `${apiDomain}/api/projects/byuser`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -198,5 +200,36 @@ export function setProjectFilters(filters) {
       type: PROJECT_FILTERS,
       payload: filters
     });
+  };
+}
+
+export function setProjectInitialState() {
+  console.log('setProjectInitialState fetched...');
+  return (dispatch) => {
+    dispatch({
+      type: PROJECT_RESET_STATE
+    });
+  };
+}
+
+export function getActiveProjects() {
+  console.log('getActiveProjects fetched...');
+  return (dispatch) => {
+    return axios
+      .get(`${apiUrl}/count`)
+      .then((response) => {
+        // console.log(response);
+        dispatch({
+          type: PROJECT_ACTIVE_COUNT,
+          payload: response.data
+        });
+      })
+      .catch((err) => {
+        // console.log(err.response);
+        dispatch({
+          type: PROJECT_ERROR,
+          payload: err.response
+        });
+      });
   };
 }

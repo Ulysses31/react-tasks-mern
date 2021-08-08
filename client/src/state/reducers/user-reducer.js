@@ -7,22 +7,29 @@ import {
   USER_DELETE,
   USER_ERROR,
   USER_ISLOADING,
-  SELECTED_USER
+  SELECTED_USER,
+  USER_RESET_STATE
 } from '../actions/user-action';
 
 const initialState = {
   roles: [],
   users: [],
   selectedUser: {
-    _id: 0,
+    id: 0,
     username: '',
     password: '',
     position: '',
-    department: '',
+    departmentId: 0,
     email: '',
+    telephone: '',
+    mobile: '',
+    internalPhone: '',
     title: '',
     isEnabled: true,
-    role: ''
+    userRoleId: 1,
+    createdBy: '',
+    updatedBy: '',
+    updatedOnTicks: ''
   },
   filters: {
     title: '',
@@ -59,15 +66,21 @@ export default function userReducer(
         ...state,
         users: action.payload,
         selectedUser: {
-          _id: 0,
+          id: 0,
           username: '',
           password: '',
           position: '',
-          department: '',
+          departmentId: 0,
           email: '',
+          telephone: '',
+          mobile: '',
+          internalPhone: '',
           title: '',
           isEnabled: true,
-          role: ''
+          userRoleId: 1,
+          createdBy: '',
+          updatedBy: '',
+          updatedOnTicks: ''
         },
         error: null
       };
@@ -85,7 +98,7 @@ export default function userReducer(
       return {
         ...state,
         users: state.users.filter((usr) => {
-          return usr._id !== action.payload;
+          return usr.id !== action.payload;
         }),
         error: null
       };
@@ -100,6 +113,8 @@ export default function userReducer(
         selectedUser: action.payload,
         error: null
       };
+    case USER_RESET_STATE:
+      return initialState;
     default:
       return state;
   }

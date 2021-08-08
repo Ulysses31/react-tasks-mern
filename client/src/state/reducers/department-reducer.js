@@ -7,13 +7,14 @@ import {
   DEPARTMENT_DELETE,
   DEPARTMENT_DEACTIVATE,
   DEPARTMENT_ERROR,
-  SELECTED_DEPARTMENT
+  SELECTED_DEPARTMENT,
+  DEPARTMENT_RESET_STATE
 } from '../actions/department-action';
 
 const initialState = {
   departments: [],
   selectedDepartment: {
-    _id: 0,
+    id: 0,
     name: '',
     description: '',
     isEnabled: true
@@ -31,13 +32,12 @@ export default function departmentReducer(
         ...state,
         departments: action.payload
       };
-    case DEPARTMENT_FETCH:
-    case DEPARTMENT_USER_FETCH:
+    case DEPARTMENT_FETCH: case DEPARTMENT_USER_FETCH:
       return {
         ...state,
         departments: action.payload,
         selectedDepartment: {
-          _id: 0,
+          id: 0,
           name: '',
           description: '',
           isEnabled: true
@@ -58,7 +58,7 @@ export default function departmentReducer(
       return {
         ...state,
         departments: state.departments.filter((dprt) => {
-          return dprt._id !== action.payload;
+          return dprt.id !== action.payload;
         }),
         error: null
       };
@@ -66,10 +66,7 @@ export default function departmentReducer(
       return {
         ...state,
         departments: state.departments.filter((dprt) => {
-          return (
-            dprt.id !== action.payload &&
-            dprt.isEnabled === true
-          );
+          return dprt.id !== action.payload && dprt.isEnabled === true;
         }),
         error: null
       };
@@ -84,6 +81,8 @@ export default function departmentReducer(
         selectedDepartment: action.payload,
         error: null
       };
+    case DEPARTMENT_RESET_STATE:
+      return initialState;
     default:
       return state;
   }

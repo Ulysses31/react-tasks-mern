@@ -37,10 +37,11 @@ export default function Login() {
     e.preventDefault();
 
     dispatch(getUserByLogin(login)).then((response) => {
-      if (response) {
+      if (response !== undefined) {
+        console.log(response);
         const validatedUserInfo = {
-          _id: response.data._id,
-          title: response.data.title,
+          id: response.data._id,
+          title: response.data._title,
           email: response.data.email,
           department: response.data.department,
           position: response.data.position,
@@ -123,7 +124,7 @@ export default function Login() {
               Sign in
             </button>
             <p className='mt-5 mb-3 text-muted text-center'>
-              React Tasks &copy; 2021
+              INTERLIFE ORBIES &copy; 2021
             </p>
           </form>
         ) : (

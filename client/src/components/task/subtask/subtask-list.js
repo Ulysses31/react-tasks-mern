@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Pagination from '../../../shared/pagination/Pagination';
 import {
-  getDateTimeFromTicks,
-  fixDate
+  fixDate,
+  fixTime
 } from '../../../shared/shared';
 import {
   deactivateSubTask,
@@ -46,10 +46,10 @@ export default function SubTasksTemplate({ subtasks }) {
       <table className="table table-striped shadow-sm">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Id</th>
             <th scope="col">Created</th>
-            <th scope="col">Start At</th>
+            <th scope="col">StartAt</th>
+            <th scope="col">StartTime</th>
             <th scope="col">SubTask</th>
             <th scope="col">Description</th>
             <th scope="col">Duration</th>
@@ -64,24 +64,24 @@ export default function SubTasksTemplate({ subtasks }) {
           {
             subTasksTableData.map((item, i) => (
               <tr key={item.id}>
-                <td><b>{
-                  currentPage === 1 ? (i + 1) : ((pageSize * (currentPage - 1)) + i) + 1
-                }</b></td>
+                {/* <td><b>{ */}
+                {/*  currentPage === 1 ? (i + 1) : ((pageSize * (currentPage - 1)) + i) + 1 */}
+                {/* }</b></td> */}
                 <td>{item.id}</td>
                 <td>
-                  {
-                    fixDate(
-                      new Date(getDateTimeFromTicks(item.createdOnTicks))
-                    )
-                  } - {item.creator.title}
+                  {fixDate(item.createdOnTicks)} - {item.creator.title}
                 </td>
                 <td>{fixDate(item.startDate)}</td>
+                <td>{
+                  item.startTime !== null
+                    ? fixTime(new Date(item.startTime))
+                    : '---'
+                }</td>
                 <td>{item.subTaskName}</td>
                 <td>{item.description}</td>
-                <td className="text-center">
-                  <span className="badge badge-primary badge-pill">
-                    {item.duration}
-                  </span>
+                <td className="text-center" nowrap="true">
+                  {Number.parseFloat(item.duration).toFixed(2)}{' '}
+                  {item.durationUnit.code}
                 </td>
                 <td nowrap="true" align="center">
                   <Link

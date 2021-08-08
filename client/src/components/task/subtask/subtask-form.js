@@ -3,7 +3,11 @@ import DatePicker from 'react-datepicker';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { getValidatedUserInfo } from '../../../shared/shared';
-import { setUserBySession } from '../../../state/actions/general-action';
+import {
+  fetchComputeDurations,
+  getDefaultComputedDurationById,
+  setUserBySession
+} from '../../../state/actions/general-action';
 import {
   insertSubTask,
   setSelectedSubTask,
@@ -19,8 +23,10 @@ export default function SubTaskForm() {
   const curSubTask = useSelector((state) => state.taskState.selectedSubTask);
   const curTask = useSelector((state) => state.taskState.taskById);
   const stateLogin = useSelector((state) => state.generalState.login);
+  const computeDurations = useSelector((state) => state.generalState.computeDurations);
 
   const [subTaskForm, setSubTaskForm] = useState(curSubTask);
+  const result = useSelector((state) => Number.parseFloat(subTaskForm.duration) * Number.parseFloat(state.generalState.defaultComputedDuration.factor));
 
   useEffect(() => {
     const userInfo = getValidatedUserInfo();
@@ -28,6 +34,10 @@ export default function SubTaskForm() {
       history.push('/login');
     } else {
       dispatch(setUserBySession(userInfo));
+      dispatch(fetchComputeDurations())
+        .then(() => curSubTask.id === 0
+          ? dispatch(getDefaultComputedDurationById(1))
+          : dispatch(getDefaultComputedDurationById(subTaskForm.durationUnitId)));
     }
   }, []);
 
@@ -43,36 +53,47 @@ export default function SubTaskForm() {
       subTaskName: '',
       description: '',
       startDate: new Date(),
+      startTime: null,
       duration: 0,
+      computedDuration: 0,
       taskId: 0,
-      isEnabled: true
+      isEnabled: true,
+      durationUnitId: 1
     }));
   };
 
   const handleOnChange = (e) => {
+    // set the selected computed unit duration as default computed unit in general state
+    if (e.target.name === 'durationUnitId') {
+      dispatch(getDefaultComputedDurationById(e.target.value));
+    }
+
     setSubTaskForm({
       ...subTaskForm,
       [e.target.name]: e.target.name === 'duration'
         ? e.target.value === ''
-          ? '0'
+          ? 0
           : e.target.value
-        : e.target.value
+        : typeof e.target.value === 'number'
+          ? e.target.value
+          : e.target.value.trim()
     });
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (curSubTask.id === 0) {
+    subTaskForm.computedDuration = Number.parseFloat(result);
+    console.log(subTaskForm);
+
+    if (subTaskForm.id === 0) {
       // INSERT
-      console.log('INSERT');
       subTaskForm.taskId = curTask.id; // task id comment belongs.
       subTaskForm.creatorId = stateLogin.id; // logged in user
       subTaskForm.createdBy = stateLogin.id; // logged in user
       dispatch(insertSubTask(history, subTaskForm));
     } else {
       // UPDATE
-      console.log('UPDATE');
       subTaskForm.updatedBy = stateLogin.id; // logged in user
       subTaskForm.editorId = stateLogin.id; // logged in user
       dispatch(updateSubTask(history, subTaskForm));
@@ -89,6 +110,16 @@ export default function SubTaskForm() {
     });
   };
 
+  const handleOnStartTimeChange = (time) => {
+    console.log(time);
+    console.log(new Date(time));
+
+    setSubTaskForm({
+      ...subTaskForm,
+      startTime: time.toLocaleString('en-US')
+    });
+  };
+
   return (
     <>
       {error && <ErrorCmp err={error} />}
@@ -99,7 +130,7 @@ export default function SubTaskForm() {
         <div className='card-body'>
           <form onSubmit={handleOnSubmit}>
             <div className="form-row">
-              <div className="form-group col-md-3">
+              <div className="form-group col-md-2">
                 <label htmlFor="subTaskName">Name*</label>
                 <input type="text"
                   className="form-control form-control-sm"
@@ -110,18 +141,9 @@ export default function SubTaskForm() {
                   required
                 />
               </div>
-              <div className="form-group col-md-3">
-                <label htmlFor="subTaskName">Duration*</label>
-                <input type="number"
-                  className="form-control form-control-sm"
-                  id="duration"
-                  name="duration"
-                  value={subTaskForm.duration}
-                  onChange={handleOnChange}
-                  min="0"
-                />
-              </div>
-              <div className="form-group col-md-3">
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-2">
                 <label htmlFor="startDate">Start Date</label>
                 <DatePicker
                   id="startDate"
@@ -130,11 +152,89 @@ export default function SubTaskForm() {
                   key="startDate"
                   minDate={new Date(curTask.startDate)}
                   dateFormat='dd/MM/yyyy'
-                  selected={subTaskForm.startDate != null ? new Date(subTaskForm.startDate) : new Date()}
-                  value={subTaskForm.startDate != null ? new Date(subTaskForm.startDate) : new Date()}
+                  selected={
+                    subTaskForm.startDate != null
+                      ? new Date(subTaskForm.startDate)
+                      : new Date()
+                  }
+                  value={
+                    subTaskForm.startDate != null
+                      ? new Date(subTaskForm.startDate)
+                      : new Date()
+                  }
                   onChange={(date) => handleOnStartDateChange(date)}
                 />
               </div>
+              <div className="form-group col-md-2">
+                <label htmlFor="startTime">Start Time*</label>
+                <DatePicker
+                  id="startTime"
+                  name="startTime"
+                  className="form-control form-control-sm"
+                  key="startTime"
+                  dateFormat='HH:mm'
+                  selected={
+                    subTaskForm.startTime != null
+                      ? new Date(subTaskForm.startTime)
+                      : ''
+                  }
+                  value={
+                    subTaskForm.startTime != null
+                      ? new Date(subTaskForm.startTime)
+                      : ''
+                  }
+                  timeIntervals={30}
+                  timeCaption="Time"
+                  showTimeSelect
+                  showTimeSelectOnly
+                  onChange={(date) => handleOnStartTimeChange(date)}
+                  required
+                />
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-group col-md-2">
+                <label htmlFor="duration">Duration*</label>
+                <input type="number"
+                  className="form-control form-control-sm"
+                  id="duration"
+                  name="duration"
+                  value={Number.parseFloat(subTaskForm.duration)}
+                  onChange={handleOnChange}
+                  min="0"
+                  step=".01"
+                />
+              </div>
+              <div className="form-group col-md-2">
+                <label htmlFor="durationUnitId">DurationUnit</label>
+                <select className="form-control form-control-sm"
+                  id="durationUnitId"
+                  name="durationUnitId"
+                  value={subTaskForm.durationUnitId}
+                  onChange={handleOnChange}
+                >
+                  {computeDurations && computeDurations.map((item) => (
+                    <option key={item.id} value={item.id} selected="selected">{item.code}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group col-md-2">
+                <label htmlFor="computedDuration">Duration (Hours)</label>
+                <input type="text"
+                  className="form-control form-control-sm"
+                  id="computedDuration"
+                  name="computedDuration"
+                  value={
+                    Number.parseFloat(result).toFixed(2) ||
+                    Number.parseFloat(subTaskForm.computedDuration).toFixed(2)
+                  }
+                  onChange={handleOnChange}
+                  placeholder="0"
+                  readOnly
+                />
+              </div>
+            </div>
+            <div className="form-row">
               <div className="form-group col-md-12">
                 <label htmlFor="description">Description*</label>
                 <textarea className="form-control form-control-sm"

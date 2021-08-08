@@ -2,6 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { apiDomain } from '../../shared/globals';
 
+export const TASK_ACTIVE_COUNT = 'TASK_ACTIVE_COUNT';
 export const TASK_USER_FETCH = 'TASK_USER_FETCH';
 export const TASK_FILTERS = 'TASK_FILTERS';
 export const TASK_FETCH = 'TASK_FETCH';
@@ -12,6 +13,7 @@ export const TASK_DEACTIVATE = 'TASK_DEACTIVATE';
 export const TASK_UPDATE = 'TASK_UPDATE';
 export const TASK_ERROR = 'TASK_ERROR';
 export const TASK_ISLOADING = 'TASK_ISLOADING';
+export const TASK_RESET_STATE = 'TASK_RESET_STATE';
 export const SELECTED_TASK = 'SELECTED_TASK';
 export const COMMENT_INSERT = 'COMMENT_INSERT';
 export const COMMENT_UPDATE = 'COMMENT_UPDATE';
@@ -27,7 +29,7 @@ export const SELECTED_SUBTASK = 'SELECTED_SUBTASK';
 const apiUrl = `${apiDomain}/api/task`;
 const apiUrlComments = `${apiDomain}/api/comment`;
 const apiUrlSubTasks = `${apiDomain}/api/subtask`;
-const apiUrlTaskUser = `${apiDomain}/api/task/byuser`;
+const apiUrlTaskUser = `${apiDomain}/api/tasks/byuser`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -59,7 +61,7 @@ export function fetchTasks() {
         });
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         dispatch({
           type: TASK_ERROR,
           payload: err.response
@@ -98,7 +100,7 @@ export function fetchTaskById(id) {
   };
 }
 
-export function fetchTaskByUser(user, dateFrom, dateTo) {
+export function fetchTaskByUser(usr, dateFrom, dateTo) {
   console.log('fetchTaskByUser fetched...');
   return (dispatch) => {
     dispatch({
@@ -107,7 +109,7 @@ export function fetchTaskByUser(user, dateFrom, dateTo) {
     });
     return axios
       .get(
-        `${apiUrlTaskUser}/${user}/from/${dateFrom}/to/${dateTo}`
+        `${apiUrlTaskUser}/${usr}/from/${dateFrom}/to/${dateTo}`
       )
       .then((response) => {
         // console.log(response);
@@ -268,6 +270,36 @@ export function setTaskFilters(filters) {
   };
 }
 
+export function setTaskInitialState() {
+  console.log('setTaskInitialState fetched...');
+  return (dispatch) => {
+    dispatch({
+      type: TASK_RESET_STATE
+    });
+  };
+}
+
+export function getActiveTasks() {
+  console.log('getActiveTasks fetched...');
+  return (dispatch) => {
+    return axios
+      .get(`${apiUrl}/count`)
+      .then((response) => {
+        // console.log(response);
+        dispatch({
+          type: TASK_ACTIVE_COUNT,
+          payload: response.data
+        });
+      })
+      .catch((err) => {
+        // console.log(err.response);
+        dispatch({
+          type: TASK_ERROR,
+          payload: err.response
+        });
+      });
+  };
+}
 /*******************************************************
  *  COMMENTS
  ******************************************************/

@@ -1,4 +1,5 @@
 import {
+  TASK_ACTIVE_COUNT,
   TASK_USER_FETCH,
   TASK_FILTERS,
   TASK_FETCH,
@@ -9,6 +10,7 @@ import {
   TASK_DEACTIVATE,
   TASK_ERROR,
   TASK_ISLOADING,
+  TASK_RESET_STATE,
   SELECTED_TASK,
   COMMENT_INSERT,
   COMMENT_UPDATE,
@@ -23,6 +25,7 @@ import {
 } from '../actions/task-action';
 
 const initialState = {
+  activeTasks: 0,
   tasks: [],
   taskById: null, // the details task page
   selectedTask: {
@@ -50,8 +53,10 @@ const initialState = {
     startDate: new Date(),
     startTime: null,
     duration: 0,
+    computedDuration: 0,
     taskId: 0,
-    isEnabled: true
+    isEnabled: true,
+    durationUnitId: 1
   },
   filters: {
     project: '',
@@ -75,6 +80,11 @@ export default function taskReducer(
   action
 ) {
   switch (action.type) {
+    case TASK_ACTIVE_COUNT:
+      return {
+        ...state,
+        activeTasks: action.payload
+      };
     case TASK_FILTERS:
       return {
         ...state,
@@ -138,6 +148,8 @@ export default function taskReducer(
         ...state,
         error: action.payload
       };
+    case TASK_RESET_STATE:
+      return initialState;
     case SELECTED_TASK:
       return {
         ...state,

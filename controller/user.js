@@ -41,6 +41,15 @@ exports.getUserByLogin = async (req, res) => {
       email: req.body.email,
       password: req.body.password
     });
+
+    if (!user) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Server Error',
+        message: 'Invalid Credentials'
+      });
+    }
+
     return res.json(user);
   } catch (err) {
     console.log(err);

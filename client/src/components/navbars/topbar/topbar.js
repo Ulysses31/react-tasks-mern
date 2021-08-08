@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import {
-  resetValidatedUserInfo
+  resetValidatedUserInfo,
+  getValidatedUserInfo
 } from '../../../shared/shared';
 import {
   changeSidebarState,
-  resetUserByLogin
+  resetUserByLogin,
+  setUserBySession
 } from '../../../state/actions/general-action';
 import './topbar.css';
 
@@ -17,6 +19,13 @@ export default function Topbar() {
   const history = useHistory();
 
   useEffect(() => {
+    // user validation
+    const userInfo = getValidatedUserInfo();
+    if (userInfo.id === 0) {
+      history.push('/login');
+    } else {
+      dispatch(setUserBySession(userInfo));
+    }
   }, []);
 
   const handleSideBarState = () => {

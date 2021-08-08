@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import './department.css';
-import { getValidatedUserInfo } from '../../shared/shared';
-import {
-  insertDepartment,
-  setSelectedDepartment,
-  updateDepartment
-} from '../../state/actions/department-action';
-import { setUserBySession } from '../../state/actions/general-action';
-import ErrorCmp from '../error/error';
+import { useHistory } from 'react-router';
+import { getValidatedUserInfo } from '../../../shared/shared';
+import { insertSelectedComputeDuration, setSelectedComputeDuration, setUserBySession, updateComputeDuration } from '../../../state/actions/general-action';
+import ErrorCmp from '../../error/error';
+import './duration.css';
 
-export default function DepartmentForm() {
+export default function DurationForm() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const department = useSelector((state) => state.departmentState.selectedDepartment);
-  const error = useSelector((state) => state.projectState.error);
+  const compDuration = useSelector((state) => state.generalState.selectedComputedDuration);
   const stateLogin = useSelector((state) => state.generalState.login);
-  const [departmentForm, setdepartmentForm] = useState(department);
+  const error = useSelector((state) => state.generalState.error);
+
+  const [compDurationForm, setcompDurationForm] = useState(compDuration);
 
   useEffect(() => {
     const userInfo = getValidatedUserInfo();
@@ -35,34 +31,39 @@ export default function DepartmentForm() {
   };
 
   const clearObj = () => {
-    dispatch(setSelectedDepartment({
+    dispatch(setSelectedComputeDuration({
       id: 0,
-      name: '',
+      code: '',
       description: '',
+      factor: 0,
+      isDefault: false,
       isEnabled: true
     }));
   };
 
   const handleOnChange = (e) => {
-    setdepartmentForm({
-      ...departmentForm,
-      [e.target.name]: e.target.value
+    setcompDurationForm({
+      ...compDurationForm,
+      [e.target.name]: e.target.name === 'factor'
+        ? e.target.value === ''
+          ? '0'
+          : e.target.value
+        : e.target.value
     });
   };
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (departmentForm.id === 0) {
+    if (compDurationForm.id === 0) {
       // INSERT
-      departmentForm.createdBy = stateLogin.id;
-      dispatch(insertDepartment(history, departmentForm));
+      compDurationForm.createdBy = stateLogin.id;
+      dispatch(insertSelectedComputeDuration(history, compDurationForm));
     } else {
       // UPDATE
-      departmentForm.updatedBy = stateLogin.id;
-      dispatch(updateDepartment(history, departmentForm));
+      compDurationForm.updatedBy = stateLogin.id;
+      dispatch(updateComputeDuration(history, compDurationForm));
     }
-
     // clear
     clearObj();
   };
@@ -72,35 +73,48 @@ export default function DepartmentForm() {
       {error && <ErrorCmp err={error} />}
       <div className='card shadow-lg'>
         <h5 className='card-header'>
-          Department Form
+          Duration Form
 						 <div className="float-right">
             &nbsp;&nbsp; <span className="text-muted">ID:</span>
-							&nbsp;{departmentForm.id}
+							&nbsp;{compDurationForm.id}
           </div>
         </h5>
         <div className='card-body'>
           <form onSubmit={handleOnSubmit}>
             <div className="form-row">
-              <div className="form-group col-md-3">
-                <label htmlFor="name">Name*</label>
-                <input type="mail"
+              <div className="form-group col-md-2">
+                <label htmlFor="code">Code*</label>
+                <input type="text"
                   className="form-control form-control-sm"
-                  id="name"
-                  name="name"
-                  value={departmentForm.name}
+                  id="code"
+                  name="code"
+                  value={compDurationForm.code}
                   onChange={handleOnChange}
                   maxLength="100"
                   required
                 />
               </div>
-              <div className="form-group col-md-3">
+              <div className="form-group col-md-4">
                 <label htmlFor="description">Description*</label>
-                <input type="mail"
+                <input type="text"
                   className="form-control form-control-sm"
                   id="description"
                   name="description"
-                  value={departmentForm.description}
+                  value={compDurationForm.description}
                   onChange={handleOnChange}
+                  required
+                />
+              </div>
+              <div className="form-group col-md-2">
+                <label htmlFor="factor">Factor*</label>
+                <input type="number"
+                  className="form-control form-control-sm"
+                  id="factor"
+                  name="factor"
+                  value={compDurationForm.factor}
+                  onChange={handleOnChange}
+                  min="0"
+                  step=".01"
                   required
                 />
               </div>

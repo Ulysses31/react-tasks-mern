@@ -6,8 +6,30 @@ exports.getTaskList = async (req, res) => {
   try {
     const tasks = await Task.find().sort({ createdAt: 1 });
     return res.json(tasks);
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
+  }
+};
+
+exports.getActiveTasks = async (req, res) => {
+  console.log('getActiveTasks executed...');
+  try {
+    const tasks = await Task.find({
+      isEnabled: true
+    }).count();
+    return res.json(tasks);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
   }
 };
 
@@ -15,12 +37,20 @@ exports.getTaskById = async (req, res) => {
   console.log(`getTaskById executed...
     Param: ${req.params.id}`);
   try {
-    const task = await Task.find({
-      _id: req.params.id
+    // const task = await Task.find({
+    //   _id: req.params.id
+    // });
+    const task = await Project.findOne({
+      'task._id': req.params.id
     });
     return res.json(task);
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
   }
 };
 
@@ -81,10 +111,26 @@ exports.insertTask = async (req, res) => {
   console.log('insertTask executed...');
   try {
     const task = new Task(req.body);
-    const result = await task.save();
+
+    const result = await Project.updateOne(
+      {
+        _id: req.body.projectId
+      },
+      {
+        $set: {
+          task: task
+        }
+      }
+    );
+
     return res.json({ result });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
   }
 };
 
@@ -99,8 +145,13 @@ exports.updateTask = async (req, res) => {
       `Task ${req.params.id} updated = ${result.nModified}`
     );
     return res.json({ nModified: result.nModified });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
   }
 };
 
@@ -114,7 +165,12 @@ exports.deleteTask = async (req, res) => {
       `Task ${req.params.id} deleted = ${result.deletedCount}`
     );
     return res.json({ deletedCount: result.deletedCount });
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
   }
 };

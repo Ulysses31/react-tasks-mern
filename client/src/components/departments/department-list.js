@@ -22,12 +22,9 @@ export default function DepartmentList() {
   const pageSize = getPageSize();
   const history = useHistory();
   const dispatch = useDispatch();
-  const error = useSelector(
-    (state) => state.userState.error
-  );
-  const departments = useSelector(
-    (state) => state.departmentState.departments
-  );
+  const error = useSelector((state) => state.userState.error);
+  const departments = useSelector((state) => state.departmentState.departments);
+  const role = useSelector((state) => state.generalState.login?.role);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -58,39 +55,34 @@ export default function DepartmentList() {
     return (
       <>
         <tr>
-          <td nowrap='true'>
-            <b>
-              {currentPage === 1
-                ? cnt + 1
-                : pageSize * (currentPage - 1) + cnt + 1}
-            </b>
-          </td>
-          <td nowrap='true'>{dprt.id}</td>
-          <td nowrap='true'>
-            <i className='bi bi-person-check-fill'></i>{' '}
-            &nbsp;
+          <td nowrap="true"><b>{
+            currentPage === 1 ? (cnt + 1) : ((pageSize * (currentPage - 1)) + cnt) + 1
+          }</b></td>
+          <td nowrap="true">{dprt.id}</td>
+          <td nowrap="true">
+            <i className="bi bi-person-check-fill"></i> &nbsp;
             <b>{dprt.name}</b>
           </td>
-          <td nowrap='true'>
-            <i className='bi bi-laptop'></i> &nbsp;
+          <td nowrap="true">
+            <i className="bi bi-laptop"></i> &nbsp;
             <b>{dprt.description}</b>
           </td>
-          <td nowrap='true'>
-            <i className='bi bi-calendar3'></i> &nbsp;
-            {fixDate(dprt.createdAt)}
+          <td nowrap="true">
+            <i className="bi bi-calendar3"></i> &nbsp;
+            {fixDate(dprt.createdOnTicks)}
           </td>
-          <td nowrap='true' align='center'>
-            <button
-              className='btn btn-sm btn-primary shadow-sm'
+          <td nowrap="true" align="center">
+            <button className="btn btn-sm btn-primary shadow-sm"
               onClick={() => handleEditBtn(dprt)}
+              disabled={role !== 'Administrator'}
             >
-              <i className='bi bi-pencil'></i>
+              <i className="bi bi-pencil"></i>
             </button>{' '}
-            <button
-              className='btn btn-sm btn-danger shadow-sm'
-              onClick={() => handleDeleteBtn(dprt._id)}
+            <button className="btn btn-sm btn-danger shadow-sm"
+              onClick={() => handleDeleteBtn(dprt.id)}
+              disabled={role !== 'Administrator'}
             >
-              <i className='bi bi-trash'></i>
+              <i className="bi bi-trash"></i>
             </button>
           </td>
         </tr>
@@ -111,58 +103,40 @@ export default function DepartmentList() {
       {error && <ErrorCmp err={error} />}
       <div className='card shadow-lg'>
         <h5 className='card-header'>
-          <i className='bi bi-person-check-fill'></i>{' '}
-          Departments
+          <i className="bi bi-person-check-fill"></i> Departments
         </h5>
         <div className='card-body overflow-auto'>
           <Link
             to='/departments/add'
-            className='btn btn-sm btn-primary shadow-sm'
-            style={{ marginBottom: '10px' }}
-          >
-            <i className='bi bi-plus-lg'></i> New Department
+            className={`btn btn-sm btn-primary shadow-sm ${role !== 'Administrator' && 'disabled'}`}
+            style={{ marginBottom: '10px' }}>
+            <i className="bi bi-plus-lg"></i> New Department
           </Link>
-          {projectsTableData.length > 0 && (
-            <div className='table-responsive'>
-              <table
-                border='0'
-                className='table table-sm table-hover'
-              >
+          {projectsTableData.length > 0 &&
+            <div className="table-responsive">
+              <table border="0" className="table table-sm table-hover">
                 <thead>
                   <tr>
-                    <th nowrap='true' scope='col'>
-                      #
-                    </th>
-                    <th nowrap='true' scope='col'>
-                      Id
-                    </th>
-                    <th nowrap='true' scope='col'>
-                      Name
-                    </th>
-                    <th nowrap='true' scope='col'>
-                      Description
-                    </th>
-                    <th nowrap='true' scope='col'>
-                      Created
-                    </th>
-                    <th nowrap='true' scope='col'></th>
+                    <th nowrap="true" scope="col">#</th>
+                    <th nowrap="true" scope="col">Id</th>
+                    <th nowrap="true" scope="col">Name</th>
+                    <th nowrap="true" scope="col">Description</th>
+                    <th nowrap="true" scope="col">Created</th>
+                    <th nowrap="true" scope="col"></th>
                   </tr>
                   <tr>
                     <th></th>
                     <th></th>
                     <th>
-                      <div className='input-group input-group-sm flex-nowrap'>
-                        <div className='input-group-prepend'>
-                          <span
-                            className='input-group-text'
-                            id='basic-addon1'
-                          >
-                            <i className='bi bi-search'></i>
+                      <div className="input-group input-group-sm flex-nowrap">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text" id="basic-addon1">
+                            <i className="bi bi-search"></i>
                           </span>
                         </div>
                         <input
-                          type='text'
-                          className='fomr-control form-control-sm'
+                          type="text"
+                          className="fomr-control form-control-sm"
                           style={{
                             border: '1px solid #cdcdcd',
                             width: '100%'
@@ -172,18 +146,15 @@ export default function DepartmentList() {
                       </div>
                     </th>
                     <th>
-                      <div className='input-group input-group-sm flex-nowrap'>
-                        <div className='input-group-prepend'>
-                          <span
-                            className='input-group-text'
-                            id='basic-addon1'
-                          >
-                            <i className='bi bi-search'></i>
+                      <div className="input-group input-group-sm flex-nowrap">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text" id="basic-addon1">
+                            <i className="bi bi-search"></i>
                           </span>
                         </div>
                         <input
-                          type='text'
-                          className='fomr-control form-control-sm'
+                          type="text"
+                          className="fomr-control form-control-sm"
                           style={{
                             border: '1px solid #cdcdcd',
                             width: '100%'
@@ -193,24 +164,21 @@ export default function DepartmentList() {
                       </div>
                     </th>
                     <th>
-                      <div className='input-group input-group-sm flex-nowrap'>
-                        <div className='input-group-prepend'>
-                          <span
-                            className='input-group-text'
-                            id='basic-addon1'
-                          >
-                            <i className='bi bi-calendar3'></i>
+                      <div className="input-group input-group-sm flex-nowrap">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text" id="basic-addon1">
+                            <i className="bi bi-calendar3"></i>
                           </span>
                         </div>
                         <DatePicker
-                          id='startDate'
-                          name='startDate'
-                          className='form-control form-control-sm'
-                          key='startDate'
+                          id="startDate"
+                          name="startDate"
+                          className="form-control form-control-sm"
+                          key="startDate"
                           dateFormat='dd/MM/yyyy'
                           selected={''}
                           value={''}
-                          onChange={() => {}}
+                          onChange={() => { }}
                           style={{
                             border: '1px solid #cdcdcd',
                             width: '100%'
@@ -224,25 +192,19 @@ export default function DepartmentList() {
                 </thead>
                 <tbody>
                   {projectsTableData.map((dprt, i) => (
-                    <DepartmentTemplate
-                      key={dprt.id}
-                      dprt={dprt}
-                      cnt={i}
-                    />
+                    <DepartmentTemplate key={dprt.id} dprt={dprt} cnt={i} />
                   ))}
                 </tbody>
               </table>
               <Pagination
-                className='pagination-bar'
+                className="pagination-bar"
                 currentPage={currentPage}
                 totalCount={departments.length}
                 pageSize={pageSize}
-                onPageChange={(page) =>
-                  setCurrentPage(page)
-                }
+                onPageChange={page => setCurrentPage(page)}
               />
             </div>
-          )}
+          }
         </div>
       </div>
     </>

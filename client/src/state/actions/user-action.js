@@ -11,9 +11,10 @@ export const USER_UPDATE = 'USER_UPDATE';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_ISLOADING = 'USER_ISLOADING';
 export const SELECTED_USER = 'SELECTED_USER';
+export const USER_RESET_STATE = 'USER_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/user`;
-const apiUrlRoles = `${apiDomain}/api/userrole`;
+const apiUrl = `${apiDomain}/api/users`;
+const apiUrlRoles = `${apiDomain}/api/userroles`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -74,7 +75,6 @@ export function fetchRoles() {
 }
 
 export function insertUser(hst, usr) {
-  console.log(usr);
   return (dispatch) => {
     return axios
       .post(apiUrl, usr, options)
@@ -89,12 +89,10 @@ export function insertUser(hst, usr) {
         hst.goBack();
       })
       .catch((err) => {
-        // console.log(err.response.data.message.message);
+        // console.log(err.response);
         dispatch({
           type: USER_ERROR,
-          payload: {
-            message: err.response.data.message.message
-          }
+          payload: err.response
         });
       });
   };
@@ -103,7 +101,7 @@ export function insertUser(hst, usr) {
 export function updateUser(hst, usr) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${usr._id}`, usr, options)
+      .put(`${apiUrl}/${usr.id}`, usr)
       .then((response) => {
         // console.log(response);
         dispatch({
@@ -165,3 +163,12 @@ export function setUserFilters(filters) {
     });
   };
 }
+
+export function setUserInitialState() {
+  console.log('setUserInitialState fetched...');
+  return (dispatch) => {
+    dispatch({
+      type: USER_RESET_STATE
+    });
+  };
+};

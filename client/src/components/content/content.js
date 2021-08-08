@@ -15,6 +15,8 @@ import UserList from '../../components/user/user-list';
 import DepartmentForm from '../departments/department-form';
 import DepartmentList from '../departments/department-list';
 import Login from '../login/login';
+import DurationForm from '../settings/durations/duration-form';
+import DurationList from '../settings/durations/duration-list';
 import './content.css';
 
 export default function Content() {
@@ -66,6 +68,12 @@ export default function Content() {
               </Route>
               <Route path='/departments/add'>
                 <DepartmentForm />
+              </Route>
+              <Route path='/settings/computeduration' exact>
+                <DurationList />
+              </Route>
+              <Route path='/settings/computeduration/add'>
+                <DurationForm />
               </Route>
               <Route path='*'>
                 <img

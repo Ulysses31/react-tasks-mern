@@ -15,6 +15,23 @@ exports.getProjectList = async (req, res) => {
   }
 };
 
+exports.getActiveProjects = async (req, res) => {
+  console.log('getActiveProjects executed...');
+  try {
+    const prj = await Project.find({
+      isEnabled: true
+    }).count();
+    return res.json(prj);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
+  }
+};
+
 exports.getProjectById = async (req, res) => {
   console.log(`getProjectById executed...
   Param: ${req.params.id}`);
@@ -78,7 +95,7 @@ exports.insertProject = async (req, res) => {
     return res.status(500).json({
       statusCode: res.statusCode,
       statusMessage: res.statusMessage,
-      message: err
+      message: err.message
     });
   }
 };

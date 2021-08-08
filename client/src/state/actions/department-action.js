@@ -4,17 +4,16 @@ import { apiDomain } from '../../shared/globals';
 
 export const DEPARTMENT_FILTERS = 'DEPARTMENT_FILTERS';
 export const DEPARTMENT_FETCH = 'DEPARTMENT_FETCH';
-export const DEPARTMENT_USER_FETCH =
-  'DEPARTMENT_USER_FETCH';
+export const DEPARTMENT_USER_FETCH = 'DEPARTMENT_USER_FETCH';
 export const DEPARTMENT_INSERT = 'DEPARTMENT_INSERT';
 export const DEPARTMENT_DELETE = 'DEPARTMENT_DELETE';
-export const DEPARTMENT_DEACTIVATE =
-  'DEPARTMENT_DEACTIVATE';
+export const DEPARTMENT_DEACTIVATE = 'DEPARTMENT_DEACTIVATE';
 export const DEPARTMENT_UPDATE = 'DEPARTMENT_UPDATE';
 export const DEPARTMENT_ERROR = 'DEPARTMENT_ERROR';
 export const SELECTED_DEPARTMENT = 'SELECTED_DEPARTMENT';
+export const DEPARTMENT_RESET_STATE = 'DEPARTMENT_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/department`;
+const apiUrl = `${apiDomain}/api/departments`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -67,7 +66,6 @@ export function fetchDepartmentByUser(usr) {
 }
 
 export function insertDepartment(hst, dprt) {
-  console.log(dprt);
   return (dispatch) => {
     return axios
       .post(apiUrl, dprt, options)
@@ -82,12 +80,10 @@ export function insertDepartment(hst, dprt) {
         hst.goBack();
       })
       .catch((err) => {
-        // console.log(err.response.data.message.message);
+        // console.log(err.response);
         dispatch({
           type: DEPARTMENT_ERROR,
-          payload: {
-            message: err.response.data.message.message
-          }
+          payload: err.response
         });
       });
   };
@@ -96,7 +92,7 @@ export function insertDepartment(hst, dprt) {
 export function updateDepartment(hst, dprt) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${dprt._id}`, dprt, options)
+      .put(`${apiUrl}/${dprt.id}`, dprt, options)
       .then((response) => {
         // console.log(response);
         dispatch({
@@ -171,3 +167,12 @@ export function setSelectedDepartment(dprt) {
     });
   };
 }
+
+export function setDepartmentInitialState() {
+  console.log('setDepartmentInitialState fetched...');
+  return (dispatch) => {
+    dispatch({
+      type: DEPARTMENT_RESET_STATE
+    });
+  };
+};

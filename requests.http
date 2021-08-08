@@ -20,7 +20,7 @@ Content-Type: application/json
       "taskName": "Interbrokers Portal Task A",
       "description": "This is a third Interbrokers Portal task.",
       "duration": 10,
-      "assignedTo": "Ιορδανίδης Χρήστος",
+      "assignedTo": "Administrator",
       "isEnabled": true,
       "startDate": "2021-08-01",
       "endDate": "",
@@ -36,7 +36,7 @@ Content-Type: application/json
           "startDate": "2021-08-02",
           "duration": 5,
           "isEnabled": true,
-          "createdBy": "Ιορδανίδης Χρήστος",
+          "createdBy": "Administrator",
           "updatedAt": "",
           "updatedBy": ""
         },
@@ -46,7 +46,7 @@ Content-Type: application/json
             "startDate": "2021-08-05",
             "duration": 5,
             "isEnabled": true,
-            "createdBy": "Ιορδανίδης Χρήστος",
+            "createdBy": "Administrator",
             "updatedAt": "",
             "updatedBy": ""
         }
@@ -54,19 +54,19 @@ Content-Type: application/json
       "comment": [
         {
           "description": "This is the first comment of Interbrokers Portal task",
-          "createdBy": "Ιορδανίδης Χρήστος",
+          "createdBy": "Administrator",
           "updatedAt": "",
           "updatedBy": ""
         },
         {
           "description": "This is the second comment of Interbrokers Portal task",
-          "createdBy": "Ιορδανίδης Χρήστος",
+          "createdBy": "Administrator",
           "updatedAt": "",
           "updatedBy": ""
         },
         {
           "description": "This is the third comment of Interbrokers Portal task",
-          "createdBy": "Ιορδανίδης Χρήστος",
+          "createdBy": "Administrator",
           "updatedAt": "",
           "updatedBy": ""
         }
@@ -76,7 +76,7 @@ Content-Type: application/json
       "taskName": "Interbrokers Portal Task B",
       "description": "This is a third Interbrokers Portal task.",
       "duration": 10,
-      "assignedTo": "Ιορδανίδης Χρήστος",
+      "assignedTo": "Administrator",
       "isEnabled": true,
       "startDate": "2021-08-01",
       "endDate": "",
@@ -92,7 +92,7 @@ Content-Type: application/json
       "taskName": "Interbrokers Portal Task C",
       "description": "This is a third Interbrokers Portal task.",
       "duration": 10,
-      "assignedTo": "Ιορδανίδης Χρήστος",
+      "assignedTo": "Administrator",
       "isEnabled": true,
       "startDate": "2021-08-01",
       "endDate": "",

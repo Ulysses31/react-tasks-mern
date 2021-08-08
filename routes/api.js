@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getProjectList,
   getProjectById,
+  getActiveProjects,
   getProjectByUser,
   insertProject,
   updateProject,
@@ -12,9 +13,10 @@ const {
 
 const {
   //   getTaskList,
-  //   getTaskById,
-  getTaskByUser
-  //   insertTask,
+  getActiveTasks,
+  getTaskById,
+  getTaskByUser,
+  insertTask
   //   updateTask,
   //   deleteTask
 } = require('../controller/task');
@@ -78,6 +80,7 @@ const {
 
 // Project
 router.get('/project', getProjectList);
+router.get('/project/count', getActiveProjects);
 router.get('/project/:id', getProjectById);
 router.get(
   '/project/user/:user/from/:curDateFrom/to/:curDateTo',
@@ -89,12 +92,13 @@ router.delete('/project/:id', deleteProject);
 
 // Task
 // router.get('/task', getTaskList);
-// router.get('/task/:id', getTaskById);
+router.get('/task/count', getActiveTasks);
+router.get('/task/:id', getTaskById);
 router.get(
   '/task/byuser/:user/from/:dateFrom/to/:dateTo',
   getTaskByUser
 );
-// router.post('/task', insertTask);
+router.post('/task', insertTask);
 // router.put('/task/:id', updateTask);
 // router.delete('/task/:id', deleteTask);
 
