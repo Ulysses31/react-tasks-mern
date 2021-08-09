@@ -66,7 +66,8 @@ export default function projectReducer(
         ...state,
         isLoading: action.payload
       };
-    case PROJECT_FETCH: case PROJECT_USER_FETCH:
+    case PROJECT_FETCH:
+    case PROJECT_USER_FETCH:
       return {
         ...state,
         projects: action.payload,
@@ -106,7 +107,10 @@ export default function projectReducer(
       return {
         ...state,
         projects: state.projects.filter((prj) => {
-          return prj.id !== action.payload && prj.isEnabled === true;
+          return (
+            prj.id !== action.payload &&
+            prj.isEnabled === true
+          );
         }),
         error: null
       };

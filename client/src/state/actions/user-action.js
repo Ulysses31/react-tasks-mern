@@ -13,8 +13,8 @@ export const USER_ISLOADING = 'USER_ISLOADING';
 export const SELECTED_USER = 'SELECTED_USER';
 export const USER_RESET_STATE = 'USER_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/users`;
-const apiUrlRoles = `${apiDomain}/api/userroles`;
+const apiUrl = `${apiDomain}/api/user`;
+const apiUrlRoles = `${apiDomain}/api/userrole`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -171,4 +171,4 @@ export function setUserInitialState() {
       type: USER_RESET_STATE
     });
   };
-};
+}

@@ -5,10 +5,12 @@ import {
   getValidatedUserInfo,
   saveValidatedUserInfo
 } from '../../shared/shared';
+import { fetchDepartments } from '../../state/actions/department-action';
 import {
   getUserByLogin,
   setUserBySession
 } from '../../state/actions/general-action';
+import { fetchRoles } from '../../state/actions/user-action';
 import ErrorCmp from '../error/error';
 import './login.css';
 
@@ -20,6 +22,12 @@ export default function Login() {
   const error = useSelector(
     (state) => state.generalState.error
   );
+  const department = useSelector(
+    (state) => state.departmentState.departments
+  );
+  const role = useSelector(
+    (state) => state.userState.roles
+  );
   const history = useHistory();
   const [login, setLogin] = useState({
     email: '',
@@ -27,10 +35,14 @@ export default function Login() {
   });
 
   useEffect(() => {
-    const userInfo = getValidatedUserInfo();
-    if (userInfo.id > 0) {
-      dispatch(setUserBySession(userInfo));
-    }
+    dispatch(fetchDepartments())
+      .then(() => dispatch(fetchRoles()))
+      .then(() => {
+        const userInfo = getValidatedUserInfo();
+        if (userInfo.id > 0) {
+          dispatch(setUserBySession(userInfo));
+        }
+      });
   }, []);
 
   const handleFormSubmit = (e) => {
@@ -41,11 +53,16 @@ export default function Login() {
         console.log(response);
         const validatedUserInfo = {
           id: response.data._id,
-          title: response.data._title,
+          title: response.data.title,
           email: response.data.email,
-          department: response.data.department,
+          department: department.find(
+            (item) =>
+              item._id === response.data.departmentId
+          ).name,
           position: response.data.position,
-          role: response.data.role
+          role: role.find(
+            (item) => item._id === response.data.roleId
+          ).role
         };
         saveValidatedUserInfo(validatedUserInfo);
         history.push('/');

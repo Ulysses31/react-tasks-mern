@@ -4,16 +4,19 @@ import { apiDomain } from '../../shared/globals';
 
 export const DEPARTMENT_FILTERS = 'DEPARTMENT_FILTERS';
 export const DEPARTMENT_FETCH = 'DEPARTMENT_FETCH';
-export const DEPARTMENT_USER_FETCH = 'DEPARTMENT_USER_FETCH';
+export const DEPARTMENT_USER_FETCH =
+  'DEPARTMENT_USER_FETCH';
 export const DEPARTMENT_INSERT = 'DEPARTMENT_INSERT';
 export const DEPARTMENT_DELETE = 'DEPARTMENT_DELETE';
-export const DEPARTMENT_DEACTIVATE = 'DEPARTMENT_DEACTIVATE';
+export const DEPARTMENT_DEACTIVATE =
+  'DEPARTMENT_DEACTIVATE';
 export const DEPARTMENT_UPDATE = 'DEPARTMENT_UPDATE';
 export const DEPARTMENT_ERROR = 'DEPARTMENT_ERROR';
 export const SELECTED_DEPARTMENT = 'SELECTED_DEPARTMENT';
-export const DEPARTMENT_RESET_STATE = 'DEPARTMENT_RESET_STATE';
+export const DEPARTMENT_RESET_STATE =
+  'DEPARTMENT_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/departments`;
+const apiUrl = `${apiDomain}/api/department`;
 
 const options = {
   headers: { 'content-type': 'application/json' },
@@ -175,4 +178,4 @@ export function setDepartmentInitialState() {
       type: DEPARTMENT_RESET_STATE
     });
   };
-};
+}

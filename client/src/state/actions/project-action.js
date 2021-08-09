@@ -16,7 +16,7 @@ export const SELECTED_PROJECT = 'SELECTED_PROJECT';
 export const PROJECT_RESET_STATE = 'PROJECT_RESET_STATE';
 
 const apiUrl = `${apiDomain}/api/project`;
-const apiUrlProjectUser = `${apiDomain}/api/projects/byuser`;
+const apiUrlProjectUser = `${apiDomain}/api/project/byuser`;
 
 const options = {
   headers: { 'content-type': 'application/json' },

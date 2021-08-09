@@ -5,7 +5,6 @@ const {
   getProjectList,
   getProjectById,
   getActiveProjects,
-  getProjectByUser,
   insertProject,
   updateProject,
   deleteProject
@@ -16,6 +15,7 @@ const {
   getActiveTasks,
   getTaskById,
   getTaskByUser,
+  getProjectByUser,
   insertTask
   //   updateTask,
   //   deleteTask
@@ -83,7 +83,7 @@ router.get('/project', getProjectList);
 router.get('/project/count', getActiveProjects);
 router.get('/project/:id', getProjectById);
 router.get(
-  '/project/user/:user/from/:curDateFrom/to/:curDateTo',
+  '/project/byuser/:user/from/:curDateFrom/to/:curDateTo',
   getProjectByUser
 );
 router.post('/project', insertProject);

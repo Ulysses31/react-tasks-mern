@@ -1,5 +1,5 @@
 [
-	  {
+	{
         "isEnabled": true,
         "projectName": "Test Project A",
         "description": "Seeded project.",
@@ -11,8 +11,24 @@
         "stateId": "60fd8c04c3ed355510b98ac3",
         "createdBy": "Admin",
         "createdAt": "2021-08-07T15:50:55.445Z",
-			  "updatedAt": null,
-			  "updatedBy": null,
+		"updatedAt": null,
+		"updatedBy": null,
         "guid": "1d6eb134-3f9e-44c3-bb4b-167847b04fe7"
+    },
+	{
+        "isEnabled": true,
+        "projectName": "Test Project B",
+        "description": "Seeded project.",
+        "duration": 15.00,
+        "computedDuration": 15.00,
+        "durationUnitId": 1,
+        "deadline": "2021-08-25T15:49:49.421Z",
+        "priorityId": "6110c3196a6dcc343cb60369",
+        "stateId": "6110c318fddf9edf50e9b32c",
+        "createdBy": "Admin",
+        "createdAt": "2021-08-10T15:50:55.445Z",
+		"updatedAt": null,
+		"updatedBy": null,
+        "guid": "a3d7ec8a-5a23-4d10-87ef-84ca1db3b55e"
     }
 ]

@@ -16,6 +16,72 @@ exports.getTaskList = async (req, res) => {
   }
 };
 
+exports.getProjectByUser = async (req, res) => {
+  console.log(`getProjectByUser executed...
+  Param: ${req.params.user}`);
+
+  const dataFrom = `${req.params.curDateFrom}`.split('|');
+  const dataTo = `${req.params.curDateTo}`.split('|');
+
+  try {
+    const prj = await Task.aggregate([
+      {
+        $lookup: {
+          from: 'projects',
+          localField: 'projectId',
+          foreignField: '_id',
+          as: 'project'
+        }
+      },
+      {
+        $match: {
+          $and: [
+            {
+              createdAt: {
+                $gte: new Date(
+                  `${dataFrom[1]}-${dataFrom[0]}-01`
+                ),
+                $lte: new Date(
+                  `${dataTo[1]}-${dataTo[0]}-31`
+                )
+              },
+              isEnabled: true,
+              assignedTo: `${req.params.user}`
+            }
+          ]
+        }
+      },
+      {
+        $unwind: {
+          path: '$project',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          projects: { $addToSet: '$project' }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          projects: 1
+        }
+      }
+    ]);
+    console.log(prj[0].projects);
+    return res.json(prj[0].projects);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      statusCode: res.statusCode,
+      statusMessage: res.statusMessage,
+      message: err
+    });
+  }
+};
+
 exports.getActiveTasks = async (req, res) => {
   console.log('getActiveTasks executed...');
   try {
