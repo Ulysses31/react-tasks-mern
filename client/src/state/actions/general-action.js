@@ -164,7 +164,7 @@ export function resetUserByLogin() {
 export function getDefaultComputedDurationById(id) {
   return (dispatch) => {
     return axios
-      .get(`${apicomputedDurationsUrl}/default/${id}`)
+      .get(`${apicomputedDurationsUrl}/${id}`)
       .then((response) => {
         // console.log(response);
         dispatch({

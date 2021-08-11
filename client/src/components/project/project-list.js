@@ -90,10 +90,15 @@ export default function ProjectList() {
     (state) => state.generalState.states
   );
   const role = useSelector(
-    (state) => state.generalState.login?.role
+    (state) =>
+      state.generalState.login &&
+      state.generalState.login.role
   );
   const error = useSelector(
     (state) => state.projectState.error
+  );
+  const computeDurationUnits = useSelector(
+    (state) => state.generalState.computeDurations
   );
   const isLoading = useSelector(
     (state) => state.projectState.isLoading
@@ -118,49 +123,51 @@ export default function ProjectList() {
         new Date().getMonth() + 1
       }|${new Date().getFullYear()}`;
 
-      // fetch projects
-      dispatch(
-        fetchProjectsByUser(
-          filters.selectedUser === 0
-            ? userInfo.id
-            : filters.selectedUser,
-          filters.selectedMonthFrom === 0
-            ? curSelectedMonthFrom
-            : prepareFilterDateAndSend(
-                filters.selectedMonthFrom
-              ),
-          filters.selectedMonthTo === 0
-            ? curSelectedMonthTo
-            : prepareFilterDateAndSend(
-                filters.selectedMonthTo
-              )
-        )
-      ).then(() =>
-        dispatch(fetchStates()).then(() =>
-          dispatch(fetchUsers()).then(() =>
-            dispatch(fetchPriorities()).then(() =>
-              dispatch(fetchComputeDurations())
-                // set project filters
-                .then(() =>
-                  dispatch(
-                    setProjectFilters({
-                      ...filters,
-                      selectedUser:
-                        filters.selectedUser === 0
-                          ? userInfo.id
-                          : filters.selectedUser,
-                      selectedMonthFrom:
-                        filters.selectedMonthFrom === 0
-                          ? new Date()
-                          : filters.selectedMonthFrom,
-                      selectedMonthTo:
-                        filters.selectedMonthTo === 0
-                          ? new Date()
-                          : filters.selectedMonthTo
-                    })
+      // fetch helpers
+      dispatch(fetchComputeDurations()).then(() =>
+        dispatch(fetchPriorities()).then(() =>
+          dispatch(fetchStates()).then(() =>
+            dispatch(fetchUsers())
+              .then(() =>
+                dispatch(
+                  // fetch projects
+                  fetchProjectsByUser(
+                    filters.selectedUser === 0
+                      ? userInfo.id
+                      : filters.selectedUser,
+                    filters.selectedMonthFrom === 0
+                      ? curSelectedMonthFrom
+                      : prepareFilterDateAndSend(
+                          filters.selectedMonthFrom
+                        ),
+                    filters.selectedMonthTo === 0
+                      ? curSelectedMonthTo
+                      : prepareFilterDateAndSend(
+                          filters.selectedMonthTo
+                        )
                   )
                 )
-            )
+              )
+              // set project filters
+              .then(() =>
+                dispatch(
+                  setProjectFilters({
+                    ...filters,
+                    selectedUser:
+                      filters.selectedUser === 0
+                        ? userInfo.id
+                        : filters.selectedUser,
+                    selectedMonthFrom:
+                      filters.selectedMonthFrom === 0
+                        ? new Date()
+                        : filters.selectedMonthFrom,
+                    selectedMonthTo:
+                      filters.selectedMonthTo === 0
+                        ? new Date()
+                        : filters.selectedMonthTo
+                  })
+                )
+              )
           )
         )
       );
@@ -663,8 +670,8 @@ export default function ProjectList() {
                         {priorities &&
                           priorities.map((item) => (
                             <option
-                              key={item.id}
-                              value={item.id}
+                              key={item._id}
+                              value={item._id}
                             >
                               {item.name}
                             </option>
@@ -735,7 +742,16 @@ export default function ProjectList() {
                         {Number.parseFloat(
                           project.duration
                         ).toFixed(2)}{' '}
-                        {/* {project.durationUnit.code} */}
+                        {
+                          computeDurationUnits.find(
+                            (item) => {
+                              return (
+                                project.durationUnitId ===
+                                item._id
+                              );
+                            }
+                          ).code
+                        }
                       </td>
                       <td colSpan='2'>
                         <i className='bi bi-calendar3'></i>{' '}
@@ -783,7 +799,7 @@ export default function ProjectList() {
                         <button
                           className='btn btn-sm btn-danger shadow-sm'
                           onClick={() =>
-                            handleDeleteBtn(project.id)
+                            handleDeleteBtn(project._id)
                           }
                           disabled={
                             role !== 'Administrator'

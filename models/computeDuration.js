@@ -1,40 +1,26 @@
 const mongoose = require('mongoose');
 
-const SubTask = new mongoose.Schema({
+const ComputeDuration = new mongoose.Schema({
   _id: mongoose.Schema.ObjectId,
-  subTaskName: {
+  code: {
     type: String,
     required: true,
-    maxlength: 255
+    maxlength: 100
   },
   description: {
     type: String,
     required: true,
     maxlength: 255
   },
-  startDate: {
-    type: Date,
-    required: true
-  },
-  startTime: {
-    type: Date,
-    required: true
-  },
-  duration: {
+  factor: {
     type: Number,
-    required: true
+    required: true,
+    default: 0
   },
-  computedDuration: {
-    type: Number,
-    required: true
-  },
-  durationUnitId: {
-    type: Number,
-    required: true
-  },
-  taskId: {
-    type: String,
-    required: true
+  isDefault: {
+    type: Boolean,
+    required: true,
+    default: false
   },
   isEnabled: {
     type: Boolean,
@@ -50,10 +36,12 @@ const SubTask = new mongoose.Schema({
     required: true
   },
   updatedAt: {
-    type: Date
+    type: Date,
+    required: false
   },
   updatedBy: {
-    type: String
+    type: String,
+    required: false
   },
   guid: {
     type: String,
@@ -61,4 +49,7 @@ const SubTask = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('SubTask', SubTask);
+module.exports = mongoose.model(
+  'ComputeDuration',
+  ComputeDuration
+);

@@ -17,7 +17,7 @@ const initialState = {
   activeProjects: 0,
   projects: [],
   selectedProject: {
-    id: 0,
+    _id: 0,
     projectName: '',
     description: '',
     isEnabled: true,
@@ -26,7 +26,10 @@ const initialState = {
     deadline: new Date(),
     priorityId: 1,
     stateId: 1,
-    durationUnitId: 1
+    durationUnitId: 1,
+    createdBy: null,
+    updatedBy: null,
+    updatedAt: null
   },
   filters: {
     createdFrom: '',
@@ -72,7 +75,7 @@ export default function projectReducer(
         ...state,
         projects: action.payload,
         selectedProject: {
-          id: 0,
+          _id: 0,
           projectName: '',
           description: '',
           computedDuration: 0,
@@ -81,7 +84,10 @@ export default function projectReducer(
           deadline: new Date(),
           priorityId: 1,
           stateId: 1,
-          durationUnitId: 1
+          durationUnitId: 1,
+          createdBy: null,
+          updatedBy: null,
+          updatedAt: null
         },
         error: null
       };
@@ -108,7 +114,7 @@ export default function projectReducer(
         ...state,
         projects: state.projects.filter((prj) => {
           return (
-            prj.id !== action.payload &&
+            prj._id !== action.payload &&
             prj.isEnabled === true
           );
         }),

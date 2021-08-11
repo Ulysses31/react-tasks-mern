@@ -7,6 +7,8 @@ import {
 } from '../../shared/shared';
 import { fetchDepartments } from '../../state/actions/department-action';
 import {
+  fetchPriorities,
+  fetchStates,
   getUserByLogin,
   setUserBySession
 } from '../../state/actions/general-action';
@@ -37,6 +39,8 @@ export default function Login() {
   useEffect(() => {
     dispatch(fetchDepartments())
       .then(() => dispatch(fetchRoles()))
+      .then(() => dispatch(fetchStates()))
+      .then(() => dispatch(fetchPriorities()))
       .then(() => {
         const userInfo = getValidatedUserInfo();
         if (userInfo.id > 0) {

@@ -7,7 +7,8 @@ const {
   getActiveProjects,
   insertProject,
   updateProject,
-  deleteProject
+  deleteProject,
+  deactivateProject
 } = require('../controller/project');
 
 const {
@@ -78,6 +79,11 @@ const {
   deleteDepartment
 } = require('../controller/department');
 
+const {
+  getComputeddurationList,
+  getComputeddurationById
+} = require('../controller/computeDuration');
+
 // Project
 router.get('/project', getProjectList);
 router.get('/project/count', getActiveProjects);
@@ -86,6 +92,7 @@ router.get(
   '/project/byuser/:user/from/:curDateFrom/to/:curDateTo',
   getProjectByUser
 );
+router.post('/project/deactivate/:id', deactivateProject);
 router.post('/project', insertProject);
 router.put('/project/:id', updateProject);
 router.delete('/project/:id', deleteProject);
@@ -151,5 +158,10 @@ router.get('/department/:id', getDepartmentById);
 router.post('/department', insertDepartment);
 router.put('/department/:id', updateDepartment);
 router.delete('/department/:id', deleteDepartment);
+
+// Compute Duration
+router.get('/computeDuration', getComputeddurationList);
+router.get('/computeDuration/:id', getComputeddurationById);
+router.get('/computeDuration/:id', getComputeddurationById);
 
 module.exports = router;

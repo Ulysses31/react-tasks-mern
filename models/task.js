@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Task = new mongoose.Schema({
-  _id: mongoose.Schema.ObjectId,
+  // _id: mongoose.Schema.ObjectId,
   taskName: {
     type: String,
     required: true,
@@ -28,11 +28,15 @@ const Task = new mongoose.Schema({
     required: true,
     maxlength: 100
   },
-  state: {
+  projectId: {
     type: String,
     required: true
   },
-  priority: {
+  stateId: {
+    type: String,
+    required: true
+  },
+  priorityId: {
     type: String,
     required: true
   },

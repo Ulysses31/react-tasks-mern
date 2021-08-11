@@ -1,5 +1,4 @@
 const Task = require('../models/task');
-const Project = require('../models/project');
 
 exports.getTaskList = async (req, res) => {
   console.log('getTaskList executed...');

@@ -81,7 +81,7 @@ export function fetchProjectsByUser(
         });
       })
       .catch((err) => {
-        // console.log(err.response);
+        console.log(err);
         dispatch({
           type: PROJECT_ERROR,
           payload: err.response
@@ -117,7 +117,7 @@ export function insertProject(hst, prj) {
 export function updateProject(hst, prj) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${prj.id}`, prj, options)
+      .put(`${apiUrl}/${prj._id}`, prj, options)
       .then((response) => {
         // console.log(response);
         dispatch({
@@ -164,7 +164,7 @@ export function deleteProject(id) {
 export function deactivateProject(id) {
   return (dispatch) => {
     return axios
-      .post(`${apiUrl}/Deactivate/${id}`)
+      .post(`${apiUrl}/deactivate/${id}`)
       .then((response) => {
         // console.log(response);
         dispatch({
