@@ -1,129 +1,85 @@
+const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 
-const Task = new mongoose.Schema({
-  // _id: mongoose.Schema.ObjectId,
-  taskName: {
-    type: String,
-    required: true,
-    maxlength: 255
-  },
-  description: {
-    type: String,
-    required: true,
-    maxlength: 255
-  },
-  startDate: {
-    type: Date,
-    required: true
-  },
-  endDate: {
-    type: Date
-  },
-  duration: {
-    type: Number,
-    required: true
-  },
-  assignedTo: {
-    type: String,
-    required: true,
-    maxlength: 100
-  },
-  projectId: {
-    type: String,
-    required: true
-  },
-  stateId: {
-    type: String,
-    required: true
-  },
-  priorityId: {
-    type: String,
-    required: true
-  },
-  isEnabled: {
-    type: Boolean,
-    required: true,
-    default: true
-  },
-  createdAt: {
-    type: Date,
-    required: true
-  },
-  createdBy: {
-    type: String,
-    required: true
-  },
-  updatedAt: {
-    type: Date
-  },
-  updatedBy: {
-    type: String
-  },
-  guid: {
-    type: String,
-    required: true
-  },
-  comment: [
-    {
-      _id: mongoose.Schema.ObjectId,
-      description: {
-        type: String,
-        required: true,
-        maxlength: 255
-      },
-      createdAt: {
-        type: Date,
-        required: true
-      },
-      createdBy: {
-        type: String,
-        required: true
-      },
-      updatedAt: {
-        type: Date
-      },
-      updatedBy: {
-        type: String
-      },
-      guid: {
-        type: String,
-        required: true
+const Task = mongoose.model(
+  'Task',
+  new mongoose.Schema({
+    // _id: mongoose.Schema.ObjectId,
+    taskName: {
+      type: String,
+      required: true,
+      maxlength: 255
+    },
+    description: {
+      type: String,
+      required: true,
+      maxlength: 255
+    },
+    startDate: {
+      type: Date,
+      required: true
+    },
+    endDate: {
+      type: Date
+    },
+    duration: {
+      type: Number,
+      required: true
+    },
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    project: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Project'
+    },
+    state: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'State'
+    },
+    priority: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Priority'
+    },
+    isEnabled: {
+      type: Boolean,
+      required: true,
+      default: true
+    },
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
       }
-    }
-  ],
-  subtask: [
-    {
-      _id: mongoose.Schema.ObjectId,
-      subTaskName: {
-        type: String,
-        required: true,
-        maxlength: 255
-      },
-      description: {
-        type: String,
-        required: true,
-        maxlength: 255
-      },
-      createdAt: {
-        type: Date,
-        required: true
-      },
-      createdBy: {
-        type: String,
-        required: true
-      },
-      updatedAt: {
-        type: Date
-      },
-      updatedBy: {
-        type: String
-      },
-      guid: {
-        type: String,
-        required: true
+    ],
+    subtasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'SubTask'
       }
+    ],
+    createdAt: {
+      type: Date,
+      required: true,
+      default: Date.now
+    },
+    createdBy: {
+      type: String,
+      required: true
+    },
+    updatedAt: {
+      type: Date
+    },
+    updatedBy: {
+      type: String
+    },
+    guid: {
+      type: String,
+      required: true,
+      default: uuidv4()
     }
-  ]
-});
+  })
+);
 
-module.exports = mongoose.model('Task', Task);
+module.exports = Task;
