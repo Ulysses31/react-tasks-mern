@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Priority = mongoose.model(
   'Priority',
   new mongoose.Schema({
-    // _id: mongoose.Schema.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     sign: {
       type: String,
       required: true,

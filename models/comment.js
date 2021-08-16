@@ -1,9 +1,10 @@
+const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 
 const Comment = mongoose.model(
   'Comment',
   new mongoose.Schema({
-    _id: mongoose.Schema.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     description: {
       type: String,
       required: true,

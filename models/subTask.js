@@ -1,9 +1,10 @@
+const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 
 const SubTask = mongoose.model(
   'SubTask',
   new mongoose.Schema({
-    _id: mongoose.Schema.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     subTaskName: {
       type: String,
       required: true,

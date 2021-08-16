@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Project = mongoose.model(
   'Project',
   new mongoose.Schema({
-    // _id: mongoose.Schema.ObjectId,
+    _id: mongoose.Schema.Types.ObjectId,
     projectName: {
       type: String,
       required: true,
