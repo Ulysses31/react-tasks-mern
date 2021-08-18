@@ -105,7 +105,7 @@ export default function projectReducer(
       return {
         ...state,
         projects: state.projects.filter((prj) => {
-          return prj.id !== action.payload;
+          return prj._id !== action.payload;
         }),
         error: null
       };

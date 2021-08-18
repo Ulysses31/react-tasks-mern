@@ -746,7 +746,7 @@ export default function ProjectList() {
                           computeDurationUnits.find(
                             (item) => {
                               return (
-                                project.durationUnitId ===
+                                project.durationUnit ===
                                 item._id
                               );
                             }
@@ -765,7 +765,7 @@ export default function ProjectList() {
                               priorities.find(
                                 (item) =>
                                   item._id ===
-                                  project.priorityId
+                                  project.priority
                               ).name
                             }
                           </b>
@@ -777,8 +777,7 @@ export default function ProjectList() {
                             {
                               states.find(
                                 (item) =>
-                                  item._id ===
-                                  project.stateId
+                                  item._id === project.state
                               ).stateName
                             }
                           </b>

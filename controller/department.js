@@ -1,4 +1,5 @@
 const Department = require('../models/department');
+const User = require('../models/user');
 
 exports.getDepartmentList = async (req, res) => {
   console.log('getDepartmentList executed...');
@@ -54,6 +55,8 @@ exports.insertDepartment = async (req, res) => {
 exports.updateDepartment = async (req, res) => {
   console.log('updateDepartment called...');
   try {
+    req.body.updatedAt = new Date();
+
     const result = await Department.updateOne(
       { _id: req.params.id },
       req.body

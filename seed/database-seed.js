@@ -1,13 +1,13 @@
-const State = require('./models/state');
-const Priority = require('./models/priority');
-const ComputeDuration = require('./models/computeDuration');
-const Department = require('./models/department');
-const UserRole = require('./models/userRole');
-const User = require('./models/user');
-const Project = require('./models/project');
-const Task = require('./models/task');
-const SubTask = require('./models/subTask');
-const Comment = require('./models/comment');
+const State = require('../models/state');
+const Priority = require('../models/priority');
+const ComputeDuration = require('../models/computeDuration');
+const Department = require('../models/department');
+const UserRole = require('../models/userRole');
+const User = require('../models/user');
+const Project = require('../models/project');
+const Task = require('../models/task');
+const SubTask = require('../models/subTask');
+const Comment = require('../models/comment');
 
 const dropCollections = () => {
   State.collection.countDocuments().then((result) => {
@@ -735,11 +735,13 @@ const seedTasks = () => {
     taskName: 'Task 1 for Test Project A',
     description: 'This is the first task.',
     startDate: '2021-08-10T19:24:39.2611093',
+    endDate: null,
     duration: 50.0,
     isEnabled: true,
     priorityId: '60fd8e5bd15d4b1f6c4da779',
     state: '6110c318fddf9edf50e9b32c',
     priority: '6110c3196a6dcc343cb60369',
+    project: '6114206850c8e4f38ee1b96e',
     comments: ['6110c31cfb1179b59ab22512'],
     subtasks: [
       '6110c31ded6c3612459ef2f0',
@@ -756,10 +758,12 @@ const seedTasks = () => {
     taskName: 'Task 2 for Test Project A',
     description: 'This is the second task.',
     startDate: '2021-08-15T19:24:39.2611093',
+    endDate: null,
     duration: 20.0,
     isEnabled: true,
     state: '6110c318fddf9edf50e9b32c',
     priority: '6110c3196a6dcc343cb60369',
+    project: '6114206850c8e4f38ee1b96e',
     comments: ['6110c31cfb1179b59ab11512'],
     subtasks: [
       '6110c31ded6c3612459ef2f1',
@@ -776,10 +780,12 @@ const seedTasks = () => {
     taskName: 'Task 3 for Test Project A',
     description: 'This is the third task.',
     startDate: '2021-08-22T19:24:39.2611093',
+    endDate: null,
     duration: 20.0,
     isEnabled: true,
     state: '6110c318fddf9edf50e9b32c',
     priority: '6110c3196a6dcc343cb60369',
+    project: '6114206850c8e4f38ee1b96e',
     comments: ['6110c31cfb3379b59ab22512'],
     subtasks: ['6110c31ded6c3612459ef2e5'],
     assignedTo: '6110c317a6c48b70cee33202',
@@ -793,10 +799,12 @@ const seedTasks = () => {
     taskName: 'Task 1 for Test Project B',
     description: 'This is the first task.',
     startDate: '2021-08-29T19:24:39.2611093',
+    endDate: null,
     duration: 40.0,
     isEnabled: true,
     state: '6110c318fddf9edf50e9b32c',
     priority: '6110c3196a6dcc343cb60369',
+    project: '6114206850c8e4f38ee1b19b',
     comments: ['6110c31cfb1179b59ab55512'],
     subtasks: ['6110c31ded6c3612459ec1e5'],
     assignedTo: '6110c317a6c48b70cee33202',

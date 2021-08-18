@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var seed = require('../database-seed');
+var seed = require('../seed/database-seed');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

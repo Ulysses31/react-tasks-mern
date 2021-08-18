@@ -95,7 +95,7 @@ export function insertDepartment(hst, dprt) {
 export function updateDepartment(hst, dprt) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${dprt.id}`, dprt, options)
+      .put(`${apiUrl}/${dprt._id}`, dprt, options)
       .then((response) => {
         // console.log(response);
         dispatch({

@@ -3,7 +3,9 @@ const User = require('../models/user');
 exports.getUserList = async (req, res) => {
   console.log('getUserList executed...');
   try {
-    const users = await User.find().sort({ createdAt: 1 });
+    const users = await User.find()
+      .populate('department')
+      .sort({ createdAt: 1 });
     return res.json(users);
   } catch (err) {
     console.log(err);
@@ -21,7 +23,7 @@ exports.getUserById = async (req, res) => {
   try {
     const user = await User.find({
       _id: req.params.id
-    });
+    }).populate('department');
     return res.json(user);
   } catch (err) {
     console.log(err);

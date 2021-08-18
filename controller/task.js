@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const Task = require('../models/task');
+const Project = require('../models/project');
 
 exports.getTaskList = async (req, res) => {
   console.log('getTaskList executed...');
@@ -27,8 +29,8 @@ exports.getProjectByUser = async (req, res) => {
       {
         $lookup: {
           from: 'projects',
-          localField: 'projectId',
-          foreignField: '_id',
+          localField: 'task.projectId',
+          foreignField: 'project._id',
           as: 'project'
         }
       },
@@ -36,16 +38,10 @@ exports.getProjectByUser = async (req, res) => {
         $match: {
           $and: [
             {
-              createdAt: {
-                $gte: new Date(
-                  `${dataFrom[1]}-${dataFrom[0]}-01`
-                ),
-                $lte: new Date(
-                  `${dataTo[1]}-${dataTo[0]}-31`
-                )
-              },
               isEnabled: true,
-              assignedTo: `${req.params.user}`
+              assignedTo: mongoose.Types.ObjectId(
+                `${req.params.user}`
+              )
             }
           ]
         }
@@ -54,6 +50,23 @@ exports.getProjectByUser = async (req, res) => {
         $unwind: {
           path: '$project',
           preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $match: {
+          $and: [
+            {
+              'project.createdAt': {
+                $gte: new Date(
+                  `${dataFrom[1]}-${dataFrom[0]}-01`
+                ),
+                $lte: new Date(
+                  `${dataTo[1]}-${dataTo[0]}-31`
+                )
+              },
+              'project.isEnabled': true
+            }
+          ]
         }
       },
       {
@@ -69,7 +82,7 @@ exports.getProjectByUser = async (req, res) => {
         }
       }
     ]);
-    console.log(prj[0].projects);
+    console.log(prj);
     return res.json(prj[0].projects);
   } catch (err) {
     console.log(err);
@@ -127,40 +140,16 @@ exports.getTaskByUser = async (req, res) => {
   const dataTo = req.params.dateTo;
 
   try {
-    const tsk = await Project.aggregate([
-      { $match: { isEnabled: true } },
-      { $unwind: '$task' },
-      {
-        $match: {
-          'task.assignedTo': `${req.params.user}`,
-          'task.isEnabled': true,
-          'task.startDate': {
-            $gte: new Date(dataFrom),
-            $lte: new Date(dataTo)
-          }
-        }
-      },
-      { $sort: { 'task.createdAt': -1 } },
-      {
-        $project: {
-          projectName: 1,
-          'task._id': 1,
-          'task.guid': 1,
-          'task.taskName': 1,
-          'task.description': 1,
-          'task.duration': 1,
-          'task.assignedTo': 1,
-          'task.isEnabled': 1,
-          'task.startDate': 1,
-          'task.endDate': 1,
-          'task.state': 1,
-          'task.priority': 1,
-          'task.createdBy': 1,
-          'task.updatedAt': 1,
-          'task.updatedBy': 1
-        }
-      }
-    ]);
+    const tsk = await Task.find({
+      isEnabled: true,
+      assignedTo: mongoose.Types.ObjectId(req.params.user),
+      startDate: { $gte: dataFrom, $lte: dataTo }
+    })
+      .populate('state')
+      .populate('priority')
+      .populate('project')
+      .populate('assignedTo');
+
     return res.json(tsk);
   } catch (err) {
     console.log(err);

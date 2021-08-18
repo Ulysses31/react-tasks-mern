@@ -29,7 +29,7 @@ export const SELECTED_SUBTASK = 'SELECTED_SUBTASK';
 const apiUrl = `${apiDomain}/api/task`;
 const apiUrlComments = `${apiDomain}/api/comment`;
 const apiUrlSubTasks = `${apiDomain}/api/subtask`;
-const apiUrlTaskUser = `${apiDomain}/api/tasks/byuser`;
+const apiUrlTaskUser = `${apiDomain}/api/task/byuser`;
 
 const options = {
   headers: { 'content-type': 'application/json' },

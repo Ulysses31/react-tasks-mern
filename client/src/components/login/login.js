@@ -60,12 +60,11 @@ export default function Login() {
           title: response.data.title,
           email: response.data.email,
           department: department.find(
-            (item) =>
-              item._id === response.data.departmentId
+            (item) => item._id === response.data.department
           ).name,
           position: response.data.position,
           role: role.find(
-            (item) => item._id === response.data.roleId
+            (item) => item._id === response.data.role
           ).role
         };
         saveValidatedUserInfo(validatedUserInfo);
