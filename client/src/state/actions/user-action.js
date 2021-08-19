@@ -101,7 +101,7 @@ export function insertUser(hst, usr) {
 export function updateUser(hst, usr) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${usr.id}`, usr)
+      .put(`${apiUrl}/${usr._id}`, usr)
       .then((response) => {
         // console.log(response);
         dispatch({

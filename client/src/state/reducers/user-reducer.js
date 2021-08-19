@@ -15,21 +15,21 @@ const initialState = {
   roles: [],
   users: [],
   selectedUser: {
-    id: 0,
+    _id: 0,
     username: '',
     password: '',
     position: '',
-    departmentId: 0,
+    department: '',
     email: '',
     telephone: '',
     mobile: '',
     internalPhone: '',
     title: '',
     isEnabled: true,
-    userRoleId: 1,
-    createdBy: '',
-    updatedBy: '',
-    updatedOnTicks: ''
+    role: '',
+    createdBy: null,
+    updatedBy: null,
+    updatedAt: null
   },
   filters: {
     title: '',
@@ -66,21 +66,21 @@ export default function userReducer(
         ...state,
         users: action.payload,
         selectedUser: {
-          id: 0,
+          _id: 0,
           username: '',
           password: '',
           position: '',
-          departmentId: 0,
+          department: '',
           email: '',
           telephone: '',
           mobile: '',
           internalPhone: '',
           title: '',
           isEnabled: true,
-          userRoleId: 1,
-          createdBy: '',
-          updatedBy: '',
-          updatedOnTicks: ''
+          role: '',
+          createdBy: null,
+          updatedBy: null,
+          updatedAt: null
         },
         error: null
       };

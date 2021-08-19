@@ -10,38 +10,38 @@ const SubTask = require('../models/subTask');
 const Comment = require('../models/comment');
 
 const dropCollections = () => {
-  State.collection.countDocuments().then((result) => {
-    console.log(`State: ${result}`);
-    if (result > 0) {
-      State.collection.drop().then(() => seedStates());
-    } else {
-      seedStates();
-    }
-  });
+  // State.collection.countDocuments().then((result) => {
+  //   console.log(`State: ${result}`);
+  //   if (result > 0) {
+  //     State.collection.drop().then(() => seedStates());
+  //   } else {
+  //     seedStates();
+  //   }
+  // });
 
-  Priority.collection.countDocuments().then((result) => {
-    console.log(`Priority: ${result}`);
-    if (result > 0) {
-      Priority.collection
-        .drop()
-        .then(() => seedPriorities());
-    } else {
-      seedPriorities();
-    }
-  });
+  // Priority.collection.countDocuments().then((result) => {
+  //   console.log(`Priority: ${result}`);
+  //   if (result > 0) {
+  //     Priority.collection
+  //       .drop()
+  //       .then(() => seedPriorities());
+  //   } else {
+  //     seedPriorities();
+  //   }
+  // });
 
-  ComputeDuration.collection
-    .countDocuments()
-    .then((result) => {
-      console.log(`ComputeDuration: ${result}`);
-      if (result > 0) {
-        ComputeDuration.collection
-          .drop()
-          .then(() => seedComputeDurations());
-      } else {
-        seedComputeDurations();
-      }
-    });
+  // ComputeDuration.collection
+  //   .countDocuments()
+  //   .then((result) => {
+  //     console.log(`ComputeDuration: ${result}`);
+  //     if (result > 0) {
+  //       ComputeDuration.collection
+  //         .drop()
+  //         .then(() => seedComputeDurations());
+  //     } else {
+  //       seedComputeDurations();
+  //     }
+  //   });
 
   Department.collection.countDocuments().then((result) => {
     console.log(`Department: ${result}`);
@@ -65,50 +65,50 @@ const dropCollections = () => {
     }
   });
 
-  User.collection.countDocuments().then((result) => {
-    console.log(`User: ${result}`);
-    if (result > 0) {
-      User.collection.drop().then(() => seedUsers());
-    } else {
-      seedUsers();
-    }
-  });
+  // User.collection.countDocuments().then((result) => {
+  //   console.log(`User: ${result}`);
+  //   if (result > 0) {
+  //     User.collection.drop().then(() => seedUsers());
+  //   } else {
+  //     seedUsers();
+  //   }
+  // });
 
-  Comment.collection.countDocuments().then((result) => {
-    console.log(`Comment: ${result}`);
-    if (result > 0) {
-      Comment.collection.drop().then(() => seedComments());
-    } else {
-      seedComments();
-    }
-  });
+  // Comment.collection.countDocuments().then((result) => {
+  //   console.log(`Comment: ${result}`);
+  //   if (result > 0) {
+  //     Comment.collection.drop().then(() => seedComments());
+  //   } else {
+  //     seedComments();
+  //   }
+  // });
 
-  SubTask.collection.countDocuments().then((result) => {
-    console.log(`SubTask: ${result}`);
-    if (result > 0) {
-      SubTask.collection.drop().then(() => seedSubTasks());
-    } else {
-      seedSubTasks();
-    }
-  });
+  // SubTask.collection.countDocuments().then((result) => {
+  //   console.log(`SubTask: ${result}`);
+  //   if (result > 0) {
+  //     SubTask.collection.drop().then(() => seedSubTasks());
+  //   } else {
+  //     seedSubTasks();
+  //   }
+  // });
 
-  Task.collection.countDocuments().then((result) => {
-    console.log(`Task: ${result}`);
-    if (result > 0) {
-      Task.collection.drop().then(() => seedTasks());
-    } else {
-      seedTasks();
-    }
-  });
+  // Task.collection.countDocuments().then((result) => {
+  //   console.log(`Task: ${result}`);
+  //   if (result > 0) {
+  //     Task.collection.drop().then(() => seedTasks());
+  //   } else {
+  //     seedTasks();
+  //   }
+  // });
 
-  Project.collection.countDocuments().then((result) => {
-    console.log(`Project: ${result}`);
-    if (result > 0) {
-      Project.collection.drop().then(() => seedProjects());
-    } else {
-      seedProjects();
-    }
-  });
+  // Project.collection.countDocuments().then((result) => {
+  //   console.log(`Project: ${result}`);
+  //   if (result > 0) {
+  //     Project.collection.drop().then(() => seedProjects());
+  //   } else {
+  //     seedProjects();
+  //   }
+  // });
 };
 
 const seedStates = () => {
@@ -514,6 +514,9 @@ const seedUsers = () => {
     email: 'admin@datacenter.com',
     title: 'Administrator',
     position: 'Προγραμματιστής',
+    telephone: null,
+    mobile: null,
+    internalPhone: null,
     isEnabled: true,
     role: '6110c31730dcb7396def5288',
     department: '6110c31950089cf902ef096e',
@@ -541,6 +544,9 @@ const seedUsers = () => {
     email: 'guest@datacenter.com',
     title: 'Guest',
     position: 'Προγραμματιστής',
+    telephone: null,
+    mobile: null,
+    internalPhone: null,
     isEnabled: true,
     role: '6110c31730dcb7396def5287',
     department: '6110c31950089cf902ef096e',
@@ -558,6 +564,9 @@ const seedUsers = () => {
     email: 'user@datacenter.com',
     title: 'User',
     position: 'Προγραμματιστής',
+    telephone: null,
+    mobile: null,
+    internalPhone: null,
     isEnabled: true,
     role: '6110c31730dcb7396def5286',
     department: '6110c31950089cf902ef096e',

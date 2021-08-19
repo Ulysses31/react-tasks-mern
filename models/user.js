@@ -17,7 +17,7 @@ const User = mongoose.model(
     email: {
       type: String,
       required: true,
-      maxlength: 450
+      maxlength: 250
     },
     title: {
       type: String,
@@ -28,6 +28,21 @@ const User = mongoose.model(
       type: String,
       required: true,
       maxlength: 100
+    },
+    telephone: {
+      type: String,
+      required: false,
+      maxlength: 15
+    },
+    mobile: {
+      type: String,
+      required: false,
+      maxlength: 15
+    },
+    internalPhone: {
+      type: String,
+      required: false,
+      maxlength: 10
     },
     isEnabled: {
       type: Boolean,

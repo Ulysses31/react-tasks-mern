@@ -1,10 +1,13 @@
 const User = require('../models/user');
+const Department = require('../models/department');
+const UserRole = require('../models/userRole');
 
 exports.getUserList = async (req, res) => {
   console.log('getUserList executed...');
   try {
     const users = await User.find()
       .populate('department')
+      .populate('role')
       .sort({ createdAt: 1 });
     return res.json(users);
   } catch (err) {
@@ -66,9 +69,35 @@ exports.getUserByLogin = async (req, res) => {
 exports.insertUser = async (req, res) => {
   console.log('insertUser executed...');
   try {
-    const cmn = new User(req.body);
-    const result = await cmn.save();
-    return res.json({ result });
+    req.body._id = null;
+
+    const usr = new User(req.body);
+    const usrResult = await usr.save();
+    const indx = await User.findOne({ guid: usr.guid });
+
+    // assign department
+    const depResult = await Department.findByIdAndUpdate(
+      req.body.department,
+      {
+        $push: { users: indx._id }
+      },
+      { new: true, useFindAndModify: false }
+    );
+
+    // assign role
+    const roleResult = await UserRole.findByIdAndUpdate(
+      req.body.role,
+      {
+        $push: { users: indx._id }
+      },
+      { new: true, useFindAndModify: false }
+    );
+
+    return res.json({
+      userResult: usrResult,
+      departmentResult: depResult,
+      roleResult: roleResult
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -82,14 +111,85 @@ exports.insertUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
   console.log('updateUser called...');
   try {
-    const result = await User.updateOne(
+    req.body.updatedAt = new Date();
+
+    // update user
+    const updatedUser = await User.updateOne(
       { _id: req.params.id },
       req.body
     );
-    console.log(
-      `User ${req.params.id} updated = ${result.nModified}`
+
+    // clear user role
+    const userRoleClearResult = await UserRole.updateOne(
+      {
+        users: req.params.id
+      },
+      {
+        $pullAll: {
+          users: [req.params.id]
+        }
+      },
+      {
+        new: false,
+        useFindAndModify: false
+      }
     );
-    return res.json({ nModified: result.nModified });
+
+    // clear department
+    const departmentClearResult =
+      await Department.updateOne(
+        {
+          users: req.params.id
+        },
+        {
+          $pullAll: {
+            users: [req.params.id]
+          }
+        },
+        {
+          new: false,
+          useFindAndModify: false
+        }
+      );
+
+    // update new user role
+    const userRoleUpdateResult =
+      await UserRole.findByIdAndUpdate(
+        { _id: req.body.role._id },
+        {
+          $push: {
+            users: [req.body._id]
+          }
+        },
+        {
+          new: true,
+          useFindAndModify: false
+        }
+      );
+
+    // update department
+    const departmentUpdateResult =
+      await Department.findByIdAndUpdate(
+        { _id: req.body.department._id },
+        {
+          $push: {
+            users: [req.body._id]
+          }
+        },
+        {
+          new: true,
+          useFindAndModify: false
+        }
+      );
+
+    console.log(`User ${req.params.id} updated`);
+    return res.json({
+      updatedUser,
+      userRoleClearResult,
+      departmentClearResult,
+      userRoleUpdateResult,
+      departmentUpdateResult
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
