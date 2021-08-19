@@ -4,7 +4,7 @@ exports.getComputeddurationList = async (req, res) => {
   console.log('getComputeddurationList executed...');
   try {
     const durations = await ComputeDuration.find();
-    console.log(durations);
+    // console.log(durations);
     return res.json(durations);
   } catch (err) {
     console.log(err);
@@ -38,6 +38,8 @@ exports.getComputeddurationById = async (req, res) => {
 exports.insertComputedduration = async (req, res) => {
   console.log('insertComputedduration executed...');
   try {
+    req.body._id = null;
+
     const cmp = new ComputeDuration(req.body);
     const result = await cmp.save();
     return res.json({ result });
@@ -54,6 +56,8 @@ exports.insertComputedduration = async (req, res) => {
 exports.updateComputedduration = async (req, res) => {
   console.log('updateComputedduration called...');
   try {
+    req.body.updatedAt = new Date();
+
     const result = await ComputeDuration.updateOne(
       { _id: req.params.id },
       req.body

@@ -25,16 +25,24 @@ const initialState = {
     code: '',
     description: '',
     factor: 0,
-    isDefault: '',
-    isEnabled: ''
+    isDefault: false,
+    isEnabled: true,
+    updatedBy: null,
+    updatedAt: null,
+    createdBy: null,
+    creaatedAt: null
   },
   selectedComputedDuration: {
-    id: 0,
+    _id: 0,
     code: '',
     description: '',
     factor: 0,
     isDefault: false,
-    isEnabled: true
+    isEnabled: true,
+    updatedBy: null,
+    updatedAt: null,
+    createdBy: null,
+    creaatedAt: null
   },
   error: null
 };
@@ -44,7 +52,8 @@ export default function generalReducer(
   action
 ) {
   switch (action.type) {
-    case USER_LOGIN: case USER_SESSION_SET:
+    case USER_LOGIN:
+    case USER_SESSION_SET:
       return {
         ...state,
         login: action.payload,
@@ -68,9 +77,14 @@ export default function generalReducer(
     case COMPUTED_DURATION_DELETE:
       return {
         ...state,
-        computeDurations: state.computeDurations.filter((dur) => {
-          return dur.id !== action.payload && dur.isEnabled === true;
-        }),
+        computeDurations: state.computeDurations.filter(
+          (dur) => {
+            return (
+              dur._id !== action.payload &&
+              dur.isEnabled === true
+            );
+          }
+        ),
         error: null
       };
     case COMPUTED_DURATION_UPDATE:
@@ -88,8 +102,10 @@ export default function generalReducer(
         ...state,
         login: null,
         computeDurations: initialState.computeDurations,
-        defaultComputedDuration: initialState.defaultComputedDuration,
-        selectedComputedDuration: initialState.selectedComputedDuration,
+        defaultComputedDuration:
+          initialState.defaultComputedDuration,
+        selectedComputedDuration:
+          initialState.selectedComputedDuration,
         states: initialState.states,
         priorities: initialState.priorities
       };
@@ -108,7 +124,8 @@ export default function generalReducer(
         ...state,
         sideBar: action.payload
       };
-    case GENERAL_ERROR: case COMPUTED_DURATION_ERROR:
+    case GENERAL_ERROR:
+    case COMPUTED_DURATION_ERROR:
       return {
         ...state,
         error: action.payload

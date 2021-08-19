@@ -82,7 +82,7 @@ exports.getProjectByUser = async (req, res) => {
         }
       }
     ]);
-    console.log(prj);
+    // console.log(prj);
     return res.json(prj[0].projects);
   } catch (err) {
     console.log(err);

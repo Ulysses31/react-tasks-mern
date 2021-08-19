@@ -30,18 +30,6 @@ const ComputeDuration = mongoose.model(
       required: true,
       default: true
     },
-    projects: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project'
-      }
-    ],
-    subtasks: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'SubTask'
-      }
-    ],
     createdAt: {
       type: Date,
       required: true,

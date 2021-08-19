@@ -81,7 +81,10 @@ const {
 
 const {
   getComputeddurationList,
-  getComputeddurationById
+  getComputeddurationById,
+  insertComputedduration,
+  updateComputedduration,
+  deleteComputedduration
 } = require('../controller/computeDuration');
 
 // Project
@@ -162,6 +165,11 @@ router.delete('/department/:id', deleteDepartment);
 // Compute Duration
 router.get('/computeDuration', getComputeddurationList);
 router.get('/computeDuration/:id', getComputeddurationById);
-router.get('/computeDuration/:id', getComputeddurationById);
+router.post('/computeDuration', insertComputedduration);
+router.put('/computeDuration/:id', updateComputedduration);
+router.delete(
+  '/computeDuration/:id',
+  deleteComputedduration
+);
 
 module.exports = router;

@@ -3,9 +3,7 @@ import { css } from '@emotion/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import ScaleLoader from 'react-spinners/ScaleLoader';
-import {
-  getValidatedUserInfo
-} from '../../../shared/shared';
+import { getValidatedUserInfo } from '../../../shared/shared';
 import {
   deleteComputeDuration,
   fetchComputeDurations,
@@ -24,11 +22,20 @@ const override = css`
 `;
 
 export default function DurationList() {
+  const currentPage = 1;
   const dispatch = useDispatch();
-  const error = useSelector((state) => state.generalState.error);
-  const role = useSelector((state) => state.generalState.login?.role);
-  const durations = useSelector((state) => state.generalState.computeDurations);
-  const isLoading = useSelector((state) => state.projectState.isLoading);
+  const error = useSelector(
+    (state) => state.generalState.error
+  );
+  const role = useSelector(
+    (state) => state.generalState.login?.role
+  );
+  const durations = useSelector(
+    (state) => state.generalState.computeDurations
+  );
+  const isLoading = useSelector(
+    (state) => state.projectState.isLoading
+  );
   const history = useHistory();
 
   useEffect(() => {
@@ -38,10 +45,9 @@ export default function DurationList() {
       history.push('/login');
     } else {
       dispatch(setUserBySession(userInfo));
-
       // fetch computed durations
       dispatch(fetchComputeDurations());
-    };
+    }
   }, []);
 
   const handleEditBtn = (dur) => {
@@ -65,9 +71,12 @@ export default function DurationList() {
         <div className='card-body overflow-auto'>
           <Link
             to='/settings/computeduration/add'
-            className={`btn btn-sm btn-primary shadow-sm ${role !== 'Administrator' && 'disabled'}`}
-            style={{ marginBottom: '10px' }}>
-            <i className="bi bi-plus-lg"></i> New Unit
+            className={`btn btn-sm btn-primary shadow-sm ${
+              role !== 'Administrator' && 'disabled'
+            }`}
+            style={{ marginBottom: '10px' }}
+          >
+            <i className='bi bi-plus-lg'></i> New Unit
           </Link>
           <ScaleLoader
             color={'#86C02E'}
@@ -76,42 +85,68 @@ export default function DurationList() {
             size={150}
           />
           <br />
-          <div className="table-responsive-sm">
-            <table className="table table-sm table-hover table-bordered">
+          <div className='table-responsive-sm'>
+            <table className='table table-sm table-hover table-bordered'>
               <thead>
                 <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Code</th>
-                  <th scope="col">Description</th>
-                  <th scope="col">Factor</th>
-                  <th nowrap="true"></th>
+                  <th scope='col'>ID</th>
+                  <th scope='col'>Code</th>
+                  <th scope='col'>Description</th>
+                  <th scope='col'>Factor</th>
+                  <th nowrap='true'></th>
                 </tr>
               </thead>
               <tbody>
-                {durations && durations.map((item) => (
-                  <tr key={item.id}>
-                    <td nowrap="true">{item.id}</td>
-                    <td nowrap="true">{item.code}</td>
-                    <td nowrap="true">{item.description}</td>
-                    <td nowrap="true" align="right">
-                      <b>{Number.parseFloat(item.factor).toFixed(2)}</b>
-                    </td>
-                    <td nowrap="true" align="center">
-                      <button className="btn btn-sm btn-primary shadow-sm"
-                        onClick={() => handleEditBtn(item)}
-                        disabled={role !== 'Administrator'}
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </button>{' '}
-                      <button className="btn btn-sm btn-danger shadow-sm"
-                        onClick={() => handleDeleteBtn(item.id)}
-                        disabled={role !== 'Administrator'}
-                      >
-                        <i className="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {durations &&
+                  durations.map((item, cnt) => (
+                    <tr key={item._id}>
+                      <td nowrap='true'>
+                        {' '}
+                        <b>
+                          {currentPage === 1
+                            ? cnt + 1
+                            : pageSize * (currentPage - 1) +
+                              cnt +
+                              1}
+                        </b>
+                      </td>
+                      <td nowrap='true'>{item.code}</td>
+                      <td nowrap='true'>
+                        {item.description}
+                      </td>
+                      <td nowrap='true' align='right'>
+                        <b>
+                          {Number.parseFloat(
+                            item.factor
+                          ).toFixed(2)}
+                        </b>
+                      </td>
+                      <td nowrap='true' align='center'>
+                        <button
+                          className='btn btn-sm btn-primary shadow-sm'
+                          onClick={() =>
+                            handleEditBtn(item)
+                          }
+                          disabled={
+                            role !== 'Administrator'
+                          }
+                        >
+                          <i className='bi bi-pencil'></i>
+                        </button>{' '}
+                        <button
+                          className='btn btn-sm btn-danger shadow-sm'
+                          onClick={() =>
+                            handleDeleteBtn(item._id)
+                          }
+                          disabled={
+                            role !== 'Administrator'
+                          }
+                        >
+                          <i className='bi bi-trash'></i>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

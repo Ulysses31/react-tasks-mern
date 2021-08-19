@@ -243,7 +243,7 @@ export function updateComputeDuration(hst, dur) {
   return (dispatch) => {
     return axios
       .put(
-        `${apicomputedDurationsUrl}/${dur.id}`,
+        `${apicomputedDurationsUrl}/${dur._id}`,
         dur,
         options
       )
