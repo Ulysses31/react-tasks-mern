@@ -59,18 +59,16 @@ export default function ProjectList() {
         (Number.parseInt(filters.duration) === 0 ||
           Number.parseInt(item.duration) ===
             Number.parseInt(filters.duration)) &&
-        (Number.parseInt(filters.priorityId) === 0 ||
-          Number.parseInt(item.priorityId) ===
-            Number.parseInt(filters.priorityId)) &&
-        (Number.parseInt(filters.stateId) === 0 ||
-          Number.parseInt(item.stateId) ===
-            Number.parseInt(filters.stateId)) &&
+        (filters.priority === 0 ||
+          item.priority === filters.priority) &&
+        (filters.state === 0 ||
+          item.state === filters.state) &&
         (filters.createdFrom === '' ||
           new Date(filters.createdFrom) <=
-            new Date(item.createdOnTicks)) &&
+            new Date(item.createdAt)) &&
         (filters.createdTo === '' ||
           new Date(filters.createdTo) >=
-            new Date(item.createdOnTicks)) &&
+            new Date(item.createdAt)) &&
         (filters.deadlineFrom === '' ||
           new Date(filters.deadlineFrom) <=
             new Date(item.deadline)) &&
@@ -251,8 +249,8 @@ export default function ProjectList() {
         duration: 0,
         deadlineFrom: '',
         deadlineTo: '',
-        priorityId: 0,
-        stateId: 0,
+        priority: 0,
+        state: 0,
         selectedUser: filters.selectedUser,
         selectedMonthFrom: filters.selectedMonthFrom,
         selectedMonthTo: filters.selectedMonthTo
@@ -651,9 +649,9 @@ export default function ProjectList() {
                       </div>
                       <select
                         className='form-control form-control-sm'
-                        id='priorityId'
-                        name='priorityId'
-                        value={filters.priorityId}
+                        id='priority'
+                        name='priority'
+                        value={filters.priority}
                         onChange={handleFiltersOnChacge}
                         style={{
                           border: '1px solid #cdcdcd',
@@ -691,9 +689,9 @@ export default function ProjectList() {
                       </div>
                       <select
                         className='form-control form-control-sm'
-                        id='stateId'
-                        name='stateId'
-                        value={filters.stateId}
+                        id='state'
+                        name='state'
+                        value={filters.state}
                         onChange={handleFiltersOnChacge}
                         style={{
                           border: '1px solid #cdcdcd',

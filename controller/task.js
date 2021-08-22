@@ -23,73 +23,139 @@ exports.getProjectByUser = async (req, res) => {
 
   const dataFrom = `${req.params.curDateFrom}`.split('|');
   const dataTo = `${req.params.curDateTo}`.split('|');
+  let prj = null;
 
   try {
-    const prj = await Project.aggregate([
-      {
-        $lookup: {
-          from: 'tasks',
-          localField: 'tasks',
-          foreignField: '_id',
-          as: 'tasks'
-        }
-      },
-      {
-        $match: {
-          isEnabled: true,
-          createdAt: {
-            $gte: new Date(
-              `${dataFrom[1]}-${dataFrom[0]}-01`
-            ),
-            $lte: new Date(`${dataTo[1]}-${dataTo[0]}-31`)
+    if (req.params.user === '0') {
+      prj = await Project.aggregate([
+        {
+          $lookup: {
+            from: 'tasks',
+            localField: 'tasks',
+            foreignField: '_id',
+            as: 'tasks'
           }
-        }
-      },
-      {
-        $unwind: {
-          path: '$tasks',
-          preserveNullAndEmptyArrays: false
-        }
-      },
-      {
-        $match: {
-          'tasks.isEnabled': true,
-          'tasks.assignedTo': mongoose.Types.ObjectId(
-            `${req.params.user}`
-          )
-        }
-      },
-      {
-        $project: {
-          tasks: 0
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          projects: {
-            $addToSet: {
-              _id: '$_id',
-              projectName: '$projectName',
-              description: '$description',
-              computedDuration: '$computedDuration',
-              durationUnit: '$durationUnit',
-              duration: '$duration',
-              deadline: '$deadline',
-              priority: '$priority',
-              state: '$state',
-              createdAt: '$createdAt'
+        },
+        {
+          $match: {
+            isEnabled: true,
+            createdAt: {
+              $gte: new Date(
+                `${dataFrom[1]}-${dataFrom[0]}-01`
+              ),
+              $lte: new Date(`${dataTo[1]}-${dataTo[0]}-31`)
             }
           }
+        },
+        {
+          $unwind: {
+            path: '$tasks',
+            preserveNullAndEmptyArrays: false
+          }
+        },
+        {
+          $match: {
+            'tasks.isEnabled': true
+          }
+        },
+        {
+          $project: {
+            tasks: 0
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            projects: {
+              $addToSet: {
+                _id: '$_id',
+                projectName: '$projectName',
+                description: '$description',
+                computedDuration: '$computedDuration',
+                durationUnit: '$durationUnit',
+                duration: '$duration',
+                deadline: '$deadline',
+                priority: '$priority',
+                state: '$state',
+                createdAt: '$createdAt'
+              }
+            }
+          }
+        },
+        {
+          $sort: {
+            createdAt: 1,
+            projectName: 1
+          }
         }
-      },
-      {
-        $sort: {
-          createdAt: 1,
-          projectName: 1
+      ]);
+    } else {
+      prj = await Project.aggregate([
+        {
+          $lookup: {
+            from: 'tasks',
+            localField: 'tasks',
+            foreignField: '_id',
+            as: 'tasks'
+          }
+        },
+        {
+          $match: {
+            isEnabled: true,
+            createdAt: {
+              $gte: new Date(
+                `${dataFrom[1]}-${dataFrom[0]}-01`
+              ),
+              $lte: new Date(`${dataTo[1]}-${dataTo[0]}-31`)
+            }
+          }
+        },
+        {
+          $unwind: {
+            path: '$tasks',
+            preserveNullAndEmptyArrays: false
+          }
+        },
+        {
+          $match: {
+            'tasks.isEnabled': true,
+            'tasks.assignedTo': mongoose.Types.ObjectId(
+              `${req.params.user}`
+            )
+          }
+        },
+        {
+          $project: {
+            tasks: 0
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            projects: {
+              $addToSet: {
+                _id: '$_id',
+                projectName: '$projectName',
+                description: '$description',
+                computedDuration: '$computedDuration',
+                durationUnit: '$durationUnit',
+                duration: '$duration',
+                deadline: '$deadline',
+                priority: '$priority',
+                state: '$state',
+                createdAt: '$createdAt'
+              }
+            }
+          }
+        },
+        {
+          $sort: {
+            createdAt: 1,
+            projectName: 1
+          }
         }
-      }
-    ]);
+      ]);
+    }
 
     console.log(prj);
     return res.json(prj.length > 0 ? prj[0].projects : []);
