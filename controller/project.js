@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Project = require('../models/project');
 const Task = require('../models/task');
 
@@ -90,7 +91,34 @@ exports.updateProject = async (req, res) => {
 
 exports.deleteProject = async (req, res) => {
   console.log('deleteProject called...');
+
   try {
+    // count tasks
+    const taskCnt = await Project.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $unwind: {
+          path: '$tasks',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $count: 'tasks'
+      }
+    ]);
+
+    if (taskCnt[0].tasks > 0) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete failed. Project contains tasks'
+      });
+    }
+
     const result = await Project.deleteOne({
       _id: req.params._id
     });

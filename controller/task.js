@@ -275,13 +275,88 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   console.log('deleteTask called...');
   try {
+    // find task
+    const tsk = await Task.findOne({
+      _id: mongoose.Types.ObjectId(req.params.id)
+    });
+
+    // count comments
+    const cmntCnt = await Task.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $unwind: {
+          path: '$comments',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $count: 'comments'
+      }
+    ]);
+
+    if (cmntCnt.length > 0 && cmntCnt[0].comments > 0) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete aborted! Task contains comments'
+      });
+    }
+
+    // count subtasks
+    const subtaskCnt = await Task.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $unwind: {
+          path: '$subtasks',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $count: 'subtasks'
+      }
+    ]);
+
+    if (
+      subtaskCnt.length > 0 &&
+      subtaskCnt[0].subtasks > 0
+    ) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete aborted! Task contains sub tasks'
+      });
+    }
+
     const result = await Task.deleteOne({
       _id: req.params.id
     });
-    console.log(
-      `Task ${req.params.id} deleted = ${result.deletedCount}`
+
+    // update project tasks
+    const prj = await Project.updateOne(
+      {
+        _id: mongoose.Types.ObjectId(tsk.project)
+      },
+      {
+        $pullAll: {
+          tasks: [req.params.id]
+        }
+      },
+      {
+        new: false,
+        useFindAndModify: false
+      }
     );
-    return res.json({ deletedCount: result.deletedCount });
+
+    console.log(`Task ${req.params.id} deleted`);
+    return res.json({ result, prj });
   } catch (err) {
     console.log(err);
     return res.status(500).json({

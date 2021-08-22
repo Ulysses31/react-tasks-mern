@@ -18,24 +18,24 @@ const {
   getTaskByUser,
   getProjectByUser,
   insertTask,
-  updateTask
-  //   deleteTask
+  updateTask,
+  deleteTask
 } = require('../controller/task');
 
 const {
   getCommentList,
   //   getCommentById,
   insertComment,
-  updateComment
-  //   deleteComment
+  updateComment,
+  deleteComment
 } = require('../controller/comment');
 
 const {
   //   getSubTaskList,
   //   getSubTaskById,
   insertSubTask,
-  updateSubTask
-  //   deleteSubTask
+  updateSubTask,
+  deleteSubTask
 } = require('../controller/subTask');
 
 const {
@@ -110,21 +110,21 @@ router.get(
 );
 router.post('/task', insertTask);
 router.put('/task/:id', updateTask);
-// router.delete('/task/:id', deleteTask);
+router.delete('/task/:id', deleteTask);
 
 // Comment
 router.get('/comment', getCommentList);
 // router.get('/comment/:id', getCommentById);
 router.post('/comment', insertComment);
 router.put('/comment/:id', updateComment);
-// router.delete('/comment/:id', deleteComment);
+router.delete('/comment/:id', deleteComment);
 
 // SubTask
 // router.get('/subTask', getSubTaskList);
 // router.get('/subTask/:id', getSubTaskById);
 router.post('/subTask', insertSubTask);
 router.put('/subTask/:id', updateSubTask);
-// router.delete('/subTask/:id', deleteSubTask);
+router.delete('/subTask/:id', deleteSubTask);
 
 // User
 router.get('/user', getUserList);

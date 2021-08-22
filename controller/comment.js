@@ -70,13 +70,33 @@ exports.updateComment = async (req, res) => {
 exports.deleteComment = async (req, res) => {
   console.log('deleteComment called...');
   try {
+    // find comment
+    const cmnt = await Comment.findOne({
+      _id: req.params.id
+    });
+
+    // delete comment from task
+    const tsk = await Task.updateOne(
+      {
+        _id: cmnt.task
+      },
+      {
+        $pullAll: {
+          comments: [req.params.id]
+        }
+      },
+      {
+        new: false,
+        useFindAndModify: false
+      }
+    );
+
+    // delete comment
     const result = await Comment.deleteOne({
       _id: req.params.id
     });
-    console.log(
-      `Comment ${req.params.id} deleted = ${result.deletedCount}`
-    );
-    return res.json({ deletedCount: result.deletedCount });
+    console.log(`Comment ${req.params.id} deleted`);
+    return res.json({ cmnt, tsk, result });
   } catch (e) {
     console.log(e);
   }

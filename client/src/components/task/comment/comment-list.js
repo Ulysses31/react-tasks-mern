@@ -7,7 +7,7 @@ import { fixDate } from '../../../shared/shared';
 import {
   fetchTaskById,
   setSelectedComment,
-  deactivateComment
+  deleteComment
 } from '../../../state/actions/task-action';
 import './comment.css';
 
@@ -26,7 +26,7 @@ export default function CommentsTemplate({ comments }) {
   const handleDeleteBtn = (id) => {
     if (confirm('Are you sure you want to delete it?')) {
       // delete comment and refresh task details state (taskById)
-      dispatch(deactivateComment(id)).then(() =>
+      dispatch(deleteComment(id)).then(() =>
         dispatch(fetchTaskById(param))
       );
     }

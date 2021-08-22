@@ -9,7 +9,7 @@ export default function ErrorCmp({ err }) {
     var message = err.data;
 
     if (
-      err.data.indexOf(
+      err.data.message.indexOf(
         'System.Exception: Invalid Credentials'
       ) > -1
     ) {
@@ -17,7 +17,7 @@ export default function ErrorCmp({ err }) {
     }
 
     if (
-      err.data.indexOf(
+      err.data.message.indexOf(
         'System.Exception: Email does not exist'
       ) > -1
     ) {
@@ -25,7 +25,7 @@ export default function ErrorCmp({ err }) {
     }
 
     if (
-      err.data.indexOf(
+      err.data.message.indexOf(
         'System.Exception: Email and password are required'
       ) > -1
     ) {
@@ -35,17 +35,17 @@ export default function ErrorCmp({ err }) {
 
     // if (err.data.indexOf('FK_SubTask_Task_TaskId') > -1) {
     if (
-      err.data.indexOf(
-        'Delete aborted! Task contains sub tasks.'
+      err.data.message.indexOf(
+        'Delete aborted! Task contains sub tasks'
       ) > -1
     ) {
-      message = 'Delete aborted. Task contains Sub tasks.';
+      message = 'Delete aborted. Task contains sub tasks.';
     }
 
     // if (err.data.indexOf('FK_TaskComment_Task_TaskId') > -1) {
     if (
-      err.data.indexOf(
-        'Delete aborted! Task contains comments.'
+      err.data.message.indexOf(
+        'Delete aborted! Task contains comments'
       ) > -1
     ) {
       message = 'Delete aborted. Task contains comments.';
@@ -53,8 +53,8 @@ export default function ErrorCmp({ err }) {
 
     // if (err.data.indexOf('FK_Task_Project_ProjectId') > -1) {
     if (
-      err.data.indexOf(
-        'Delete aborted! Project contains tasks.'
+      err.data.message.indexOf(
+        'Delete failed. Project contains tasks'
       ) > -1
     ) {
       message = 'Delete aborted. Project contains tasks.';

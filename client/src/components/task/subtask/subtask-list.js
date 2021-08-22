@@ -6,9 +6,9 @@ import Pagination from '../../../shared/pagination/Pagination';
 import { fixDate, fixTime } from '../../../shared/shared';
 import { fetchComputeDurations } from '../../../state/actions/general-action';
 import {
-  deactivateSubTask,
   fetchTaskById,
-  setSelectedSubTask
+  setSelectedSubTask,
+  deleteSubTask
 } from '../../../state/actions/task-action';
 import './subtask.css';
 import { fetchUsers } from '../../../state/actions/user-action';
@@ -40,7 +40,7 @@ export default function SubTasksTemplate({ subtasks }) {
   const handleDeleteBtn = (id) => {
     if (confirm('Are you sure you want to delete it?')) {
       // delete comment and refresh task details state (taskById)
-      dispatch(deactivateSubTask(id)).then(() =>
+      dispatch(deleteSubTask(id)).then(() =>
         dispatch(fetchTaskById(param))
       );
     }
@@ -122,7 +122,7 @@ export default function SubTasksTemplate({ subtasks }) {
                 {' | '}
                 <Link
                   to='#'
-                  onClick={() => handleDeleteBtn(item.id)}
+                  onClick={() => handleDeleteBtn(item._id)}
                   title='Delete Daily Task'
                 >
                   <i className='bi bi-trash my-icon-form-size'></i>

@@ -9,7 +9,7 @@ import { fetchComputeDurations } from '../../state/actions/general-action';
 import {
   fetchTaskById,
   setSelectedTask,
-  deactivateTask
+  deleteTask
 } from '../../state/actions/task-action';
 import { fetchUsers } from '../../state/actions/user-action';
 import ErrorCmp from '../error/error';
@@ -55,7 +55,7 @@ export default function TaskList() {
 
   const handleDeleteBtn = (id) => {
     if (confirm('Are you sure you want to delete it?')) {
-      dispatch(deactivateTask(history, id));
+      dispatch(deleteTask(history, id));
     }
   };
 
@@ -109,7 +109,7 @@ export default function TaskList() {
             </button>{' '}
             <button
               className='btn btn-sm btn-danger shadow-sm'
-              onClick={() => handleDeleteBtn(task?.id)}
+              onClick={() => handleDeleteBtn(task?._id)}
               disabled={role !== 'Administrator'}
             >
               <i className='bi bi-trash'></i>

@@ -24,7 +24,7 @@ import {
   fetchProjectsByUser,
   setProjectFilters,
   setSelectedProject,
-  deactivateProject
+  deleteProject
 } from '../../state/actions/project-action';
 import { fetchUsers } from '../../state/actions/user-action';
 import './project.css';
@@ -186,7 +186,7 @@ export default function ProjectList() {
 
   const handleDeleteBtn = (id) => {
     if (confirm('Are you sure you want to delete it?')) {
-      dispatch(deactivateProject(id));
+      dispatch(deleteProject(id));
     }
   };
 

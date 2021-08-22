@@ -143,13 +143,69 @@ exports.updateSubTask = async (req, res) => {
 exports.deleteSubTask = async (req, res) => {
   console.log('deleteSubTask called...');
   try {
+    // find sub task
+    const sbtsk = await SubTask.findOne({
+      _id: req.params.id
+    });
+
+    // delete comment from task
+    const tsk = await Task.updateOne(
+      {
+        _id: sbtsk.task
+      },
+      {
+        $pullAll: {
+          subtasks: [req.params.id]
+        }
+      },
+      {
+        new: false,
+        useFindAndModify: false
+      }
+    );
+
+    // delete sub task
     const result = await SubTask.deleteOne({
       _id: req.params.id
     });
-    console.log(
-      `SubTask ${req.params.id} deleted = ${result.deletedCount}`
+
+    // count durations
+    const cnt = await Task.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(sbtsk.task)
+        }
+      },
+      {
+        $lookup: {
+          from: 'subtasks',
+          localField: 'subtasks',
+          foreignField: '_id',
+          as: 'subtasks'
+        }
+      },
+      {
+        $project: {
+          total: {
+            $sum: '$subtasks.computedDuration'
+          }
+        }
+      }
+    ]);
+
+    // update task total duration
+    const totalResult = await Task.updateOne(
+      {
+        _id: sbtsk.task
+      },
+      {
+        $set: { duration: cnt[0].total }
+      },
+      { new: true, useFindAndModify: false }
     );
-    return res.json({ deletedCount: result.deletedCount });
+
+    console.log(`SubTask ${req.params.id} deleted`);
+    return res.json({ sbtsk, tsk, result, totalResult });
   } catch (e) {
     console.log(e);
   }
