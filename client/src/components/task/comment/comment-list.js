@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Pagination from '../../../shared/pagination/Pagination';
-import {
-  fixDate
-} from '../../../shared/shared';
+import { fixDate } from '../../../shared/shared';
 import {
   fetchTaskById,
   setSelectedComment,
@@ -28,8 +26,9 @@ export default function CommentsTemplate({ comments }) {
   const handleDeleteBtn = (id) => {
     if (confirm('Are you sure you want to delete it?')) {
       // delete comment and refresh task details state (taskById)
-      dispatch(deactivateComment(id))
-        .then(() => dispatch(fetchTaskById(param)));
+      dispatch(deactivateComment(id)).then(() =>
+        dispatch(fetchTaskById(param))
+      );
     }
   };
 
@@ -42,57 +41,66 @@ export default function CommentsTemplate({ comments }) {
   // -- pagination table data -----------------------------
 
   return (
-    <div className="col-lg-6 col-md-12">
-      <table className="table table-striped shadow-sm">
+    <div className='col-lg-6 col-md-12'>
+      <table className='table table-striped shadow-sm'>
         <thead>
           <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Created</th>
-            <th scope="col">Comment</th>
-            <th scope="col" className="text-center">
-              <Link to="/tasks/comments/add" title="New Task Comment">
-                <i className="bi bi-plus-lg my-icon-form-size"></i>
+            <th scope='col'>#</th>
+            <th scope='col'>Created</th>
+            <th scope='col'>Comment</th>
+            <th scope='col' className='text-center'>
+              <Link
+                to='/tasks/comments/add'
+                title='New Task Comment'
+              >
+                <i className='bi bi-plus-lg my-icon-form-size'></i>
               </Link>
             </th>
           </tr>
         </thead>
         <tbody>
-          {
-            commentsTableData.map((cm, i) => (
-              <tr key={cm.id}>
-                {/* <td><b>{ */}
-                {/*   currentPage === 1 ? (i + 1) : ((pageSize * (currentPage - 1)) + i) + 1 */}
-                {/* }</b></td> */}
-                <td>{cm.id}</td>
-                <td>
-                  {fixDate(cm.createdOnTicks)} - {cm.creator.title}
-                </td>
-                <td>{cm.description}</td>
-                <td nowrap="true" align="center">
-                  <Link
-                    to='/tasks/comments/add'
-                    onClick={() => handleEditBtn(cm)}
-                    title="Edit Task Comment">
-                    <i className="bi bi-pencil my-icon-form-size"></i>
-                  </Link>{' | '}
-                  <Link
-                    to="#"
-                    onClick={() => handleDeleteBtn(cm.id)}
-                    title="Delete Task Comment">
-                    <i className="bi bi-trash my-icon-form-size"></i>
-                  </Link>
-                </td>
-              </tr>
-            ))
-          }
+          {commentsTableData.map((cm, i) => (
+            <tr key={cm._id}>
+              <td>
+                <b>
+                  {currentPage === 1
+                    ? i + 1
+                    : pageSize * (currentPage - 1) + i + 1}
+                </b>
+              </td>
+              {/* <td>{cm._id}</td> */}
+              <td>
+                {fixDate(cm.createdAt)} - {cm.user.title} (
+                {cm.user.department.name})
+              </td>
+              <td>{cm.description}</td>
+              <td nowrap='true' align='center'>
+                <Link
+                  to='/tasks/comments/add'
+                  onClick={() => handleEditBtn(cm)}
+                  title='Edit Task Comment'
+                >
+                  <i className='bi bi-pencil my-icon-form-size'></i>
+                </Link>
+                {' | '}
+                <Link
+                  to='#'
+                  onClick={() => handleDeleteBtn(cm._id)}
+                  title='Delete Task Comment'
+                >
+                  <i className='bi bi-trash my-icon-form-size'></i>
+                </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
       <Pagination
-        className="pagination-bar"
+        className='pagination-bar'
         currentPage={currentPage}
         totalCount={comments.length}
         pageSize={pageSize}
-        onPageChange={page => setCurrentPage(page)}
+        onPageChange={(page) => setCurrentPage(page)}
       />
     </div>
   );

@@ -53,7 +53,7 @@ const Project = mongoose.model(
     createdAt: {
       type: Date,
       required: false,
-      default: Date.now
+      default: new Date()
     },
     createdBy: {
       type: String,

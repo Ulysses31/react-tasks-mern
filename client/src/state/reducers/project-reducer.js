@@ -20,16 +20,17 @@ const initialState = {
     _id: 0,
     projectName: '',
     description: '',
-    isEnabled: true,
     duration: 0,
     computedDuration: 0,
+    durationUnit: 0,
     deadline: new Date(),
-    priorityId: 1,
-    stateId: 1,
-    durationUnitId: 1,
+    isEnabled: true,
+    state: '',
+    priority: '',
+    tasks: [],
     createdBy: null,
-    updatedBy: null,
-    updatedAt: null
+    updatedAt: null,
+    updatedBy: null
   },
   filters: {
     createdFrom: '',
@@ -78,16 +79,17 @@ export default function projectReducer(
           _id: 0,
           projectName: '',
           description: '',
-          computedDuration: 0,
-          isEnabled: true,
           duration: 0,
+          computedDuration: 0,
+          durationUnit: 0,
           deadline: new Date(),
-          priorityId: 1,
-          stateId: 1,
-          durationUnitId: 1,
+          isEnabled: true,
+          state: '',
+          priority: '',
+          tasks: [],
           createdBy: null,
-          updatedBy: null,
-          updatedAt: null
+          updatedAt: null,
+          updatedBy: null
         },
         error: null
       };

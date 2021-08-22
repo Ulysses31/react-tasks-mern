@@ -357,8 +357,8 @@ export default function ProjectList() {
                 </option>
                 {users &&
                   users.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.title} ({item.departmentId})
+                    <option key={item._id} value={item._id}>
+                      {item.title} ({item.department.name})
                     </option>
                   ))}
               </select>
@@ -422,7 +422,7 @@ export default function ProjectList() {
             <table className='table table-sm table-hover'>
               <thead>
                 <tr>
-                  <th scope='col'>ID</th>
+                  <th scope='col'>#</th>
                   <th scope='col' colSpan='2'>
                     Created
                   </th>
@@ -710,8 +710,8 @@ export default function ProjectList() {
                         {states &&
                           states.map((item) => (
                             <option
-                              key={item.id}
-                              value={item.id}
+                              key={item._id}
+                              value={item._id}
                             >
                               {item.stateName}
                             </option>
@@ -724,10 +724,16 @@ export default function ProjectList() {
               </thead>
               <tbody>
                 {projectsTableData.length > 0 &&
-                  projectsTableData.map((project, i) => (
-                    <tr key={project.id}>
+                  projectsTableData.map((project, cnt) => (
+                    <tr key={project._id}>
                       <td>
-                        <b>{project.id}</b>
+                        <b>
+                          {currentPage === 1
+                            ? cnt + 1
+                            : pageSize * (currentPage - 1) +
+                              cnt +
+                              1}
+                        </b>
                       </td>
                       <td colSpan='2'>
                         <i className='bi bi-calendar3'></i>{' '}
@@ -742,7 +748,7 @@ export default function ProjectList() {
                         {Number.parseFloat(
                           project.duration
                         ).toFixed(2)}{' '}
-                        {
+                        {computeDurationUnits &&
                           computeDurationUnits.find(
                             (item) => {
                               return (
@@ -750,8 +756,7 @@ export default function ProjectList() {
                                 item._id
                               );
                             }
-                          ).code
-                        }
+                          ).code}
                       </td>
                       <td colSpan='2'>
                         <i className='bi bi-calendar3'></i>{' '}

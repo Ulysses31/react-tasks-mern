@@ -29,24 +29,34 @@ const initialState = {
   tasks: [],
   taskById: null, // the details task page
   selectedTask: {
-    id: 0,
+    _id: 0,
     taskName: '',
     description: '',
     startDate: new Date(),
     endDate: null,
     duration: 0,
     isEnabled: true,
-    priorityId: 1,
-    stateId: 1,
-    projectId: 0
+    state: '',
+    priority: '',
+    assignedTo: '',
+    project: 0,
+    createdBy: null,
+    updatedAt: null,
+    updatedBy: null
   },
-  selectedComment: { // selected comment for new - edit
-    id: 0,
+  selectedComment: {
+    // selected comment for new - edit
+    _id: 0,
     description: '',
-    taskId: 0,
-    isEnabled: true
+    task: '',
+    user: '',
+    isEnabled: true,
+    createdBy: null,
+    updatedAt: null,
+    updatedBy: null
   },
-  selectedSubTask: { // selected subt task for new - edit
+  selectedSubTask: {
+    // selected subt task for new - edit
     id: 0,
     subTaskName: '',
     description: '',
@@ -95,20 +105,26 @@ export default function taskReducer(
         ...state,
         isLoading: action.payload
       };
-    case TASK_FETCH: case TASK_USER_FETCH:
+    case TASK_FETCH:
+    case TASK_USER_FETCH:
       return {
         ...state,
         tasks: action.payload,
         selectedTask: {
-          id: 0,
+          _id: 0,
           taskName: '',
           description: '',
           startDate: new Date(),
           endDate: null,
+          duration: 0,
           isEnabled: true,
-          priorityId: 1,
-          stateId: 1,
-          projectId: 0
+          state: '',
+          priority: '',
+          assignedTo: '',
+          project: 0,
+          createdBy: null,
+          updatedAt: null,
+          updatedBy: null
         },
         error: null
       };

@@ -25,65 +25,74 @@ exports.getProjectByUser = async (req, res) => {
   const dataTo = `${req.params.curDateTo}`.split('|');
 
   try {
-    const prj = await Task.aggregate([
+    const prj = await Project.aggregate([
       {
         $lookup: {
-          from: 'projects',
-          localField: 'task.projectId',
-          foreignField: 'project._id',
-          as: 'project'
+          from: 'tasks',
+          localField: 'tasks',
+          foreignField: '_id',
+          as: 'tasks'
         }
       },
       {
         $match: {
-          $and: [
-            {
-              isEnabled: true,
-              assignedTo: mongoose.Types.ObjectId(
-                `${req.params.user}`
-              )
-            }
-          ]
+          isEnabled: true,
+          createdAt: {
+            $gte: new Date(
+              `${dataFrom[1]}-${dataFrom[0]}-01`
+            ),
+            $lte: new Date(`${dataTo[1]}-${dataTo[0]}-31`)
+          }
         }
       },
       {
         $unwind: {
-          path: '$project',
+          path: '$tasks',
           preserveNullAndEmptyArrays: false
         }
       },
       {
         $match: {
-          $and: [
-            {
-              'project.createdAt': {
-                $gte: new Date(
-                  `${dataFrom[1]}-${dataFrom[0]}-01`
-                ),
-                $lte: new Date(
-                  `${dataTo[1]}-${dataTo[0]}-31`
-                )
-              },
-              'project.isEnabled': true
-            }
-          ]
+          'tasks.isEnabled': true,
+          'tasks.assignedTo': mongoose.Types.ObjectId(
+            `${req.params.user}`
+          )
+        }
+      },
+      {
+        $project: {
+          tasks: 0
         }
       },
       {
         $group: {
           _id: null,
-          projects: { $addToSet: '$project' }
+          projects: {
+            $addToSet: {
+              _id: '$_id',
+              projectName: '$projectName',
+              description: '$description',
+              computedDuration: '$computedDuration',
+              durationUnit: '$durationUnit',
+              duration: '$duration',
+              deadline: '$deadline',
+              priority: '$priority',
+              state: '$state',
+              createdAt: '$createdAt'
+            }
+          }
         }
       },
       {
-        $project: {
-          _id: 0,
-          projects: 1
+        $sort: {
+          createdAt: 1,
+          projectName: 1
         }
       }
     ]);
-    // console.log(prj);
-    return res.json(prj[0].projects);
+
+    console.log(prj);
+    return res.json(prj.length > 0 ? prj[0].projects : []);
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -115,12 +124,20 @@ exports.getTaskById = async (req, res) => {
   console.log(`getTaskById executed...
     Param: ${req.params.id}`);
   try {
-    // const task = await Task.find({
-    //   _id: req.params.id
-    // });
-    const task = await Project.findOne({
-      'task._id': req.params.id
-    });
+    const task = await Task.findOne({
+      _id: req.params.id
+    })
+      .populate('project')
+      .populate('assignedTo')
+      .populate('state')
+      .populate('priority')
+      .populate('subtasks')
+      .populate({
+        path: 'comments',
+        populate: [
+          { path: 'user', populate: { path: 'department' } }
+        ]
+      });
     return res.json(task);
   } catch (err) {
     console.log(err);
@@ -164,20 +181,23 @@ exports.getTaskByUser = async (req, res) => {
 exports.insertTask = async (req, res) => {
   console.log('insertTask executed...');
   try {
+    req.body._id = null;
+
     const task = new Task(req.body);
+    const tskResult = await task.save();
+    const indx = await Task.findOne({ guid: task.guid });
 
     const result = await Project.updateOne(
       {
-        _id: req.body.projectId
+        _id: req.body.project
       },
       {
-        $set: {
-          task: task
-        }
-      }
+        $push: { tasks: indx._id }
+      },
+      { new: true, useFindAndModify: false }
     );
 
-    return res.json({ result });
+    return res.json({ tskResult, result });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
@@ -191,14 +211,54 @@ exports.insertTask = async (req, res) => {
 exports.updateTask = async (req, res) => {
   console.log('updateTask called...');
   try {
-    const result = await Task.updateOne(
+    req.body.updatedAt = new Date();
+
+    const updateTask = await Task.updateOne(
       { _id: req.params.id },
       req.body
     );
-    console.log(
-      `Task ${req.params.id} updated = ${result.nModified}`
+
+    // clear projects
+    const projectClearResult = await Project.updateOne(
+      {
+        tasks: req.params.id
+      },
+      {
+        $pullAll: {
+          tasks: [req.params.id]
+        }
+      },
+      {
+        new: false,
+        useFindAndModify: false
+      }
     );
-    return res.json({ nModified: result.nModified });
+
+    // update project
+    const projectUpdateResult =
+      await Project.findByIdAndUpdate(
+        {
+          _id: req.body.project._id
+            ? req.body.project._id
+            : req.body.project
+        },
+        {
+          $push: {
+            tasks: [req.body._id]
+          }
+        },
+        {
+          new: true,
+          useFindAndModify: false
+        }
+      );
+
+    console.log(`Task ${req.params.id} updated`);
+    return res.json({
+      updateTask,
+      projectClearResult,
+      projectUpdateResult
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({

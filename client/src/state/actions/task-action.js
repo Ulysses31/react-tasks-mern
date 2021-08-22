@@ -159,7 +159,7 @@ export function insertTask(hst, tsk) {
 export function updateTask(hst, tsk) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrl}/${tsk.id}`, tsk, options)
+      .put(`${apiUrl}/${tsk._id}`, tsk, options)
       .then((response) => {
         // console.log(response);
         dispatch({
@@ -330,7 +330,7 @@ export function insertComment(hst, cmn) {
 export function updateComment(hst, cmn) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrlComments}/${cmn.id}`, cmn, options)
+      .put(`${apiUrlComments}/${cmn._id}`, cmn, options)
       .then((response) => {
         // console.log(response);
         dispatch({

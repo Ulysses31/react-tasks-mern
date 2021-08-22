@@ -43,27 +43,27 @@ const dropCollections = () => {
   //     }
   //   });
 
-  Department.collection.countDocuments().then((result) => {
-    console.log(`Department: ${result}`);
-    if (result > 0) {
-      Department.collection
-        .drop()
-        .then(() => seedDepartments());
-    } else {
-      seedDepartments();
-    }
-  });
+  // Department.collection.countDocuments().then((result) => {
+  //   console.log(`Department: ${result}`);
+  //   if (result > 0) {
+  //     Department.collection
+  //       .drop()
+  //       .then(() => seedDepartments());
+  //   } else {
+  //     seedDepartments();
+  //   }
+  // });
 
-  UserRole.collection.countDocuments().then((result) => {
-    console.log(`UserRole: ${result}`);
-    if (result > 0) {
-      UserRole.collection
-        .drop()
-        .then(() => seedUserRoles());
-    } else {
-      seedUserRoles();
-    }
-  });
+  // UserRole.collection.countDocuments().then((result) => {
+  //   console.log(`UserRole: ${result}`);
+  //   if (result > 0) {
+  //     UserRole.collection
+  //       .drop()
+  //       .then(() => seedUserRoles());
+  //   } else {
+  //     seedUserRoles();
+  //   }
+  // });
 
   // User.collection.countDocuments().then((result) => {
   //   console.log(`User: ${result}`);
@@ -101,14 +101,14 @@ const dropCollections = () => {
   //   }
   // });
 
-  // Project.collection.countDocuments().then((result) => {
-  //   console.log(`Project: ${result}`);
-  //   if (result > 0) {
-  //     Project.collection.drop().then(() => seedProjects());
-  //   } else {
-  //     seedProjects();
-  //   }
-  // });
+  Project.collection.countDocuments().then((result) => {
+    console.log(`Project: ${result}`);
+    if (result > 0) {
+      Project.collection.drop().then(() => seedProjects());
+    } else {
+      seedProjects();
+    }
+  });
 };
 
 const seedStates = () => {

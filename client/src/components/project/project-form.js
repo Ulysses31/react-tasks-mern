@@ -67,7 +67,7 @@ export default function ProjectForm() {
                 )
               : dispatch(
                   getDefaultComputedDurationById(
-                    projectForm.durationUnitId
+                    projectForm.durationUnit
                   )
                 )
           )
@@ -95,23 +95,24 @@ export default function ProjectForm() {
         _id: 0,
         projectName: '',
         description: '',
-        computedDuration: 0,
-        isEnabled: true,
         duration: 0,
+        computedDuration: 0,
+        durationUnit: 0,
         deadline: new Date(),
-        priorityId: 1,
-        stateId: 1,
-        durationUnitId: 1,
+        isEnabled: true,
+        state: '',
+        priority: '',
+        tasks: [],
         createdBy: null,
-        updatedBy: null,
-        updatedAt: null
+        updatedAt: null,
+        updatedBy: null
       })
     );
   };
 
   const handleOnChange = (e) => {
     // set the selected computed unit duration as default computed unit in general state
-    if (e.target.name === 'durationUnitId') {
+    if (e.target.name === 'durationUnit') {
       dispatch(
         getDefaultComputedDurationById(e.target.value)
       );
@@ -200,14 +201,14 @@ export default function ProjectForm() {
                 />
               </div>
               <div className='form-group col-md-2'>
-                <label htmlFor='durationUnitId'>
+                <label htmlFor='durationUnit'>
                   DurationUnit
                 </label>
                 <select
                   className='form-control form-control-sm'
-                  id='durationUnitId'
-                  name='durationUnitId'
-                  value={projectForm.durationUnitId}
+                  id='durationUnit'
+                  name='durationUnit'
+                  value={projectForm.durationUnit}
                   onChange={handleOnChange}
                   required
                 >
@@ -219,7 +220,6 @@ export default function ProjectForm() {
                       <option
                         key={item._id}
                         value={item._id}
-                        selected='selected'
                       >
                         {item.code}
                       </option>
@@ -272,12 +272,12 @@ export default function ProjectForm() {
                 />
               </div>
               <div className='form-group col-md-2'>
-                <label htmlFor='priorityId'>Priority</label>
+                <label htmlFor='priority'>Priority</label>
                 <select
                   className='form-control form-control-sm'
-                  id='priorityId'
-                  name='priorityId'
-                  value={projectForm.priorityId}
+                  id='priority'
+                  name='priority'
+                  value={projectForm.priority}
                   onChange={handleOnChange}
                   required
                 >
@@ -296,12 +296,12 @@ export default function ProjectForm() {
                 </select>
               </div>
               <div className='form-group col-md-2'>
-                <label htmlFor='stateId'>State</label>
+                <label htmlFor='state'>State</label>
                 <select
                   className='form-control form-control-sm'
-                  id='stateId'
-                  name='stateId'
-                  value={projectForm.stateId}
+                  id='state'
+                  name='state'
+                  value={projectForm.state}
                   onChange={handleOnChange}
                   required
                 >
@@ -313,7 +313,6 @@ export default function ProjectForm() {
                       <option
                         key={item._id}
                         value={item._id}
-                        selected='selected'
                       >
                         {item.stateName}
                       </option>

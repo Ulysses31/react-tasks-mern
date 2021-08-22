@@ -326,7 +326,7 @@ export default function TaskList() {
           <td align='center'>
             <Link
               className='btn btn-sm btn-primary shadow-sm'
-              to={`/tasks/details/${task.id}`}
+              to={`/tasks/details/${task._id}`}
             >
               <i className='bi bi-clipboard'></i> Details
             </Link>
@@ -376,7 +376,10 @@ export default function TaskList() {
                   </option>
                   {users &&
                     users.map((item) => (
-                      <option key={item.id} value={item.id}>
+                      <option
+                        key={item._id}
+                        value={item._id}
+                      >
                         {item.title} ({item.department.name}
                         )
                       </option>
@@ -648,8 +651,8 @@ export default function TaskList() {
                         {priorities &&
                           priorities.map((item) => (
                             <option
-                              key={item.id}
-                              value={item.id}
+                              key={item._id}
+                              value={item._id}
                             >
                               {item.name}
                             </option>
@@ -688,8 +691,8 @@ export default function TaskList() {
                         {states &&
                           states.map((item) => (
                             <option
-                              key={item.id}
-                              value={item.id}
+                              key={item._id}
+                              value={item._id}
                             >
                               {item.stateName}
                             </option>
@@ -703,7 +706,7 @@ export default function TaskList() {
                 {tasksTableData.length > 0 &&
                   tasksTableData.map((task, i) => (
                     <TaskTemplate
-                      key={task.id}
+                      key={task._id}
                       task={task}
                       cnt={i}
                     />
