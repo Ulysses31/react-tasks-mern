@@ -70,8 +70,7 @@ export default function CommentsTemplate({ comments }) {
               </td>
               {/* <td>{cm._id}</td> */}
               <td>
-                {fixDate(cm.createdAt)} - {cm.user.title} (
-                {cm.user.department.name})
+                {fixDate(cm.createdAt)} - {cm.user.title}
               </td>
               <td>{cm.description}</td>
               <td nowrap='true' align='center'>

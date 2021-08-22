@@ -57,16 +57,20 @@ const initialState = {
   },
   selectedSubTask: {
     // selected subt task for new - edit
-    id: 0,
+    _id: 0,
     subTaskName: '',
     description: '',
     startDate: new Date(),
     startTime: null,
     duration: 0,
     computedDuration: 0,
-    taskId: 0,
+    durationUnit: 0,
+    task: null,
     isEnabled: true,
-    durationUnitId: 1
+    guid: '',
+    createdBy: null,
+    updatedAt: null,
+    updatedBy: null
   },
   filters: {
     project: '',

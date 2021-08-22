@@ -434,7 +434,7 @@ export function insertSubTask(hst, sbt) {
 export function updateSubTask(hst, sbt) {
   return (dispatch) => {
     return axios
-      .put(`${apiUrlSubTasks}/${sbt.id}`, sbt, options)
+      .put(`${apiUrlSubTasks}/${sbt._id}`, sbt, options)
       .then((response) => {
         // console.log(response);
         dispatch({

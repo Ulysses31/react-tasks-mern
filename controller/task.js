@@ -131,7 +131,10 @@ exports.getTaskById = async (req, res) => {
       .populate('assignedTo')
       .populate('state')
       .populate('priority')
-      .populate('subtasks')
+      .populate('durationUnit')
+      .populate({
+        path: 'subtasks'
+      })
       .populate({
         path: 'comments',
         populate: [

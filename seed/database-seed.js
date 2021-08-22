@@ -83,14 +83,14 @@ const dropCollections = () => {
   //   }
   // });
 
-  // SubTask.collection.countDocuments().then((result) => {
-  //   console.log(`SubTask: ${result}`);
-  //   if (result > 0) {
-  //     SubTask.collection.drop().then(() => seedSubTasks());
-  //   } else {
-  //     seedSubTasks();
-  //   }
-  // });
+  SubTask.collection.countDocuments().then((result) => {
+    console.log(`SubTask: ${result}`);
+    if (result > 0) {
+      SubTask.collection.drop().then(() => seedSubTasks());
+    } else {
+      seedSubTasks();
+    }
+  });
 
   // Task.collection.countDocuments().then((result) => {
   //   console.log(`Task: ${result}`);
@@ -101,14 +101,14 @@ const dropCollections = () => {
   //   }
   // });
 
-  Project.collection.countDocuments().then((result) => {
-    console.log(`Project: ${result}`);
-    if (result > 0) {
-      Project.collection.drop().then(() => seedProjects());
-    } else {
-      seedProjects();
-    }
-  });
+  // Project.collection.countDocuments().then((result) => {
+  //   console.log(`Project: ${result}`);
+  //   if (result > 0) {
+  //     Project.collection.drop().then(() => seedProjects());
+  //   } else {
+  //     seedProjects();
+  //   }
+  // });
 };
 
 const seedStates = () => {
@@ -642,7 +642,7 @@ const seedSubTasks = () => {
     startTime: '2021-08-15T19:24:39.4191775',
     duration: 10.0,
     computedDuration: 10.0,
-    durationUnitId: '61121d2e3cd3f7eeb6047e32',
+    durationUnit: '61121d2e3cd3f7eeb6047e32',
     isEnabled: true,
     task: '6110c31c9423eea0f5280e1d',
     createdBy: '6110c317a6c48b70cee33202',
@@ -658,7 +658,7 @@ const seedSubTasks = () => {
     startTime: '2021-08-17T19:24:39.4191775',
     duration: 10.0,
     computedDuration: 10.0,
-    durationUnitId: '61121d2e3cd3f7eeb6047e32',
+    durationUnit: '61121d2e3cd3f7eeb6047e32',
     isEnabled: true,
     task: '6110c31c9423eea0f5280e1d',
     createdBy: '6110c317a6c48b70cee33202',
@@ -674,7 +674,7 @@ const seedSubTasks = () => {
     startTime: '2021-08-27T19:24:39.4191775',
     duration: 20.0,
     computedDuration: 20.0,
-    durationUnitId: '61121d2e3cd3f7eeb6047e32',
+    durationUnit: '61121d2e3cd3f7eeb6047e32',
     isEnabled: true,
     task: '6110c31c9423eea0f5280e1c',
     createdBy: '6110c317a6c48b70cee33202',
@@ -690,7 +690,7 @@ const seedSubTasks = () => {
     startTime: '2021-08-30T19:24:39.4191775',
     duration: 25.0,
     computedDuration: 25.0,
-    durationUnitId: '61121d2e3cd3f7eeb6047e32',
+    durationUnit: '61121d2e3cd3f7eeb6047e32',
     isEnabled: true,
     task: '6110c31c9423eea0f5280e1c',
     createdBy: '6110c317a6c48b70cee33202',
@@ -706,7 +706,7 @@ const seedSubTasks = () => {
     startTime: '2021-08-31T19:24:39.4191775',
     duration: 45.0,
     computedDuration: 45.0,
-    durationUnitId: '61121d2e3cd3f7eeb6047e32',
+    durationUnit: '61121d2e3cd3f7eeb6047e32',
     isEnabled: true,
     task: '61139693c3d575ed33bf6698',
     createdBy: '6110c317a6c48b70cee33202',
@@ -722,7 +722,7 @@ const seedSubTasks = () => {
     startTime: '2021-08-31T19:24:39.4191775',
     duration: 45.0,
     computedDuration: 45.0,
-    durationUnitId: '61121d2e3cd3f7eeb6047e32',
+    durationUnit: '61121d2e3cd3f7eeb6047e32',
     isEnabled: true,
     task: '61139693c3d575ed33bf6658',
     createdBy: '6110c317a6c48b70cee33202',

@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 // import ScaleLoader from 'react-spinners/ScaleLoader';
 import { fixDate } from '../../shared/shared';
+import { fetchComputeDurations } from '../../state/actions/general-action';
 import {
   fetchTaskById,
   setSelectedTask,
   deactivateTask
 } from '../../state/actions/task-action';
+import { fetchUsers } from '../../state/actions/user-action';
 import ErrorCmp from '../error/error';
 import CommentsTemplate from './comment/comment-list';
 import SubTasksTemplate from './subtask/subtask-list';
@@ -39,7 +41,11 @@ export default function TaskList() {
   const param = useParams().id;
 
   useEffect(() => {
-    dispatch(fetchTaskById(param));
+    dispatch(fetchUsers()).then(() =>
+      dispatch(fetchComputeDurations()).then(() =>
+        dispatch(fetchTaskById(param))
+      )
+    );
   }, []);
 
   const handleEditBtn = (task) => {

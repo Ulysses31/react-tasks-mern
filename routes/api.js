@@ -30,13 +30,13 @@ const {
   //   deleteComment
 } = require('../controller/comment');
 
-// const {
-//   getSubTaskList,
-//   getSubTaskById,
-//   insertSubTask,
-//   updateSubTask,
-//   deleteSubTask
-// } = require('../controller/subTask');
+const {
+  //   getSubTaskList,
+  //   getSubTaskById,
+  insertSubTask,
+  updateSubTask
+  //   deleteSubTask
+} = require('../controller/subTask');
 
 const {
   getUserList,
@@ -122,8 +122,8 @@ router.put('/comment/:id', updateComment);
 // SubTask
 // router.get('/subTask', getSubTaskList);
 // router.get('/subTask/:id', getSubTaskById);
-// router.post('/subTask', insertSubTask);
-// router.put('/subTask/:id', updateSubTask);
+router.post('/subTask', insertSubTask);
+router.put('/subTask/:id', updateSubTask);
 // router.delete('/subTask/:id', deleteSubTask);
 
 // User
