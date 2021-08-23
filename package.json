@@ -23,7 +23,7 @@
   },
   "homepage": "",
   "scripts": {
-    "start": "set DEBUG=http,express:* & nodemon --inspect ./bin/www",
+    "start": "set DEBUG=http,express:* & nodemon --inspect server.js",
     "test": "mocha \"./tests/**/*.js\" --exit --reporter spec",
     "lint": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json",
     "lintfix": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json --fix",

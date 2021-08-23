@@ -13,6 +13,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const app = express();
 dotenv.config();
+const PORT = process.env.PORT || '5000';
 
 app.use(logger('dev'));
 app.use(cookieParser());
@@ -21,6 +22,7 @@ app.use(morgan('combined'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
 // production script needed
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -125,5 +127,11 @@ mongoose.connect(
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 app.use('*', pageNotFoundRouter);
+
+app.listen(PORT, () => {
+  console.log(
+    `Server started at http://localhost:${PORT}...`
+  );
+});
 
 module.exports = app;
