@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+var seed = require('../seed/database-seed');
 
 const {
   getProjectList,
@@ -171,5 +172,11 @@ router.delete(
   '/computeDuration/:id',
   deleteComputedduration
 );
+
+/* GET seed page. */
+router.get('/seed', function (req, res, next) {
+  seed.dropCollections();
+  res.end('<h1>Database seeded...</h1>');
+});
 
 module.exports = router;

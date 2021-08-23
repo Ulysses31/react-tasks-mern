@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const indexRouter = require('./routes/index');
+const seedRouter = require('./routes/seed');
 const apiRouter = require('./routes/api');
 const pageNotFoundRouter = require('./routes/pageNotFound');
 // const swaggerUi = require('swagger-ui-express');
@@ -110,9 +110,7 @@ mongoose.connect(
 // });
 
 // routes
-app.use('/', indexRouter);
 app.use('/api', apiRouter);
-app.use('*', pageNotFoundRouter);
 
 // production script needed
 if (process.env.NODE_ENV === 'production') {
