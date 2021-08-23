@@ -10,25 +10,25 @@ const SubTask = require('../models/subTask');
 const Comment = require('../models/comment');
 
 const dropCollections = () => {
-  // State.collection.countDocuments().then((result) => {
-  //   console.log(`State: ${result}`);
-  //   if (result > 0) {
-  //     State.collection.drop().then(() => seedStates());
-  //   } else {
-  //     seedStates();
-  //   }
-  // });
+  State.collection.countDocuments().then((result) => {
+    console.log(`State: ${result}`);
+    if (result > 0) {
+      State.collection.drop().then(() => seedStates());
+    } else {
+      seedStates();
+    }
+  });
 
-  // Priority.collection.countDocuments().then((result) => {
-  //   console.log(`Priority: ${result}`);
-  //   if (result > 0) {
-  //     Priority.collection
-  //       .drop()
-  //       .then(() => seedPriorities());
-  //   } else {
-  //     seedPriorities();
-  //   }
-  // });
+  Priority.collection.countDocuments().then((result) => {
+    console.log(`Priority: ${result}`);
+    if (result > 0) {
+      Priority.collection
+        .drop()
+        .then(() => seedPriorities());
+    } else {
+      seedPriorities();
+    }
+  });
 
   ComputeDuration.collection
     .countDocuments()
@@ -43,72 +43,72 @@ const dropCollections = () => {
       }
     });
 
-  // Department.collection.countDocuments().then((result) => {
-  //   console.log(`Department: ${result}`);
-  //   if (result > 0) {
-  //     Department.collection
-  //       .drop()
-  //       .then(() => seedDepartments());
-  //   } else {
-  //     seedDepartments();
-  //   }
-  // });
+  Department.collection.countDocuments().then((result) => {
+    console.log(`Department: ${result}`);
+    if (result > 0) {
+      Department.collection
+        .drop()
+        .then(() => seedDepartments());
+    } else {
+      seedDepartments();
+    }
+  });
 
-  // UserRole.collection.countDocuments().then((result) => {
-  //   console.log(`UserRole: ${result}`);
-  //   if (result > 0) {
-  //     UserRole.collection
-  //       .drop()
-  //       .then(() => seedUserRoles());
-  //   } else {
-  //     seedUserRoles();
-  //   }
-  // });
+  UserRole.collection.countDocuments().then((result) => {
+    console.log(`UserRole: ${result}`);
+    if (result > 0) {
+      UserRole.collection
+        .drop()
+        .then(() => seedUserRoles());
+    } else {
+      seedUserRoles();
+    }
+  });
 
-  // User.collection.countDocuments().then((result) => {
-  //   console.log(`User: ${result}`);
-  //   if (result > 0) {
-  //     User.collection.drop().then(() => seedUsers());
-  //   } else {
-  //     seedUsers();
-  //   }
-  // });
+  User.collection.countDocuments().then((result) => {
+    console.log(`User: ${result}`);
+    if (result > 0) {
+      User.collection.drop().then(() => seedUsers());
+    } else {
+      seedUsers();
+    }
+  });
 
-  // Comment.collection.countDocuments().then((result) => {
-  //   console.log(`Comment: ${result}`);
-  //   if (result > 0) {
-  //     Comment.collection.drop().then(() => seedComments());
-  //   } else {
-  //     seedComments();
-  //   }
-  // });
+  Comment.collection.countDocuments().then((result) => {
+    console.log(`Comment: ${result}`);
+    if (result > 0) {
+      Comment.collection.drop().then(() => seedComments());
+    } else {
+      seedComments();
+    }
+  });
 
-  // SubTask.collection.countDocuments().then((result) => {
-  //   console.log(`SubTask: ${result}`);
-  //   if (result > 0) {
-  //     SubTask.collection.drop().then(() => seedSubTasks());
-  //   } else {
-  //     seedSubTasks();
-  //   }
-  // });
+  SubTask.collection.countDocuments().then((result) => {
+    console.log(`SubTask: ${result}`);
+    if (result > 0) {
+      SubTask.collection.drop().then(() => seedSubTasks());
+    } else {
+      seedSubTasks();
+    }
+  });
 
-  // Task.collection.countDocuments().then((result) => {
-  //   console.log(`Task: ${result}`);
-  //   if (result > 0) {
-  //     Task.collection.drop().then(() => seedTasks());
-  //   } else {
-  //     seedTasks();
-  //   }
-  // });
+  Task.collection.countDocuments().then((result) => {
+    console.log(`Task: ${result}`);
+    if (result > 0) {
+      Task.collection.drop().then(() => seedTasks());
+    } else {
+      seedTasks();
+    }
+  });
 
-  // Project.collection.countDocuments().then((result) => {
-  //   console.log(`Project: ${result}`);
-  //   if (result > 0) {
-  //     Project.collection.drop().then(() => seedProjects());
-  //   } else {
-  //     seedProjects();
-  //   }
-  // });
+  Project.collection.countDocuments().then((result) => {
+    console.log(`Project: ${result}`);
+    if (result > 0) {
+      Project.collection.drop().then(() => seedProjects());
+    } else {
+      seedProjects();
+    }
+  });
 };
 
 const seedStates = () => {

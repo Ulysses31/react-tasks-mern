@@ -5,12 +5,16 @@
   "author": {
     "name": "Iordanidis Chris"
   },
-  "description": "React MERN Redux Tasks client",
+  "description": "React MERN Redux Projects Tasks client",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ulysses31/react-mern-tasks.git"
   },
-  "keywords": [],
+  "keywords": [
+    "projects",
+    "tassks",
+    "client"
+  ],
   "engines": {
     "node": "16.4.2",
     "npm": "7.19.1"

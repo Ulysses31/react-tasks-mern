@@ -1,16 +1,18 @@
 {
-  "name": "node-crm",
+  "name": "react-projects-tasks",
   "version": "1.0.0",
   "private": true,
   "author": "Iordanidis Chris",
   "license": "MIT",
-  "description": "NodeJS Tasks API Server",
+  "description": "NodeJS Projects Tasks API Server",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ulysses31/react-mern-tasks.git"
   },
   "keywords": [
-    "tasks"
+    "projects",
+    "tasks",
+    "api"
   ],
   "engines": {
     "node": "16.4.2",
@@ -24,7 +26,8 @@
     "start": "set DEBUG=http,express:* & nodemon --inspect ./bin/www",
     "test": "mocha \"./tests/**/*.js\" --exit --reporter spec",
     "lint": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json",
-    "lintfix": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json --fix"
+    "lintfix": "eslint ./*.js ./models/*.js ./routes/*.js --ext .js --config .eslintrc.json --fix",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",

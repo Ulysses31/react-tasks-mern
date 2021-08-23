@@ -61,7 +61,7 @@ const SubTask = mongoose.model(
     },
     guid: {
       type: String,
-      required: true
+      required: false
       // default: uuidv4()
     }
   })
