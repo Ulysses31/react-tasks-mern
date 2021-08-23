@@ -22,6 +22,7 @@
     "url": ""
   },
   "homepage": "",
+  "main": "server.js",
   "scripts": {
     "start": "set DEBUG=http,express:* & nodemon --inspect server.js",
     "test": "mocha \"./tests/**/*.js\" --exit --reporter spec",

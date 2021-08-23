@@ -23,7 +23,7 @@
     "url": ""
   },
   "homepage": "",
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:3001",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
