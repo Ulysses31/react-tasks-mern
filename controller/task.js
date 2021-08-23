@@ -224,17 +224,33 @@ exports.getTaskByUser = async (req, res) => {
 
   const dataFrom = req.params.dateFrom;
   const dataTo = req.params.dateTo;
+  let tsk = null;
 
   try {
-    const tsk = await Task.find({
-      isEnabled: true,
-      assignedTo: mongoose.Types.ObjectId(req.params.user),
-      startDate: { $gte: dataFrom, $lte: dataTo }
-    })
-      .populate('state')
-      .populate('priority')
-      .populate('project')
-      .populate('assignedTo');
+    if (req.params.user === '0') {
+      tsk = await Task.find({
+        isEnabled: true,
+        startDate: { $gte: dataFrom, $lte: dataTo }
+      })
+        .populate('state')
+        .populate('priority')
+        .populate('project')
+        .populate('assignedTo')
+        .sort({ createdAt: 1 });
+    } else {
+      tsk = await Task.find({
+        isEnabled: true,
+        assignedTo: mongoose.Types.ObjectId(
+          req.params.user
+        ),
+        startDate: { $gte: dataFrom, $lte: dataTo }
+      })
+        .populate('state')
+        .populate('priority')
+        .populate('project')
+        .populate('assignedTo')
+        .sort({ createdAt: 1 });
+    }
 
     return res.json(tsk);
   } catch (err) {

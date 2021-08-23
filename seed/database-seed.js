@@ -30,18 +30,18 @@ const dropCollections = () => {
   //   }
   // });
 
-  // ComputeDuration.collection
-  //   .countDocuments()
-  //   .then((result) => {
-  //     console.log(`ComputeDuration: ${result}`);
-  //     if (result > 0) {
-  //       ComputeDuration.collection
-  //         .drop()
-  //         .then(() => seedComputeDurations());
-  //     } else {
-  //       seedComputeDurations();
-  //     }
-  //   });
+  ComputeDuration.collection
+    .countDocuments()
+    .then((result) => {
+      console.log(`ComputeDuration: ${result}`);
+      if (result > 0) {
+        ComputeDuration.collection
+          .drop()
+          .then(() => seedComputeDurations());
+      } else {
+        seedComputeDurations();
+      }
+    });
 
   // Department.collection.countDocuments().then((result) => {
   //   console.log(`Department: ${result}`);
@@ -83,14 +83,14 @@ const dropCollections = () => {
   //   }
   // });
 
-  SubTask.collection.countDocuments().then((result) => {
-    console.log(`SubTask: ${result}`);
-    if (result > 0) {
-      SubTask.collection.drop().then(() => seedSubTasks());
-    } else {
-      seedSubTasks();
-    }
-  });
+  // SubTask.collection.countDocuments().then((result) => {
+  //   console.log(`SubTask: ${result}`);
+  //   if (result > 0) {
+  //     SubTask.collection.drop().then(() => seedSubTasks());
+  //   } else {
+  //     seedSubTasks();
+  //   }
+  // });
 
   // Task.collection.countDocuments().then((result) => {
   //   console.log(`Task: ${result}`);

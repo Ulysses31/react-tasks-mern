@@ -50,12 +50,10 @@ export default function UserList() {
           item.position
             .toLowerCase()
             .includes(filters.position.toLowerCase())) &&
-        (Number.parseInt(filters.department) === 0 ||
-          Number.parseInt(item.departmentId) ===
-            Number.parseInt(filters.department)) &&
-        (Number.parseInt(filters.roleId) === 0 ||
-          Number.parseInt(item.userRoleId) ===
-            Number.parseInt(filters.roleId))
+        (filters.department === '0' ||
+          item.department._id === filters.department) &&
+        (filters.role === '0' ||
+          item.role._id === filters.role)
       );
     })
   );
@@ -96,8 +94,8 @@ export default function UserList() {
       setUserFilters({
         title: '',
         position: '',
-        department: 0,
-        roleId: 0
+        department: '0',
+        role: '0'
       })
     );
   };
@@ -203,8 +201,8 @@ export default function UserList() {
             </button>{' '}
             <button
               className='btn btn-sm btn-danger shadow-sm'
-              onClick={() => handleDeleteBtn(user.id)}
-              disabled={role !== ''}
+              onClick={() => handleDeleteBtn(user._id)}
+              disabled={role !== 'Administrator'}
             >
               <i className='bi bi-trash'></i>
             </button>
@@ -352,7 +350,7 @@ export default function UserList() {
                       >
                         <option
                           key='pj'
-                          value='0'
+                          value={'0'}
                           defaultValue
                         >
                           ---
@@ -405,9 +403,9 @@ export default function UserList() {
                       </div>
                       <select
                         className='form-control form-control-sm'
-                        id='roleId'
-                        name='roleId'
-                        value={filters.roleId}
+                        id='role'
+                        name='role'
+                        value={filters.role}
                         onChange={handleFiltersOnChacge}
                         style={{
                           border: '1px solid #cdcdcd',
@@ -416,7 +414,7 @@ export default function UserList() {
                       >
                         <option
                           key={'all'}
-                          value='0'
+                          value={'0'}
                           defaultValue
                         >
                           ---

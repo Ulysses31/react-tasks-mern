@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const User = require('../models/user');
 const Department = require('../models/department');
 const UserRole = require('../models/userRole');
@@ -202,10 +203,64 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   console.log('deleteUser called...');
+
   try {
+    // find comments
+    const cmnCnt = await User.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $unwind: {
+          path: '$comments',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $count: 'comments'
+      }
+    ]);
+
+    if (cmnCnt.length > 0 && cmnCnt[0].comments > 0) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete failed. User contains comments'
+      });
+    }
+
+    // find tasks
+    const tskCnt = await User.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $unwind: {
+          path: '$tasks',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $count: 'tasks'
+      }
+    ]);
+
+    if (tskCnt.length > 0 && tskCnt[0].tasks > 0) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete failed. User contains tasks'
+      });
+    }
+
     const result = await User.deleteOne({
       _id: req.params.id
     });
+
     console.log(
       `User ${req.params.id} deleted = ${result.deletedCount}`
     );

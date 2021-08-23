@@ -18,6 +18,38 @@ export default function ErrorCmp({ err }) {
 
     if (
       err.data.message.indexOf(
+        'Delete aborted. Duration unit in use'
+      ) > -1
+    ) {
+      message = 'Delete aborted. Duration unit in use.';
+    }
+
+    if (
+      err.data.message.indexOf(
+        'Delete failed. User contains comments'
+      ) > -1
+    ) {
+      message = 'Delete failed. User contains comments.';
+    }
+
+    if (
+      err.data.message.indexOf(
+        'Delete failed. User contains tasks'
+      ) > -1
+    ) {
+      message = 'Delete failed. User contains tasks.';
+    }
+
+    if (
+      err.data.message.indexOf(
+        'Delete failed. Department contains users'
+      ) > -1
+    ) {
+      message = 'Delete failed. Department contains users.';
+    }
+
+    if (
+      err.data.message.indexOf(
         'System.Exception: Email does not exist'
       ) > -1
     ) {

@@ -40,8 +40,8 @@ const initialState = {
     duration: 0,
     deadlineFrom: '',
     deadlineTo: '',
-    priority: 0,
-    state: 0,
+    priority: '0',
+    state: '0',
     selectedUser: 0,
     selectedMonthFrom: 0,
     selectedMonthTo: 0

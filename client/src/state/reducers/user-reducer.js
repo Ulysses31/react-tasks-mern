@@ -19,14 +19,14 @@ const initialState = {
     username: '',
     password: '',
     position: '',
-    department: '',
+    department: '0',
     email: '',
     telephone: '',
     mobile: '',
     internalPhone: '',
     title: '',
     isEnabled: true,
-    role: '',
+    role: '0',
     createdBy: null,
     updatedBy: null,
     updatedAt: null
@@ -34,8 +34,8 @@ const initialState = {
   filters: {
     title: '',
     position: '',
-    department: 0,
-    roleId: 0
+    department: '0',
+    role: '0'
   },
   isLoading: false,
   error: null
@@ -70,14 +70,14 @@ export default function userReducer(
           username: '',
           password: '',
           position: '',
-          department: '',
+          department: '0',
           email: '',
           telephone: '',
           mobile: '',
           internalPhone: '',
           title: '',
           isEnabled: true,
-          role: '',
+          role: '0',
           createdBy: null,
           updatedBy: null,
           updatedAt: null

@@ -23,7 +23,8 @@ export default function DepartmentList() {
   const history = useHistory();
   const dispatch = useDispatch();
   const error = useSelector(
-    (state) => state.userState.error
+    (state) =>
+      state.userState.error || state.departmentState.error
   );
   const departments = useSelector(
     (state) => state.departmentState.departments

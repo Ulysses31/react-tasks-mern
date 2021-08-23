@@ -1,4 +1,6 @@
 const ComputeDuration = require('../models/computeDuration');
+const SubTask = require('../models/subTask');
+const Project = require('../models/project');
 
 exports.getComputeddurationList = async (req, res) => {
   console.log('getComputeddurationList executed...');
@@ -78,14 +80,36 @@ exports.updateComputedduration = async (req, res) => {
 
 exports.deleteComputedduration = async (req, res) => {
   console.log('deleteComputedduration called...');
+
   try {
-    const result = await ComputeDuration.deleteOne({
-      _id: req.params.id
+    // find duration in subtasks
+    const sbtsk = await SubTask.findOne({
+      durationUnit: req.params.id
     });
-    console.log(
-      `Computedduration ${req.params.id} deleted = ${result.deletedCount}`
-    );
-    return res.json({ deletedCount: result.deletedCount });
+
+    // find duration in projects
+    const prj = await Project.findOne({
+      durationUnit: req.params.id
+    });
+
+    if (sbtsk === null && prj === null) {
+      const result = await ComputeDuration.deleteOne({
+        _id: req.params.id
+      });
+
+      console.log(
+        `Computedduration ${req.params.id} deleted = ${result.deletedCount}`
+      );
+      return res.json({
+        deletedCount: result.deletedCount
+      });
+    } else {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete aborted. Duration unit in use'
+      });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json({

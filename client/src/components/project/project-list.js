@@ -59,9 +59,9 @@ export default function ProjectList() {
         (Number.parseInt(filters.duration) === 0 ||
           Number.parseInt(item.duration) ===
             Number.parseInt(filters.duration)) &&
-        (filters.priority === 0 ||
+        (filters.priority === '0' ||
           item.priority === filters.priority) &&
-        (filters.state === 0 ||
+        (filters.state === '0' ||
           item.state === filters.state) &&
         (filters.createdFrom === '' ||
           new Date(filters.createdFrom) <=
@@ -249,8 +249,8 @@ export default function ProjectList() {
         duration: 0,
         deadlineFrom: '',
         deadlineTo: '',
-        priority: 0,
-        state: 0,
+        priority: '0',
+        state: '0',
         selectedUser: filters.selectedUser,
         selectedMonthFrom: filters.selectedMonthFrom,
         selectedMonthTo: filters.selectedMonthTo
@@ -660,7 +660,7 @@ export default function ProjectList() {
                       >
                         <option
                           key={'all'}
-                          value='0'
+                          value={'0'}
                           defaultValue
                         >
                           ---
@@ -700,7 +700,7 @@ export default function ProjectList() {
                       >
                         <option
                           key={'all'}
-                          value='0'
+                          value={'0'}
                           defaultValue
                         >
                           ---

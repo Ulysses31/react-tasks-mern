@@ -1,5 +1,5 @@
+const mongoose = require('mongoose');
 const Department = require('../models/department');
-const User = require('../models/user');
 
 exports.getDepartmentList = async (req, res) => {
   console.log('getDepartmentList executed...');
@@ -77,7 +77,34 @@ exports.updateDepartment = async (req, res) => {
 
 exports.deleteDepartment = async (req, res) => {
   console.log('deleteDepartment called...');
+
   try {
+    // find department in users
+    const usrCnt = await Department.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }
+      },
+      {
+        $unwind: {
+          path: '$users',
+          preserveNullAndEmptyArrays: false
+        }
+      },
+      {
+        $count: 'users'
+      }
+    ]);
+
+    if (usrCnt.length > 0 && usrCnt[0].users > 0) {
+      return res.status(500).json({
+        statusCode: 500,
+        statusMessage: 'Internal Server Error',
+        message: 'Delete failed. Department contains users'
+      });
+    }
+
     const result = await Department.deleteOne({
       _id: req.params.id
     });

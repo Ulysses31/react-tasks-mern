@@ -54,12 +54,10 @@ export default function TaskList() {
           item.description
             .toLowerCase()
             .includes(filters.description.toLowerCase())) &&
-        (Number.parseInt(filters.priorityId) === 0 ||
-          Number.parseInt(item.priorityId) ===
-            Number.parseInt(filters.priorityId)) &&
-        (Number.parseInt(filters.stateId) === 0 ||
-          Number.parseInt(item.stateId) ===
-            Number.parseInt(filters.stateId)) &&
+        (filters.priority === '0' ||
+          item.priority._id === filters.priority) &&
+        (filters.state === '0' ||
+          item.state._id === filters.state) &&
         (Number.parseInt(filters.duration) === 0 ||
           Number.parseInt(item.duration) ===
             Number.parseInt(filters.duration)) &&
@@ -171,8 +169,8 @@ export default function TaskList() {
         startDate: '',
         endDate: '',
         duration: 0,
-        priorityId: 0,
-        stateId: 0,
+        priority: '0',
+        state: '0',
         selectedUser: filters.selectedUser,
         startDateFrom: filters.startDateFrom,
         startDateTo: filters.startDateTo
@@ -632,9 +630,9 @@ export default function TaskList() {
                       </div>
                       <select
                         className='form-control form-control-sm'
-                        id='priorityId'
-                        name='priorityId'
-                        value={filters.priorityId}
+                        id='priority'
+                        name='priority'
+                        value={filters.priority}
                         onChange={handleFiltersOnChacge}
                         style={{
                           border: '1px solid #cdcdcd',
@@ -643,7 +641,7 @@ export default function TaskList() {
                       >
                         <option
                           key={'all'}
-                          value='0'
+                          value={'0'}
                           defaultValue
                         >
                           ---
@@ -672,9 +670,9 @@ export default function TaskList() {
                       </div>
                       <select
                         className='form-control form-control-sm'
-                        id='stateId'
-                        name='stateId'
-                        value={filters.stateId}
+                        id='state'
+                        name='state'
+                        value={filters.state}
                         onChange={handleFiltersOnChacge}
                         style={{
                           border: '1px solid #cdcdcd',
@@ -683,7 +681,7 @@ export default function TaskList() {
                       >
                         <option
                           key={'all'}
-                          value='0'
+                          value={'0'}
                           defaultValue
                         >
                           ---

@@ -79,8 +79,8 @@ const initialState = {
     startDate: '',
     endDate: '',
     duration: 0,
-    priorityId: 0,
-    stateId: 0,
+    priority: '0',
+    state: '0',
     selectedUser: 0,
     startDateFrom: 0,
     startDateTo: 0
