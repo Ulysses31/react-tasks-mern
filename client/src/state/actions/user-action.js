@@ -13,8 +13,16 @@ export const USER_ISLOADING = 'USER_ISLOADING';
 export const SELECTED_USER = 'SELECTED_USER';
 export const USER_RESET_STATE = 'USER_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/user`;
-const apiUrlRoles = `${apiDomain}/api/userrole`;
+let apiUrl = null;
+let apiUrlRoles = null;
+
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = '/api/user';
+  apiUrlRoles = '/api/userrole';
+} else {
+  apiUrl = `${apiDomain}/api/user`;
+  apiUrlRoles = `${apiDomain}/api/userrole`;
+}
 
 const options = {
   headers: { 'content-type': 'application/json' },

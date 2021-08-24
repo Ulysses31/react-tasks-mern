@@ -26,10 +26,22 @@ export const SUBTASK_DELETE = 'SUBTASK_DELETE';
 export const SUBTASK_DEACTIVATE = 'SUBTASK_DEACTIVATE';
 export const SELECTED_SUBTASK = 'SELECTED_SUBTASK';
 
-const apiUrl = `${apiDomain}/api/task`;
-const apiUrlComments = `${apiDomain}/api/comment`;
-const apiUrlSubTasks = `${apiDomain}/api/subtask`;
-const apiUrlTaskUser = `${apiDomain}/api/task/byuser`;
+let apiUrl = null;
+let apiUrlComments = null;
+let apiUrlSubTasks = null;
+let apiUrlTaskUser = null;
+
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = '/api/task';
+  apiUrlComments = '/api/comment';
+  apiUrlSubTasks = '/api/subtask';
+  apiUrlTaskUser = '/api/task/byuser';
+} else {
+  apiUrl = `${apiDomain}/api/task`;
+  apiUrlComments = `${apiDomain}/api/comment`;
+  apiUrlSubTasks = `${apiDomain}/api/subtask`;
+  apiUrlTaskUser = `${apiDomain}/api/task/byuser`;
+}
 
 const options = {
   headers: { 'content-type': 'application/json' },

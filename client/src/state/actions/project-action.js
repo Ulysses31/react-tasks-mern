@@ -15,8 +15,16 @@ export const PROJECT_ISLOADING = 'PROJECT_ISLOADING';
 export const SELECTED_PROJECT = 'SELECTED_PROJECT';
 export const PROJECT_RESET_STATE = 'PROJECT_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/project`;
-const apiUrlProjectUser = `${apiDomain}/api/project/byuser`;
+let apiUrl = null;
+let apiUrlProjectUser = null;
+
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = '/api/project';
+  apiUrlProjectUser = '/api/project/byuser';
+} else {
+  apiUrl = `${apiDomain}/api/project`;
+  apiUrlProjectUser = `${apiDomain}/api/project/byuser`;
+}
 
 const options = {
   headers: { 'content-type': 'application/json' },

@@ -39,6 +39,8 @@ exports.getDepartmentById = async (req, res) => {
 exports.insertDepartment = async (req, res) => {
   console.log('insertDepartment executed...');
   try {
+    req.body._id = null;
+
     const cmn = new Department(req.body);
     const result = await cmn.save();
     return res.json({ result });

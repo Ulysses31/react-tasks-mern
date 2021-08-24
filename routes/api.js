@@ -86,6 +86,7 @@ const {
   updateComputedduration,
   deleteComputedduration
 } = require('../controller/computeDuration');
+const { dbSeed } = require('../controller/dbSeed');
 
 // Project
 router.get('/project', getProjectList);
@@ -171,5 +172,8 @@ router.delete(
   '/computeDuration/:id',
   deleteComputedduration
 );
+
+/* GET seed page. */
+router.get('/seed', dbSeed);
 
 module.exports = router;
