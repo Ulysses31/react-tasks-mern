@@ -32,8 +32,8 @@ export default function Login() {
   );
   const history = useHistory();
   const [login, setLogin] = useState({
-    email: '',
-    password: ''
+    email: 'admin@datacenter.com',
+    password: '123'
   });
 
   useEffect(() => {
@@ -138,13 +138,24 @@ export default function Login() {
               </label>
             </div>
             <button
-              className='btn btn-lg btn-primary btn-block'
+              className='btn btn-lg btn-primary btn-block shadow-sm'
               type='submit'
             >
               Sign in
             </button>
             <p className='mt-5 mb-3 text-muted text-center'>
-              React Projects - Tasks &copy; 2021
+              React Projects - Tasks &copy; 2021 <br /> by{' '}
+              <a
+                href='https://www.linkedin.com/in/iordanidischristos/'
+                target='_blank'
+                rel='noreferrer'
+                title='LinkedIn Profile'
+                style={{
+                  textDecoration: 'underline'
+                }}
+              >
+                Iordanidis Chris
+              </a>
             </p>
           </form>
         ) : (
