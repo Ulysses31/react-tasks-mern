@@ -171,7 +171,12 @@ exports.updateUser = async (req, res) => {
     // update department
     const departmentUpdateResult =
       await Department.findByIdAndUpdate(
-        { _id: req.body.department },
+        {
+          _id:
+            req.body.department._id === undefined
+              ? req.body.department
+              : req.body.department._id
+        },
         {
           $push: {
             users: [req.body._id]
