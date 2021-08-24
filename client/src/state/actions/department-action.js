@@ -16,7 +16,13 @@ export const SELECTED_DEPARTMENT = 'SELECTED_DEPARTMENT';
 export const DEPARTMENT_RESET_STATE =
   'DEPARTMENT_RESET_STATE';
 
-const apiUrl = `${apiDomain}/api/department`;
+let apiUrl = null;
+
+if (process.env.NODE_ENV === 'production') {
+  apiUrl = '/api/department';
+} else {
+  apiUrl = `${apiDomain}/api/department`;
+}
 
 const options = {
   headers: { 'content-type': 'application/json' },

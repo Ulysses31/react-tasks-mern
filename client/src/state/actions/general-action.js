@@ -29,10 +29,22 @@ export const PRIORITY_FETCH = 'PRIORITY_FETCH';
 export const SIDEBAR_STATE = 'SIDEBAR_STATE';
 export const GENERAL_ERROR = 'GENERAL_ERROR';
 
-const apiStatesUrl = `${apiDomain}/api/state`;
-const apicomputedDurationsUrl = `${apiDomain}/api/computeDuration`;
-const apiPrioritiesUrl = `${apiDomain}/api/priority`;
-const apiUrlUsers = `${apiDomain}/api/user`;
+let apiStatesUrl = null;
+let apicomputedDurationsUrl = null;
+let apiPrioritiesUrl = null;
+let apiUrlUsers = null;
+
+if (process.env.NODE_ENV === 'production') {
+  apiStatesUrl = '/api/state';
+  apicomputedDurationsUrl = '/api/computeDuration';
+  apiPrioritiesUrl = '/api/priority';
+  apiUrlUsers = '/api/user';
+} else {
+  apiStatesUrl = `${apiDomain}/api/state`;
+  apicomputedDurationsUrl = `${apiDomain}/api/computeDuration`;
+  apiPrioritiesUrl = `${apiDomain}/api/priority`;
+  apiUrlUsers = `${apiDomain}/api/user`;
+}
 
 const options = {
   headers: { 'content-type': 'application/json' },
