@@ -144,7 +144,7 @@ export default function Login() {
               Sign in
             </button>
             <p className='mt-5 mb-3 text-muted text-center'>
-              INTERLIFE ORBIES &copy; 2021
+              React Projects - Tasks &copy; 2021
             </p>
           </form>
         ) : (
