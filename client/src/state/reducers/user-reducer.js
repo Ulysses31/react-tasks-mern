@@ -98,7 +98,7 @@ export default function userReducer(
       return {
         ...state,
         users: state.users.filter((usr) => {
-          return usr.id !== action.payload;
+          return usr._id !== action.payload;
         }),
         error: null
       };
