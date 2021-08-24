@@ -266,10 +266,24 @@ exports.deleteUser = async (req, res) => {
       _id: req.params.id
     });
 
-    console.log(
-      `User ${req.params.id} deleted = ${result.deletedCount}`
+    // delete user from department
+    const dep = await Department.updateOne(
+      {
+        _id: sbtsk.department
+      },
+      {
+        $pullAll: {
+          users: [req.params.id]
+        }
+      },
+      {
+        new: false,
+        useFindAndModify: false
+      }
     );
-    return res.json({ deletedCount: result.deletedCount });
+
+    console.log(`User ${req.params.id} deleted`);
+    return res.json({ result, dep });
   } catch (err) {
     console.log(err);
     return res.status(500).json({
