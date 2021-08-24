@@ -54,7 +54,7 @@ export default function Login() {
 
     dispatch(getUserByLogin(login)).then((response) => {
       if (response !== undefined) {
-        console.log(response);
+        // console.log(response);
         const validatedUserInfo = {
           id: response.data._id,
           title: response.data.title,
